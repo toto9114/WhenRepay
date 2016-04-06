@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">WhenRepay</string>
+    <string name="action_settings">Settings</string>
+    <string name="kakao_app_key">7d53594cba0b186860a3b53419365f68</string>
+    <string name="kakao_scheme">kakao7d53594cba0b186860a3b53419365f68c</string>
+    <string name="kakaolink_host">kakaolink</string>
+</resources>
