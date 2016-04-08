@@ -24,7 +24,7 @@ public class IntroActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(IntroActivity.this, ProfileActivity.class));
+                startActivity(new Intent(IntroActivity.this, MainActivity.class));
                 finish();
             }
         });

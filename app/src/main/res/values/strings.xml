@@ -4,6 +4,7 @@
     <string name="kakao_app_key">7d53594cba0b186860a3b53419365f68</string>
     <string name="kakao_scheme">kakao7d53594cba0b186860a3b53419365f68c</string>
     <string name="kakaolink_host">kakaolink</string>
+    <string name="video_ad_unit_id">ca-app-pub-3670411145174358/4328479026</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="connect_contract_message">원활한 돈 관리를 위해 주소록 정보를 연결하시겠습니까?</string>

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -13,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -39,13 +41,21 @@ public class MainActivity extends AppCompatActivity {
     ViewPager pager;
 
     MainPagerAdapter mAdapter;
-
+    ProfileDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, LendActivity.class));
+            }
+        });
         pager = (ViewPager)findViewById(R.id.pager);
       //  pager.setAdapter();
         mAdapter = new MainPagerAdapter(getSupportFragmentManager());
@@ -61,25 +71,25 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()){
+                switch (tab.getPosition()) {
                     case 0:
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.pager,new ReceiveFragment())
+                                .replace(R.id.pager, new ReceiveFragment())
                                 .commit();
                         break;
                     case 1:
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.pager,new RepayFragment())
+                                .replace(R.id.pager, new RepayFragment())
                                 .commit();
                         break;
                     case 2:
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.pager,new DutchFragment())
+                                .replace(R.id.pager, new DutchFragment())
                                 .commit();
                         break;
                     case 3:
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.pager,new BetFragment())
+                                .replace(R.id.pager, new BetFragment())
                                 .commit();
                         break;
 
@@ -96,6 +106,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        dialog = new ProfileDialog();
+        dialog.show(getSupportFragmentManager(),"dialog");
     }
 
     @Override
