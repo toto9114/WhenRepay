@@ -11,4 +11,5 @@
     <string name="loading_contract_message">주소를 가져오는 중</string>
     <string name="alert_evaluate_app_message">언제줄래?가 맘에 드셨나요?\n지금 추천해주세요</string>
     <string name="back_pressed_message">뒤로 버튼 한번 더 누르시면 종료됩니다.</string>
+    <string name="alert_insert_profile">프로필 정보를 입력해주세요.</string>
 </resources>
