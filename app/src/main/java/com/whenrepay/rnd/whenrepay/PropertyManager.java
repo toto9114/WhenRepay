@@ -23,6 +23,16 @@ public class PropertyManager {
         mEditor = mPrefs.edit();
     }
 
+    private static final String REG_LOG = "log";
+
+    public void setLog(boolean isLog){
+        mEditor.putBoolean(REG_LOG,true);
+        mEditor.commit();
+    }
+    public boolean getLog(){
+        return mPrefs.getBoolean(REG_LOG,false);
+    }
+
     private static final String REG_NAME = "name";
     public void setName(String name){
         mEditor.putString(REG_NAME,name);

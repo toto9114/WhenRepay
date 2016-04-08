@@ -106,8 +106,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        dialog = new ProfileDialog();
-        dialog.show(getSupportFragmentManager(),"dialog");
+        if(!PropertyManager.getInstance().getLog()) {
+            dialog = new ProfileDialog();
+            dialog.show(getSupportFragmentManager(), "dialog");
+        }
     }
 
     @Override
