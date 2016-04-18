@@ -15,11 +15,15 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        switch (position){
+            case 0:
+
+        }
         return null;
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return 5;
     }
 }

@@ -13,5 +13,5 @@
         android:orderInCategory="200"
         android:icon="@android:drawable/ic_dialog_info"
         android:title="@string/action_settings"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
 </menu>

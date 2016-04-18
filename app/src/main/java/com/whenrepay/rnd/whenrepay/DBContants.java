@@ -9,9 +9,8 @@ public class DBContants {
     public interface AddressBook extends BaseColumns {
         public static final String TABLE_NAME = "addressBook";
         public static final String COLUMN_NAME = "name";
-        public static final String COLUMN_PHONE = "phone";
-        public static final String COLUMN_HOME = "home";
-        public static final String COLUMN_OFFICE = "office";
-        public static final String COLUMN_LAST_MESSAGE_ID = "lastMessageId";
+        public static final String COLUMN_MONEY = "money";
+        public static final String COLUMN_START_DATE = "start";
+        public static final String COLUMN_END_DATE = "end";
     }
 }

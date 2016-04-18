@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -14,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -49,24 +47,26 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, LendActivity.class));
-            }
-        });
-        pager = (ViewPager)findViewById(R.id.pager);
+       // pager = (ViewPager)findViewById(R.id.pager);
       //  pager.setAdapter();
-        mAdapter = new MainPagerAdapter(getSupportFragmentManager());
-        pager.setAdapter(mAdapter);
+     //   mAdapter = new MainPagerAdapter(getSupportFragmentManager());
+       // pager.setAdapter(mAdapter);
 
         tabLayout = (TabLayout)findViewById(R.id.tablayout);
 
         tabLayout.addTab(tabLayout.newTab().setText("받을돈"));
         tabLayout.addTab(tabLayout.newTab().setText("갚을돈"));
+        tabLayout.addTab(tabLayout.newTab().setText("HOME"));
         tabLayout.addTab(tabLayout.newTab().setText("N빵하기"));
         tabLayout.addTab(tabLayout.newTab().setText("내기하기"));
+
+        tabLayout.setScrollPosition(2,0,true);
+        if(savedInstanceState ==null){
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, new HomeFragment())
+                    .commit();
+            setTitle("언제줄래");
+        }
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -74,25 +74,34 @@ public class MainActivity extends AppCompatActivity {
                 switch (tab.getPosition()) {
                     case 0:
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.pager, new ReceiveFragment())
+                                .replace(R.id.container, new ReceiveFragment())
                                 .commit();
+                        setTitle("받을돈");
                         break;
                     case 1:
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.pager, new RepayFragment())
+                                .replace(R.id.container, new RepayFragment())
                                 .commit();
+                        setTitle("갚을 돈");
                         break;
                     case 2:
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.pager, new DutchFragment())
+                                .replace(R.id.container, new HomeFragment())
                                 .commit();
+                        setTitle("언제줄래");
                         break;
                     case 3:
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.pager, new BetFragment())
+                                .replace(R.id.container, new DutchFragment())
                                 .commit();
+                        setTitle("N빵하기");
                         break;
-
+                    case 4:
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.container, new BetFragment())
+                                .commit();
+                        setTitle("내기하기");
+                        break;
                 }
             }
 
@@ -107,8 +116,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         if(!PropertyManager.getInstance().getLog()) {
+            PropertyManager.getInstance().setLog(true);
             dialog = new ProfileDialog();
             dialog.show(getSupportFragmentManager(), "dialog");
+        }else {
+            Toast.makeText(this, PropertyManager.getInstance().getName() + "님 환영합니다", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -148,9 +160,8 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             startActivity(new Intent(this,ContractActivity.class));
+            return true;
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

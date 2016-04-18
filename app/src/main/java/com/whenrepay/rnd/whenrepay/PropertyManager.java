@@ -26,7 +26,7 @@ public class PropertyManager {
     private static final String REG_LOG = "log";
 
     public void setLog(boolean isLog){
-        mEditor.putBoolean(REG_LOG,true);
+        mEditor.putBoolean(REG_LOG,isLog);
         mEditor.commit();
     }
     public boolean getLog(){

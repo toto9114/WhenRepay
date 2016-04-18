@@ -28,6 +28,5 @@ public class IntroActivity extends AppCompatActivity {
                 finish();
             }
         });
-        PropertyManager.getInstance().setLog(true);
     }
 }
