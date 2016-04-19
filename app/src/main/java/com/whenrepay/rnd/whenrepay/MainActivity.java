@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         if(!PropertyManager.getInstance().getLog()) {
             PropertyManager.getInstance().setLog(true);
             dialog = new ProfileDialog();
+            dialog.setCancelable(false);
             dialog.show(getSupportFragmentManager(), "dialog");
         }else {
             Toast.makeText(this, PropertyManager.getInstance().getName() + "님 환영합니다", Toast.LENGTH_SHORT).show();
