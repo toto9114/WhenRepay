@@ -42,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ok"
-        android:id="@+id/btn_ok"
+        android:id="@+id/btn_done"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
@@ -64,5 +64,5 @@
         android:layout_below="@+id/textView5"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/btn_ok" />
+        android:layout_above="@+id/btn_done" />
 </RelativeLayout>

@@ -31,7 +31,7 @@ public class MyCustomDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_my_custom_dialog, container, false);
         listView = (ListView)view.findViewById(R.id.listView);
 
-        Button btn = (Button)view.findViewById(R.id.btn_ok);
+        Button btn = (Button)view.findViewById(R.id.btn_done);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

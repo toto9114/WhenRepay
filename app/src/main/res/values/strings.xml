@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">WhenRepay</string>
-    <string name="action_settings">주소록 불러오기</string>
+    <string name="action_search">search</string>
     <string name="kakao_app_key">7d53594cba0b186860a3b53419365f68</string>
-    <string name="kakao_scheme">kakao7d53594cba0b186860a3b53419365f68c</string>
+    <string name="kakao_scheme">kakao7d53594cba0b186860a3b53419365f68</string>
     <string name="kakaolink_host">kakaolink</string>
     <string name="video_ad_unit_id">ca-app-pub-3670411145174358/4328479026</string>
     <!-- TODO: Remove or change this placeholder text -->

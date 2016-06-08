@@ -13,6 +13,8 @@ import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.whenrepay.rnd.whenrepay.Manager.DataManager;
+
 public class ContractActivity extends AppCompatActivity {
     EditText keywordView;
     ListView listView;
@@ -31,7 +33,6 @@ public class ContractActivity extends AppCompatActivity {
         int[] to = {android.R.id.text1};
 
         mAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, null, from, to, 0);
-
         listView.setAdapter(mAdapter);
 
         keywordView.addTextChangedListener(new TextWatcher() {
@@ -55,7 +56,25 @@ public class ContractActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        searchContacts();
+        ContentResolver resolver = getContentResolver();
+        Uri uri = ContactsContract.Contacts.CONTENT_URI;
+        if (!TextUtils.isEmpty(mKeyword)) {
+            uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_FILTER_URI, Uri.encode(mKeyword));
+        }
+        AccountData data = new AccountData();
+        Cursor c = resolver.query(uri, projection, selection, selectionArgs, sortOrder);
+        c.moveToFirst();
+        do {
+            String name = c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+
+            data.name = name;
+            data.startDate = null;
+            data.endDate = null;
+            data.money = null;
+            DataManager.getInstance().insertAddress(data);
+        }
+        while(c.moveToNext());
+
     }
 
     String[] projection = {ContactsContract.Contacts._ID, ContactsContract.Contacts.DISPLAY_NAME};
