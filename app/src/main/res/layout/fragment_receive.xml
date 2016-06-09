@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BorrowMoney.ReceiveFragment">
+    tools:context=".Transactions.ContractFragment">
 
     <!-- TODO: Update blank fragment layout -->
 <LinearLayout
@@ -11,29 +11,26 @@
     android:orientation="horizontal"
     android:layout_height="wrap_content">
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="이름"
+        android:text="날짜순 정렬"
         android:id="@+id/textView13"
         android:layout_weight="1"
         android:layout_marginRight="3dp" />
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="금액"
+        android:text="금액순 정렬"
         android:id="@+id/textView15"
         android:layout_weight="1"
         android:layout_marginRight="3dp" />
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="상환일자"
+        android:text="필터"
         android:id="@+id/textView17"
         android:layout_weight="1"
         android:layout_marginRight="3dp" />

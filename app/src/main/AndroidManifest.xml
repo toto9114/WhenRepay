@@ -58,7 +58,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ContractActivity"
+            android:name=".BorrowMoney.ContractActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
@@ -67,7 +67,7 @@
         <activity
             android:name=".BorrowMoney.LendActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".IOUActivity" />
         <activity android:name=".LoginActivity"></activity>
     </application>
