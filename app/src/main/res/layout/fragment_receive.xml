@@ -1,56 +1,48 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Transactions.ContractFragment">
+    tools:context=".Transactions.TransactionFragment">
 
     <!-- TODO: Update blank fragment layout -->
-<LinearLayout
-    android:id="@+id/linear_title"
-    android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:layout_height="wrap_content">
-
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linear_title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="날짜순 정렬"
-        android:id="@+id/textView13"
-        android:layout_weight="1"
-        android:layout_marginRight="3dp" />
+        android:orientation="horizontal">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="금액순 정렬"
-        android:id="@+id/textView15"
-        android:layout_weight="1"
-        android:layout_marginRight="3dp" />
+        <Button
+            android:id="@+id/btn_sort_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"
+            android:layout_weight="1"
+            android:text="날짜순 정렬" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="필터"
-        android:id="@+id/textView17"
-        android:layout_weight="1"
-        android:layout_marginRight="3dp" />
-</LinearLayout>
+        <Button
+            android:id="@+id/btn_sort_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"
+            android:layout_weight="1"
+            android:text="금액순 정렬" />
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/listView"
+        <Button
+            android:id="@+id/btn_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"
+            android:layout_weight="1"
+            android:text="필터" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/linear_title" />
+        android:layout_below="@+id/linear_title"/>
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="clear"
-        android:id="@+id/btn_clear"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
 </RelativeLayout>
