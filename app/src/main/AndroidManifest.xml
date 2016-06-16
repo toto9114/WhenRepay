@@ -67,9 +67,9 @@
         <activity
             android:name=".BorrowMoney.LendActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".IOUActivity" />
-        <activity android:name=".LoginActivity"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".Transactions.DetailTransactionActivity"></activity>
     </application>
 
 </manifest>

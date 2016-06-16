@@ -37,7 +37,7 @@
             android:text="필터" />
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <cn.iwgang.familiarrecyclerview.FamiliarRecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

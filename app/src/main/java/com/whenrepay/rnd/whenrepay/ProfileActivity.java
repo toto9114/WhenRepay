@@ -57,7 +57,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        String[] arrays = getResources().getStringArray(R.array.items);
+        String[] arrays = getResources().getStringArray(R.array.bank);
         for (String s : arrays) {
             mAdapter.add(s);
         }
