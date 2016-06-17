@@ -10,10 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.whenrepay.rnd.whenrepay.BorrowMoney.FingerPaintView;
 import com.whenrepay.rnd.whenrepay.Main.MainActivity;
 import com.whenrepay.rnd.whenrepay.Manager.PropertyManager;
+import com.whenrepay.rnd.whenrepay.MyProfile;
 import com.whenrepay.rnd.whenrepay.R;
 
 import java.io.ByteArrayOutputStream;
@@ -54,17 +56,21 @@ public class MySignFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() { //서명 저장하기
             @Override
             public void onClick(View v) {
-                Bitmap bmp = getViewBitmap(paint);
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byte[] byteArray = stream.toByteArray();
-//                mRealm.beginTransaction();
-//                MyProfile profile = mRealm.createObject(MyProfile.class);
-//                profile.setSignature(byteArray);
-//                mRealm.commitTransaction();
-                PropertyManager.getInstance().setMember(true);
-                startActivity(new Intent(getContext(), MainActivity.class));
-                getActivity().finish();
+                if(paint.isDraw()) {
+                    Bitmap bmp = getViewBitmap(paint);
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    byte[] byteArray = stream.toByteArray();
+                    mRealm.beginTransaction();
+                    MyProfile profile = mRealm.where(MyProfile.class).findFirst();
+                    profile.setSignature(byteArray);
+                    mRealm.commitTransaction();
+                    PropertyManager.getInstance().setMember(true);
+                    startActivity(new Intent(getContext(), MainActivity.class));
+                    getActivity().finish();
+                }else{
+                    Toast.makeText(getContext(),"서명해주세요",Toast.LENGTH_SHORT).show();
+                }
             }
         });
         return view;

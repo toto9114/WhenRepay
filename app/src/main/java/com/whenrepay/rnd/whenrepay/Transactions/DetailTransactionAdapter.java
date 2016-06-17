@@ -22,6 +22,10 @@ public class DetailTransactionAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
+    public void addAll(List<DetailTransData> list){
+        items.addAll(list);
+        notifyDataSetChanged();
+    }
     @Override
     public int getItemViewType(int position) {
         DetailTransData data = items.get(position);
@@ -45,18 +49,15 @@ public class DetailTransactionAdapter extends RecyclerView.Adapter {
         switch (viewType) {
             case DataManager.TRANSACTION_ADD:
                 view = inflater.inflate(R.layout.view_detail_trans_add, parent, false);
-                AddTransViewHolder addTransViewHolder = new AddTransViewHolder(view);
-                return addTransViewHolder;
+                return new AddTransViewHolder(view);
             case DataManager.TRANSACTION_SUB:
                 view = inflater.inflate(R.layout.view_detail_trans_sub, parent, false);
-                SubTransViewHolder subTransViewHolder = new SubTransViewHolder(view);
-                return subTransViewHolder;
+                return new SubTransViewHolder(view);
             case DataManager.TRANSACTION_COMPLETE:
                 view = inflater.inflate(R.layout.view_detail_trans_complete, parent, false);
-                CompleteTransViewHolder completeTransViewHolder = new CompleteTransViewHolder(view);
-                return completeTransViewHolder;
+                return new CompleteTransViewHolder(view);
         }
-        return null;
+        return new AddTransViewHolder(view);
     }
 
     @Override

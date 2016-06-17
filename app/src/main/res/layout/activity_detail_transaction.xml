@@ -123,9 +123,5 @@
         android:layout_below="@+id/textView15"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/linearLayout10"
-        app:frv_divider="#696969"
-        app:frv_dividerHeight="1dp"
-        app:frv_layoutManager="linear"
-        app:frv_layoutManagerOrientation="vertical"/>
+        android:layout_above="@+id/linearLayout10" />
 </RelativeLayout>
