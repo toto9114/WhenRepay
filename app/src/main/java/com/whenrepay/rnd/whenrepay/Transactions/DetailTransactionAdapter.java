@@ -26,6 +26,10 @@ public class DetailTransactionAdapter extends RecyclerView.Adapter {
         items.addAll(list);
         notifyDataSetChanged();
     }
+
+    public DetailTransData getLastItem(){
+        return items.get(items.size());
+    }
     @Override
     public int getItemViewType(int position) {
         DetailTransData data = items.get(position);

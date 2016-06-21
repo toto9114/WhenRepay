@@ -109,6 +109,9 @@ public class DetailTransactionActivity extends AppCompatActivity implements Tran
         if (DataManager.getInstance().getTransactionList(accountData._id).size() > 0) {
             mAdapter.addAll(DataManager.getInstance().getTransactionList(accountData._id));
         }
+        if(mAdapter.getLastItem().remain == 0){
+            complete();
+        }
         totalView.setText(accountData.money);
         nameView.setText(accountData.name);
         dateView.setText(accountData.date);
