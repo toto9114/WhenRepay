@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -24,8 +23,7 @@ import jp.wasabeef.recyclerview.animators.FadeInDownAnimator;
 public class DetailTransactionActivity extends AppCompatActivity implements TransactionDialog.OnEditButtonClickListener {
 
     public static final String EXTRA_ACCOUNT_DATA = "account";
-    public static final String EXTRA_ACCOUNT_ID = "accountid";
-    public static final String EXTRA_ACCOUNT_NAME = "name";
+
     TextView totalView, nameView, dateView;
     FamiliarRecyclerView recyclerView;
     DetailTransactionAdapter mAdapter;
@@ -40,7 +38,7 @@ public class DetailTransactionActivity extends AppCompatActivity implements Tran
         setContentView(R.layout.activity_detail_transaction);
 
         Intent i = getIntent();
-        accountData = (AccountData) i.getSerializableExtra(EXTRA_ACCOUNT_DATA);
+        accountData = (AccountData) i.getSerializableExtra(EXTRA_ACCOUNT_DATA); //리스트에서 뽑아온 AccountData
         totalView = (TextView) findViewById(R.id.text_total);
         nameView = (TextView) findViewById(R.id.text_name);
         dateView = (TextView) findViewById(R.id.text_date);
@@ -55,6 +53,7 @@ public class DetailTransactionActivity extends AppCompatActivity implements Tran
         dialog = new TransactionDialog();
         recyclerView.setItemAnimator(new FadeInDownAnimator());
 
+        initData(accountData);
         Button btn = (Button) findViewById(R.id.btn_back);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +65,7 @@ public class DetailTransactionActivity extends AppCompatActivity implements Tran
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+
             }
         });
 
@@ -81,41 +80,48 @@ public class DetailTransactionActivity extends AppCompatActivity implements Tran
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle args = new Bundle();
-                args.putInt(TransactionDialog.EXTRA_TYPE, TYPE_SUB);
-                dialog.setArguments(args);
-                dialog.show(getSupportFragmentManager(), null);
+                if (remainPrice > 0) {
+                    Bundle args = new Bundle();
+                    args.putInt(TransactionDialog.EXTRA_TYPE, TYPE_SUB);
+                    dialog.setArguments(args);
+                    dialog.show(getSupportFragmentManager(), null);
+                } else {
+                    Toast.makeText(DetailTransactionActivity.this, "이미 상환되었습니다", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         btn = (Button) findViewById(R.id.btn_repay_all);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                complete();
+                if (remainPrice > 0) {
+                    complete();
+                } else {
+                    Toast.makeText(DetailTransactionActivity.this, "이미 상환되었습니다", Toast.LENGTH_SHORT).show();
+                }
             }
         });
-        initData(accountData);
 
     }
 
     private void initData(AccountData accountData) {
         DetailTransData data = new DetailTransData();
         data.type = TYPE_ADD;
-        data.repay = Integer.parseInt(accountData.money);
-        data.remain = Integer.parseInt(accountData.money);
+        data.repay = accountData.money;
+        data.remain = accountData.money;
         data.date = accountData.date;
         mAdapter.add(data);
 
         if (DataManager.getInstance().getTransactionList(accountData._id).size() > 0) {
             mAdapter.addAll(DataManager.getInstance().getTransactionList(accountData._id));
+            remainPrice = mAdapter.getLastItem().remain;
+        } else {
+            remainPrice = accountData.money;
         }
-        if(mAdapter.getLastItem().remain == 0){
-            complete();
-        }
-        totalView.setText(accountData.money);
+        totalView.setText(""+accountData.money);
         nameView.setText(accountData.name);
         dateView.setText(accountData.date);
-        remainPrice = Integer.parseInt(totalView.getText().toString());
+
     }
 
 
@@ -143,6 +149,9 @@ public class DetailTransactionActivity extends AppCompatActivity implements Tran
 
     public void subTrans(int price) {
         DetailTransData data = new DetailTransData();
+        if (DataManager.getInstance().getTransactionList(accountData._id).size() > 0) {
+            remainPrice = mAdapter.getLastItem().remain;
+        }
         data.type = TYPE_SUB;
         data.repay = price;
         if (remainPrice - price >= 0) {
@@ -152,10 +161,10 @@ public class DetailTransactionActivity extends AppCompatActivity implements Tran
             SimpleDateFormat sdf = new SimpleDateFormat("MM월 dd일");
             data.date = sdf.format(date);
             DataManager.getInstance().insertTransaction(accountData._id, data.repay, data.remain, data.type, data.date);
-            for (DetailTransData d : DataManager.getInstance().getTransactionList(accountData._id)) {
-                Log.i("DetailTrans", "repay: " + d.repay);
-            }
             mAdapter.add(data);
+            if (remainPrice == 0) {
+                complete();
+            }
         } else {
             Toast.makeText(this, "전액 상환되었습니다", Toast.LENGTH_SHORT).show();
         }
@@ -163,11 +172,17 @@ public class DetailTransactionActivity extends AppCompatActivity implements Tran
 
     public void complete() {
         DetailTransData data = new DetailTransData();
+        if (DataManager.getInstance().getTransactionList(accountData._id).size() == 0) { //부분상환된게 없다면
+            data.repay = accountData.money;
+        } else {
+            data.repay = mAdapter.getLastItem().remain;
+        }
         data.type = TYPE_COMPLETE;
         data.remain = 0;
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("MM월 dd일");
         data.date = sdf.format(date);
+        DataManager.getInstance().insertTransaction(accountData._id, data.repay, data.remain, data.type, data.date);
         mAdapter.add(data);
     }
 }

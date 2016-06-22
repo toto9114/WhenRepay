@@ -66,11 +66,16 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@android:style/Theme.Translucent" />
         <activity
-            android:name=".BorrowMoney.LendActivity"
+            android:name=".BorrowMoney.LendMoneyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".Transactions.DetailTransactionActivity"></activity>
+        <activity android:name=".Transactions.DetailTransactionActivity" />
+        <activity
+            android:name=".BorrowThings.LendThingsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

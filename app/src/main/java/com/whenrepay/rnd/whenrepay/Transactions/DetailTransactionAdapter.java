@@ -28,7 +28,7 @@ public class DetailTransactionAdapter extends RecyclerView.Adapter {
     }
 
     public DetailTransData getLastItem(){
-        return items.get(items.size());
+        return items.get(items.size()-1);
     }
     @Override
     public int getItemViewType(int position) {
@@ -80,6 +80,7 @@ public class DetailTransactionAdapter extends RecyclerView.Adapter {
                 ((SubTransViewHolder) holder).setData(data);
                 break;
             case DataManager.TRANSACTION_COMPLETE:
+                ((CompleteTransViewHolder)holder).setData(data);
                 break;
         }
     }
