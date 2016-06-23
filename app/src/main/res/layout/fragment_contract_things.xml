@@ -14,7 +14,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
     <ViewSwitcher
-        android:id="@+id/view_switcher"
+        android:id="@+id/view_switcher_contact"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView10"
@@ -52,7 +52,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/view_switcher"
+        android:layout_below="@+id/view_switcher_contact"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/linearLayout5">

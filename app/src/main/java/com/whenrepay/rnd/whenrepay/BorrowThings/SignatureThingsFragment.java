@@ -1,6 +1,7 @@
 package com.whenrepay.rnd.whenrepay.BorrowThings;
 
 
+import android.app.DatePickerDialog;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.whenrepay.rnd.whenrepay.BorrowMoney.BorrowerData;
@@ -17,6 +19,7 @@ import com.whenrepay.rnd.whenrepay.R;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -73,6 +76,23 @@ public class SignatureThingsFragment extends Fragment {
                 data.byteBitmap = byteArray;
                 thingsData.date = dateView.getText().toString(); //상환일자 가져오기
                 ((LendThingsActivity)getActivity()).changeSend(data,thingsData);
+            }
+        });
+
+        btn= (Button)view.findViewById(R.id.btn_edit_date);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+                DatePickerDialog pickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        c.set(year, monthOfYear, dayOfMonth);
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+                        dateView.setText(sdf.format(c.getTime()));
+                    }
+                },c.get(Calendar.YEAR),c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH));
+                pickerDialog.show();
             }
         });
         return view;

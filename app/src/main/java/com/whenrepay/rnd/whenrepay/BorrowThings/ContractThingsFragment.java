@@ -65,7 +65,7 @@ public class ContractThingsFragment extends Fragment {
             }
         });
         thingsData = new ThingsData();
-        viewSwitcher = (ViewSwitcher) view.findViewById(R.id.view_switcher);
+        viewSwitcher = (ViewSwitcher) view.findViewById(R.id.view_switcher_contact);
         cameraView = (LinearLayout) view.findViewById(R.id.btn_camera);
         galleryView = (LinearLayout) view.findViewById(R.id.btn_gallery);
         pictureView = (ImageView) view.findViewById(R.id.image_things);
@@ -97,7 +97,7 @@ public class ContractThingsFragment extends Fragment {
             public void onClick(View v) {
                 if(!TextUtils.isEmpty(thingsData.borrowerName) || !TextUtils.isEmpty(nameView.getText().toString())) {
                     thingsData.thingsName = nameView.getText().toString();
-                    thingsData.memo = nameView.getText().toString();
+                    thingsData.memo = memoView.getText().toString();
                     ((LendThingsActivity) getActivity()).changeSignature(thingsData);
                 }else{
                     Toast.makeText(getContext(),"필수정보를 입력해주세요",Toast.LENGTH_SHORT).show();

@@ -52,8 +52,7 @@
         <activity
             android:name=".Intro.IntroActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".ProfileActivity"
             android:screenOrientation="portrait"
@@ -74,8 +73,8 @@
         <activity
             android:name=".BorrowThings.LendThingsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".Group.AddGroupActivity"></activity>
     </application>
 
 </manifest>

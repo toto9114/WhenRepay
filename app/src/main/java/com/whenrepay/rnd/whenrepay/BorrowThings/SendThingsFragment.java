@@ -13,6 +13,7 @@ import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +25,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.whenrepay.rnd.whenrepay.BorrowMoney.BorrowerData;
 import com.whenrepay.rnd.whenrepay.Manager.DBContants;
+import com.whenrepay.rnd.whenrepay.Manager.DataManager;
 import com.whenrepay.rnd.whenrepay.MyProfile;
 import com.whenrepay.rnd.whenrepay.R;
+import com.whenrepay.rnd.whenrepay.TransactionData;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -85,6 +88,12 @@ public class SendThingsFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                Log.i("SendThings", "name:" + thingsData.borrowerName + "things:" + thingsData.thingsName + "\ndate:" + thingsData.date + "memo" + thingsData.memo);
+                DataManager.getInstance().insertContractThings(thingsData);
+                for(TransactionData data : DataManager.getInstance().getContractThingsList()){
+                    ThingsData thingsData = (ThingsData)data;
+                    Log.i("SendThings", "name:" + thingsData.borrowerName + " things:" + thingsData.thingsName + "\ndate:" + thingsData.date + " memo:" + thingsData.memo);
+                }
                 if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED) {
                     if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
