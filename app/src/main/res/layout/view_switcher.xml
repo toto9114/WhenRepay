@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ViewSwitcher
+        android:id="@+id/view_switcher_contact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView10">
+
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginBottom="32dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="연락처에서" />
+
+            <Button
+                android:id="@+id/btn_directly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="직접입력" />
+        </LinearLayout>
+
+        <com.whenrepay.rnd.whenrepay.BorrowMoney.PersonView
+            android:id="@+id/person"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></com.whenrepay.rnd.whenrepay.BorrowMoney.PersonView>
+    </ViewSwitcher>
+</RelativeLayout>

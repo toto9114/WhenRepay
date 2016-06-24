@@ -20,6 +20,6 @@ public class GroupViewHolder extends RecyclerView.ViewHolder{
 
     public void setData(GroupData data){
         titleView.setText(data.title);
-        numberView.setText(""+data.people.size());
+        numberView.setText(""+data.personList.size());
     }
 }

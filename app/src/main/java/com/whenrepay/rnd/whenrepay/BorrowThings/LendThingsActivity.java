@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.whenrepay.rnd.whenrepay.BorrowMoney.BorrowerData;
 import com.whenrepay.rnd.whenrepay.BorrowMoney.OnKeyBackPressedListener;
@@ -29,7 +30,7 @@ public class LendThingsActivity extends AppCompatActivity {
         }
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .setCustomAnimations(R.anim.slide_left_in, R.anim.slide_left_out, R.anim.slide_right_out, R.anim.slide_right_in)
+                    .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
                     .addToBackStack(null)
                     .add(R.id.container, new ContractThingsFragment())
                     .commit();
@@ -41,7 +42,7 @@ public class LendThingsActivity extends AppCompatActivity {
         args.putSerializable(SignatureThingsFragment.EXTRA_THINGS_DATA,data);
         f.setArguments(args);
         getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.slide_left_in, R.anim.slide_left_out,R.anim.slide_right_out,R.anim.slide_right_in)
+                .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,R.anim.slide_left_in,R.anim.slide_right_out)
                 .replace(R.id.container, f)
                 .addToBackStack(null)
                 .commit();
@@ -54,7 +55,7 @@ public class LendThingsActivity extends AppCompatActivity {
         args.putSerializable(SendThingsFragment.EXTRA_BORROWER_DATA,data);
         f.setArguments(args);
         getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.slide_left_in, R.anim.slide_left_out,R.anim.slide_right_out,R.anim.slide_right_in)
+                .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,R.anim.slide_left_in,R.anim.slide_right_out)
                 .replace(R.id.container, f)
                 .addToBackStack(null)
                 .commit();
@@ -62,7 +63,7 @@ public class LendThingsActivity extends AppCompatActivity {
     protected void changeSuccess() {
 
         getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.slide_left_in, R.anim.slide_left_out,R.anim.slide_right_out,R.anim.slide_right_in)
+                .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,R.anim.slide_left_in,R.anim.slide_right_out)
                 .replace(R.id.container, new SuccessFragment())
                 .commit();
         getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -81,5 +82,25 @@ public class LendThingsActivity extends AppCompatActivity {
         }else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            if(getSupportFragmentManager().getBackStackEntryCount()>1) {
+                getSupportFragmentManager().popBackStack();
+            }else{
+                finish();
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_left_in_background, R.anim.slide_right_out);
     }
 }

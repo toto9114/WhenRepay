@@ -28,7 +28,7 @@ public class PersonView extends FrameLayout{
             @Override
             public void onClick(View v) {
                 if(onDelButtonClickListener != null){
-                    onDelButtonClickListener.onDelButtonClick(v);
+                    onDelButtonClickListener.onDelButtonClick(v,0);
                 }
             }
         });

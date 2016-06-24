@@ -7,5 +7,5 @@ import java.util.List;
  */
 public class GroupData {
     String title;
-    List<PersonData> people;
+    List<PersonData> personList;
 }
