@@ -132,6 +132,8 @@ public class ContractThingsFragment extends Fragment {
                     String path = c.getString(c.getColumnIndex(MediaStore.Images.Media.DATA));
                     c.close();
                     thingsData.pictureUri = selectedImageUri.toString();
+                    cameraView.setVisibility(View.GONE);
+                    galleryView.setVisibility(View.GONE);
                     Glide.with(getContext()).load(selectedImageUri).into(pictureView);
                 }
                 break;
@@ -146,6 +148,8 @@ public class ContractThingsFragment extends Fragment {
                     String path = c.getString(c.getColumnIndex(MediaStore.Images.Media.DATA));
                     c.close();
                     thingsData.pictureUri = selectedImageUri.toString();
+                    cameraView.setVisibility(View.GONE);
+                    galleryView.setVisibility(View.GONE);
                     Glide.with(getContext()).load(selectedImageUri).into(pictureView);
                 }
                 break;

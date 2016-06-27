@@ -48,8 +48,7 @@ public class MySignFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager()
-                        .popBackStack();
+                paint.undoAll();
             }
         });
         btn = (Button) view.findViewById(R.id.btn_done);

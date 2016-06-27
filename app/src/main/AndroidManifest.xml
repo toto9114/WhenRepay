@@ -75,9 +75,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Group.AddGroupActivity" />
-        <activity android:name=".DutchPay.DutchPayActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
+        <activity
+            android:name=".DutchPay.DutchPayActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Transactions.IOUActivity"></activity>
     </application>
 
 </manifest>

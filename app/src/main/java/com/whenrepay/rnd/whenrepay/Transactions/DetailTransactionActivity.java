@@ -1,6 +1,8 @@
 package com.whenrepay.rnd.whenrepay.Transactions;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -65,6 +67,9 @@ public class DetailTransactionActivity extends AppCompatActivity implements Tran
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent i =new Intent(DetailTransactionActivity.this, IOUActivity.class);
+                i.putExtra(IOUActivity.EXTRA_ACCOUNT_DATA,accountData);
+                startActivity(i);
 
             }
         });
@@ -118,12 +123,15 @@ public class DetailTransactionActivity extends AppCompatActivity implements Tran
         } else {
             remainPrice = accountData.money;
         }
-        totalView.setText(""+accountData.money);
+        totalView.setText("" + accountData.money);
         nameView.setText(accountData.name);
         dateView.setText(accountData.date);
-
     }
 
+    public Bitmap byteArrayToBitmap(byte[] $byteArray) {
+        Bitmap bitmap = BitmapFactory.decodeByteArray($byteArray, 0, $byteArray.length);
+        return bitmap;
+    }
 
     @Override
     public void onButtonClick(int type, int price) {  //금액 입력 다이얼로그로부터 받는 값

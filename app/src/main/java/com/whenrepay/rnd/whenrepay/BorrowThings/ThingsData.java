@@ -15,6 +15,7 @@ public class ThingsData implements Serializable, TransactionData {
     public String memo;
     public String date;
     public String pictureUri;
+    public byte[] sign;
 
     @Override
     public String getDate() {
