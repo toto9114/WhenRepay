@@ -16,6 +16,7 @@ import com.whenrepay.rnd.whenrepay.AccountData;
 import com.whenrepay.rnd.whenrepay.Manager.DataManager;
 import com.whenrepay.rnd.whenrepay.R;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -123,7 +124,8 @@ public class DetailTransactionActivity extends AppCompatActivity implements Tran
         } else {
             remainPrice = accountData.money;
         }
-        totalView.setText("" + accountData.money);
+        NumberFormat nf= NumberFormat.getInstance();
+        totalView.setText(nf.format(accountData.money));
         nameView.setText(accountData.name);
         dateView.setText(accountData.date);
     }

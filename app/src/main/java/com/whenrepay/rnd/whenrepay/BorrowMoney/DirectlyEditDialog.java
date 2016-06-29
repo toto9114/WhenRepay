@@ -22,6 +22,11 @@ public class DirectlyEditDialog extends DialogFragment {
         // Required empty public constructor
     }
 
+    private OnButtonClickListener buttonClickListener;
+    public void setOnButtonClickListener(OnButtonClickListener listener){
+        buttonClickListener = listener;
+    }
+
     EditText nameView, phoneView;
 
     @Override
@@ -36,14 +41,17 @@ public class DirectlyEditDialog extends DialogFragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                dismiss();
             }
         });
         btn = (Button)view.findViewById(R.id.btn_ok);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(buttonClickListener!=null){
+                    buttonClickListener.OnButtonClick(nameView.getText().toString(),phoneView.getText().toString());
+                }
+                dismiss();
             }
         });
 

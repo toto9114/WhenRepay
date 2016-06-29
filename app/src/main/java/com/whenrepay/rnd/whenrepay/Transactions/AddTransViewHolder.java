@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import com.whenrepay.rnd.whenrepay.R;
 
+import java.text.NumberFormat;
+
 /**
  * Created by RND on 2016-06-16.
  */
@@ -21,9 +23,10 @@ public class AddTransViewHolder extends RecyclerView.ViewHolder{
 
     DetailTransData data;
     public void setData(DetailTransData data){
+        NumberFormat nf = NumberFormat.getInstance();
         this.data = data;
         dateView.setText(data.date);
-        transView.setText(""+data.repay);
-        remainView.setText(""+data.remain);
+        transView.setText(nf.format(data.repay));
+        remainView.setText(nf.format(data.remain));
     }
 }

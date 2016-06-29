@@ -12,4 +12,5 @@ public class DutchPayData implements Serializable{
     int totalPrice;
     String date;
     List<PersonData> personList;
+    List<EventData> eventList;
 }

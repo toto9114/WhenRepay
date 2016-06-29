@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.whenrepay.rnd.whenrepay.BorrowMoney.SuccessFragment;
 import com.whenrepay.rnd.whenrepay.R;
 
 public class DutchPayActivity extends AppCompatActivity {
@@ -36,7 +37,7 @@ public class DutchPayActivity extends AppCompatActivity {
     public void changeEditMoney(DutchPayData data){
         EditMoneyFragment f= new EditMoneyFragment();
         Bundle args = new Bundle();
-        args.putSerializable(EditMoneyFragment.EXTRA_DUTCH_DATA,data);
+        args.putSerializable(EditMoneyFragment.EXTRA_DUTCH_DATA, data);
         f.setArguments(args);
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
@@ -45,12 +46,21 @@ public class DutchPayActivity extends AppCompatActivity {
                 .commit();
     }
 
-    public void changeSend(){
+    public void changeSend(DutchPayData data){
         SendDutchFragment f= new SendDutchFragment();
-
+        Bundle args = new Bundle();
+        args.putSerializable(SendDutchFragment.EXTRA_DUTCH_DATA,data);
+        f.setArguments(args);
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
                 .replace(R.id.container, f)
+                .addToBackStack(null)
+                .commit();
+    }
+    public void changeSuccess(){
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
+                .replace(R.id.container, new SuccessFragment())
                 .addToBackStack(null)
                 .commit();
     }
