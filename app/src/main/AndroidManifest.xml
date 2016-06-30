@@ -69,7 +69,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".Transactions.DetailTransactionActivity" />
+        <activity android:name=".Transactions.DetailMoneyTransactionActivity" />
         <activity
             android:name=".BorrowThings.LendThingsActivity"
             android:screenOrientation="portrait"
@@ -78,7 +78,9 @@
         <activity
             android:name=".DutchPay.DutchPayActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Transactions.IOUActivity"></activity>
+        <activity android:name=".Transactions.IOUActivity" />
+        <activity android:name=".Transactions.DetailThingsTransactionActivity" />
+        <activity android:name=".Main.SettingActivity"></activity>
     </application>
 
 </manifest>

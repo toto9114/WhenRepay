@@ -1,7 +1,5 @@
 package com.whenrepay.rnd.whenrepay.DutchPay;
 
-import com.whenrepay.rnd.whenrepay.Group.PersonData;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -10,5 +8,5 @@ import java.util.List;
  */
 public class EventData implements Serializable{
     int money;
-    List<PersonData> people;
+    List<DutchPersonData> people;
 }

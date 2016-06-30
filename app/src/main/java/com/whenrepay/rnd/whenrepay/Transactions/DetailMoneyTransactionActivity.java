@@ -23,7 +23,7 @@ import java.util.Date;
 import cn.iwgang.familiarrecyclerview.FamiliarRecyclerView;
 import jp.wasabeef.recyclerview.animators.FadeInDownAnimator;
 
-public class DetailTransactionActivity extends AppCompatActivity implements TransactionDialog.OnEditButtonClickListener {
+public class DetailMoneyTransactionActivity extends AppCompatActivity implements TransactionDialog.OnEditButtonClickListener {
 
     public static final String EXTRA_ACCOUNT_DATA = "account";
 
@@ -68,7 +68,7 @@ public class DetailTransactionActivity extends AppCompatActivity implements Tran
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i =new Intent(DetailTransactionActivity.this, IOUActivity.class);
+                Intent i =new Intent(DetailMoneyTransactionActivity.this, IOUActivity.class);
                 i.putExtra(IOUActivity.EXTRA_ACCOUNT_DATA,accountData);
                 startActivity(i);
 
@@ -92,7 +92,7 @@ public class DetailTransactionActivity extends AppCompatActivity implements Tran
                     dialog.setArguments(args);
                     dialog.show(getSupportFragmentManager(), null);
                 } else {
-                    Toast.makeText(DetailTransactionActivity.this, "이미 상환되었습니다", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailMoneyTransactionActivity.this, "이미 상환되었습니다", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -103,7 +103,7 @@ public class DetailTransactionActivity extends AppCompatActivity implements Tran
                 if (remainPrice > 0) {
                     complete();
                 } else {
-                    Toast.makeText(DetailTransactionActivity.this, "이미 상환되었습니다", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailMoneyTransactionActivity.this, "이미 상환되었습니다", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -35,13 +35,13 @@ public class DetailTransactionAdapter extends RecyclerView.Adapter {
         DetailTransData data = items.get(position);
         switch (data.type) {
             case DataManager.TRANSACTION_ADD:
-                return DetailTransactionActivity.TYPE_ADD;
+                return DetailMoneyTransactionActivity.TYPE_ADD;
 
             case DataManager.TRANSACTION_SUB:
-                return DetailTransactionActivity.TYPE_SUB;
+                return DetailMoneyTransactionActivity.TYPE_SUB;
 
             case DataManager.TRANSACTION_COMPLETE:
-                return DetailTransactionActivity.TYPE_COMPLETE;
+                return DetailMoneyTransactionActivity.TYPE_COMPLETE;
         }
         return super.getItemViewType(position);
     }

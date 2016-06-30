@@ -4,6 +4,8 @@ package com.whenrepay.rnd.whenrepay.BorrowThings;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -24,6 +26,8 @@ import android.widget.ViewSwitcher;
 import com.bumptech.glide.Glide;
 import com.whenrepay.rnd.whenrepay.BorrowMoney.PersonView;
 import com.whenrepay.rnd.whenrepay.R;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -98,6 +102,11 @@ public class ContractThingsFragment extends Fragment {
                 if(!TextUtils.isEmpty(thingsData.borrowerName) || !TextUtils.isEmpty(nameView.getText().toString())) {
                     thingsData.thingsName = nameView.getText().toString();
                     thingsData.memo = memoView.getText().toString();
+                    Bitmap bitmap = getViewBitmap(pictureView);
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    byte[] byteArray = stream.toByteArray();
+                    thingsData.picture = byteArray;
                     ((LendThingsActivity) getActivity()).changeSignature(thingsData);
                 }else{
                     Toast.makeText(getContext(),"필수정보를 입력해주세요",Toast.LENGTH_SHORT).show();
@@ -167,5 +176,24 @@ public class ContractThingsFragment extends Fragment {
                 }
                 break;
         }
+    }
+    private Bitmap getViewBitmap(View v) {
+        v.clearFocus();
+        v.setPressed(false);
+        boolean willNotCache = v.willNotCacheDrawing();
+        v.setWillNotCacheDrawing(false);
+        int color = v.getDrawingCacheBackgroundColor();
+        v.setDrawingCacheBackgroundColor(Color.TRANSPARENT);
+        if (color != Color.TRANSPARENT) {
+            v.destroyDrawingCache();
+        }
+        v.buildDrawingCache();
+        Bitmap cacheBitmap = v.getDrawingCache();
+        Bitmap bitmap = Bitmap.createBitmap(cacheBitmap);
+        v.destroyDrawingCache();
+        v.setWillNotCacheDrawing(willNotCache);
+        v.setDrawingCacheBackgroundColor(color);
+
+        return bitmap;
     }
 }

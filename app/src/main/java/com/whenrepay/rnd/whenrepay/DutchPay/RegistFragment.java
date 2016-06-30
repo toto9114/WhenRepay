@@ -21,7 +21,9 @@ import com.whenrepay.rnd.whenrepay.BorrowMoney.OnDelButtonClickListener;
 import com.whenrepay.rnd.whenrepay.Group.PersonData;
 import com.whenrepay.rnd.whenrepay.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import cn.iwgang.familiarrecyclerview.FamiliarRecyclerView;
@@ -81,7 +83,10 @@ public class RegistFragment extends Fragment {
                     personDataList.add(mAdapter.getItem(i));
                 }
                 DutchPayData data = new DutchPayData();
-                data.personList = personDataList;
+                data.personList = personDataList; //참석 인원 리스트
+                Date date = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+                data.date = sdf.format(date);  //더치페이 날짜
                 ((DutchPayActivity) getActivity()).changeEditMoney(data);
             }
         });

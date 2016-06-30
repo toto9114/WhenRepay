@@ -35,9 +35,9 @@ public class DutchPayActivity extends AppCompatActivity {
     }
 
     public void changeEditMoney(DutchPayData data){
-        EditMoneyFragment f= new EditMoneyFragment();
+        EditEventFragment f= new EditEventFragment();
         Bundle args = new Bundle();
-        args.putSerializable(EditMoneyFragment.EXTRA_DUTCH_DATA, data);
+        args.putSerializable(EditEventFragment.EXTRA_DUTCH_DATA, data);
         f.setArguments(args);
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
