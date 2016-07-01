@@ -68,8 +68,8 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i =new Intent(DetailMoneyTransactionActivity.this, IOUActivity.class);
-                i.putExtra(IOUActivity.EXTRA_ACCOUNT_DATA,accountData);
+                Intent i = new Intent(DetailMoneyTransactionActivity.this, IOUActivity.class);
+                i.putExtra(IOUActivity.EXTRA_ACCOUNT_DATA, accountData);
                 startActivity(i);
 
             }
@@ -79,7 +79,14 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addTrans();
+                if (remainPrice > 0) {
+                    Bundle args = new Bundle();
+                    args.putInt(TransactionDialog.EXTRA_TYPE, TYPE_ADD);
+                    dialog.setArguments(args);
+                    dialog.show(getSupportFragmentManager(), null);
+                } else {
+                    Toast.makeText(DetailMoneyTransactionActivity.this, "이미 상환되었습니다", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         btn = (Button) findViewById(R.id.btn_sub);
@@ -124,7 +131,7 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
         } else {
             remainPrice = accountData.money;
         }
-        NumberFormat nf= NumberFormat.getInstance();
+        NumberFormat nf = NumberFormat.getInstance();
         totalView.setText(nf.format(accountData.money));
         nameView.setText(accountData.name);
         dateView.setText(accountData.date);
@@ -139,7 +146,7 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
     public void onButtonClick(int type, int price) {  //금액 입력 다이얼로그로부터 받는 값
         switch (type) {
             case TYPE_ADD:
-                addTrans();
+                addTrans(price);
                 break;
             case TYPE_SUB:
                 subTrans(price);
@@ -151,9 +158,19 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
     public static final int TYPE_SUB = 1;   //금액차감
     public static final int TYPE_COMPLETE = 2;  //완전상환
 
-    public void addTrans() {
+    public void addTrans(int price) {
         DetailTransData data = new DetailTransData();
+        if (DataManager.getInstance().getTransactionList(accountData._id).size() > 0) {
+            remainPrice = mAdapter.getLastItem().remain;
+        }
         data.type = TYPE_ADD;
+        data.repay = price;
+        data.remain = remainPrice + price;
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("MM월 dd일");
+        data.date = sdf.format(date);
+        DataManager.getInstance().insertTransaction(accountData._id,data.repay,data.remain,data.type,data.date);
+        mAdapter.add(data);
 //        mAdapter.add(data);
     }
 
@@ -176,7 +193,7 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
                 complete();
             }
         } else {
-            Toast.makeText(this, "전액 상환되었습니다", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "잔여금보다 액수가 많습니다", Toast.LENGTH_SHORT).show();
         }
     }
 

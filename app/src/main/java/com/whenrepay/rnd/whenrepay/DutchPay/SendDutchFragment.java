@@ -141,11 +141,11 @@ public class SendDutchFragment extends Fragment {
         totalView.setText("" + dutchPayData.totalPrice);
         accountView.setText(mRealm.where(MyProfile.class).findFirst().getName() + " " + mRealm.where(MyProfile.class).findFirst().getAccount());
 //        mAdapter.addAll(dutchPayData.personList);
-//        DutchListData result = n
+//        DutchResultData result = n
 //        for(int i = 0 ; i < dutchPayData.eventList.size() ; i++){
 //            EventData eventData = dutchPayData.eventList.get(i);
 //            for(int j = 0 ; j< eventData.people.size() ; j++){
-//                DutchListData personal = new DutchListData();
+//                DutchResultData personal = new DutchResultData();
 //                personal.name = person.name;
 //                if(person.attended){
 //                    personal.attendList.add(i);
@@ -153,12 +153,13 @@ public class SendDutchFragment extends Fragment {
 //            }
 //        }
         for(int i = 0 ; i< dutchPayData.personList.size() ; i++){
-            DutchListData data = new DutchListData();
+            DutchResultData data = new DutchResultData();
             data.name = dutchPayData.personList.get(i).name;
             data.attendList = new ArrayList<>();
             for(int j = 0 ; j<dutchPayData.eventList.size() ; j++){
                 if(dutchPayData.eventList.get(j).people.get(i).attended){
                     data.attendList.add(j);
+                    data.money += dutchPayData.eventList.get(j).people.get(i).dutchMoney;
                 }
             }
             mAdapter.add(data);

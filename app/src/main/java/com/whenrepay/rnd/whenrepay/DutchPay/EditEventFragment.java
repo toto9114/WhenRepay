@@ -3,6 +3,7 @@ package com.whenrepay.rnd.whenrepay.DutchPay;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,6 @@ public class EditEventFragment extends Fragment {
 
     FlowLayout mFlowLayout;
     EventView eventView;
-    int index = 1;
     List<EventData> eventList = new ArrayList<>();
 
     @Override
@@ -54,6 +54,9 @@ public class EditEventFragment extends Fragment {
                 eventList.add(eventView.getData());
                 for (EventData data : eventList) {
                     dutchPayData.totalPrice += data.money;
+                    for(DutchPersonData personData : data.people){
+                        Log.i("pay",""+personData.dutchMoney);
+                    }
                 }
                 dutchPayData.eventList = eventList;
                 ((DutchPayActivity) getActivity()).changeSend(dutchPayData);
@@ -77,6 +80,4 @@ public class EditEventFragment extends Fragment {
         eventView = new EventView(getContext(), dutchPayData.personList);
         mFlowLayout.addView(eventView);
     }
-
-
 }

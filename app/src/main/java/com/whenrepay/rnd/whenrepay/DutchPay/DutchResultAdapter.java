@@ -11,9 +11,9 @@ import java.util.List;
  * Created by RND on 2016-06-30.
  */
 public class DutchResultAdapter extends BaseAdapter {
-    List<DutchListData> items = new ArrayList<>();
+    List<DutchResultData> items = new ArrayList<>();
 
-    public void add(DutchListData data){
+    public void add(DutchResultData data){
         items.add(data);
         notifyDataSetChanged();
     }

@@ -64,6 +64,4 @@ private OnFilterItemClickListener itemClickListener;
 
         setContentView(view);
     }
-
-
 }

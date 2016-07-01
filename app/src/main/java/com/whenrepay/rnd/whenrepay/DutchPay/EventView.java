@@ -59,8 +59,22 @@ public class EventView extends FrameLayout {
 
     public EventData getData() {
         EventData data = new EventData();
+        int count = 0;
+        for(DutchPersonData personData : personList){
+            if(personData.attended){
+                count++;
+            }
+        }
         if (!TextUtils.isEmpty(editMoney.getText().toString())) {
             data.money = Integer.parseInt(editMoney.getText().toString());
+            for(int i = 0 ; i < personList.size() ; i++){
+                if(personList.get(i).attended){
+                    personList.get(i).dutchMoney = data.money/count;
+                }else{
+                    personList.get(i).dutchMoney = 0;
+                }
+            }
+
         } else {
             data.money = 0;
         }
