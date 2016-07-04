@@ -34,7 +34,7 @@ public class DirectlyEditDialog extends DialogFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_directly_edit_dialog, container, false);
-        nameView = (EditText) view.findViewById(R.id.edit_name);
+        nameView = (EditText) view.findViewById(R.id.text_name);
         phoneView = (EditText) view.findViewById(R.id.edit_phone);
 
         Button btn = (Button)view.findViewById(R.id.btn_cancel);

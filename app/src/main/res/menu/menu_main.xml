@@ -3,15 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".Main.MainActivity">
     <item
-        android:id="@+id/search"
+        android:id="@+id/setting"
         android:orderInCategory="100"
         android:title="@string/action_search"
-        android:icon="@android:drawable/ic_menu_search"
+        android:icon="@drawable/ic_settings_white"
         app:showAsAction="always" />
-    <item
-        android:id="@+id/calculator"
-        android:orderInCategory="200"
-        android:title="@string/action_calculate"
-        android:icon="@android:drawable/ic_dialog_dialer"
-        app:showAsAction="always"/>
 </menu>

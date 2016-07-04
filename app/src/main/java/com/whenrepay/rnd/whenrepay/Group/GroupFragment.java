@@ -1,6 +1,7 @@
 package com.whenrepay.rnd.whenrepay.Group;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -54,6 +55,7 @@ public class GroupFragment extends Fragment {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(getContext(),AddGroupActivity.class));
                 Toast.makeText(getContext(),"add",Toast.LENGTH_SHORT).show();
                 menu.collapse();
             }

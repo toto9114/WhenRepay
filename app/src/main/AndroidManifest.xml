@@ -55,12 +55,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".BorrowMoney.ContractActivity"
+            android:name=".Group.ContractActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name="com.google.android.gms.ads.AdActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-            android:theme="@android:style/Theme.Translucent" />
         <activity
             android:name=".BorrowMoney.LendMoneyActivity"
             android:screenOrientation="portrait"
@@ -71,13 +67,17 @@
             android:name=".BorrowThings.LendThingsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Group.AddGroupActivity" />
+        <activity android:name=".Group.AddGroupActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".DutchPay.DutchPayActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Transactions.IOUActivity" />
         <activity android:name=".Transactions.DetailThingsTransactionActivity" />
-        <activity android:name=".Main.SettingActivity"></activity>
+        <activity android:name=".Main.SettingActivity" />
+        <activity android:name=".OverDue.OverDueActivity" />
+        <activity android:name=".Group.GroupManageActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

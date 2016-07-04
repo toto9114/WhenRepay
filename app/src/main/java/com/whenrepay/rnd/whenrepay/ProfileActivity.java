@@ -34,7 +34,7 @@ public class ProfileActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         profileView = (ImageView)findViewById(R.id.image_profile);
-        nameView = (EditText)findViewById(R.id.edit_name);
+        nameView = (EditText)findViewById(R.id.text_name);
         phoneView = (EditText)findViewById(R.id.edit_phone);
         spinner = (Spinner)findViewById(R.id.spinner);
         mAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item);

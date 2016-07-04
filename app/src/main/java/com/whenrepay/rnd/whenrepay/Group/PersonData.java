@@ -9,6 +9,7 @@ public class PersonData implements Serializable{
     public String name;
     public String phone;
 
+    public boolean isPay;
     @Override
     public String toString() {
         return name;

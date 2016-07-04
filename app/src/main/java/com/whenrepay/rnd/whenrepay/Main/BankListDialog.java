@@ -1,4 +1,4 @@
-package com.whenrepay.rnd.whenrepay.Intro;
+package com.whenrepay.rnd.whenrepay.Main;
 
 
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.whenrepay.rnd.whenrepay.Intro.OnItemClickListener;
 import com.whenrepay.rnd.whenrepay.R;
 
 /**

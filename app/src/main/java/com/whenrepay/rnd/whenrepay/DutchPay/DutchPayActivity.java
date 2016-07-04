@@ -21,11 +21,11 @@ public class DutchPayActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("더치페이하기");
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-            getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.colorPrimaryDark));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         }
 
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
                     .add(R.id.container, new RegistFragment())
@@ -34,8 +34,8 @@ public class DutchPayActivity extends AppCompatActivity {
         }
     }
 
-    public void changeEditMoney(DutchPayData data){
-        EditEventFragment f= new EditEventFragment();
+    public void changeEditMoney(DutchPayData data) {
+        EditEventFragment f = new EditEventFragment();
         Bundle args = new Bundle();
         args.putSerializable(EditEventFragment.EXTRA_DUTCH_DATA, data);
         f.setArguments(args);
@@ -46,10 +46,10 @@ public class DutchPayActivity extends AppCompatActivity {
                 .commit();
     }
 
-    public void changeSend(DutchPayData data){
-        SendDutchFragment f= new SendDutchFragment();
+    public void changeSend(DutchPayData data) {
+        SendDutchFragment f = new SendDutchFragment();
         Bundle args = new Bundle();
-        args.putSerializable(SendDutchFragment.EXTRA_DUTCH_DATA,data);
+        args.putSerializable(SendDutchFragment.EXTRA_DUTCH_DATA, data);
         f.setArguments(args);
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
@@ -57,7 +57,8 @@ public class DutchPayActivity extends AppCompatActivity {
                 .addToBackStack(null)
                 .commit();
     }
-    public void changeSuccess(){
+
+    public void changeSuccess() {
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
                 .replace(R.id.container, new SuccessFragment())
@@ -69,19 +70,13 @@ public class DutchPayActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            if(getSupportFragmentManager().getBackStackEntryCount()>1) {
+            if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
                 getSupportFragmentManager().popBackStack();
-            }else{
+            } else {
                 finish();
             }
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-        overridePendingTransition(R.anim.slide_left_in_background, R.anim.slide_right_out);
     }
 }
