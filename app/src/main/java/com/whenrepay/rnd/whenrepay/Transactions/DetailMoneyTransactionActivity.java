@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.whenrepay.rnd.whenrepay.AccountData;
+import com.whenrepay.rnd.whenrepay.BorrowMoney.AccountData;
 import com.whenrepay.rnd.whenrepay.Manager.DataManager;
 import com.whenrepay.rnd.whenrepay.R;
 

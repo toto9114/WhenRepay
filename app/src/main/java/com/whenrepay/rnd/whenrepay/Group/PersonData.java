@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class PersonData implements Serializable{
     public String name;
     public String phone;
-
+    public int money;
     public boolean isPay;
     @Override
     public String toString() {

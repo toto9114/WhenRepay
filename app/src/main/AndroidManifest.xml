@@ -67,8 +67,9 @@
             android:name=".BorrowThings.LendThingsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Group.AddGroupActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".Group.AddGroupActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".DutchPay.DutchPayActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -76,8 +77,10 @@
         <activity android:name=".Transactions.DetailThingsTransactionActivity" />
         <activity android:name=".Main.SettingActivity" />
         <activity android:name=".OverDue.OverDueActivity" />
-        <activity android:name=".Group.GroupManageActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Group.GroupManageActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Main.EditInfoActivity"></activity>
     </application>
 
 </manifest>

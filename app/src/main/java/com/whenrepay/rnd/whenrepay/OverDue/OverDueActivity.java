@@ -8,7 +8,7 @@ import android.support.v7.widget.OrientationHelper;
 import android.view.View;
 import android.widget.Toast;
 
-import com.whenrepay.rnd.whenrepay.AccountData;
+import com.whenrepay.rnd.whenrepay.BorrowMoney.AccountData;
 import com.whenrepay.rnd.whenrepay.Manager.DataManager;
 import com.whenrepay.rnd.whenrepay.R;
 import com.whenrepay.rnd.whenrepay.TransactionData;

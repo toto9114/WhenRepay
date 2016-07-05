@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.whenrepay.rnd.whenrepay.AccountData;
+import com.whenrepay.rnd.whenrepay.BorrowMoney.AccountData;
 import com.whenrepay.rnd.whenrepay.BorrowThings.ThingsData;
 import com.whenrepay.rnd.whenrepay.R;
 import com.whenrepay.rnd.whenrepay.TransactionData;

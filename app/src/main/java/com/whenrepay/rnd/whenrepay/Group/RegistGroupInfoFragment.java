@@ -80,7 +80,7 @@ public class RegistGroupInfoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 groupData.groupName = titleView.getText().toString();
-                ((AddGroupActivity)getActivity()).changePayment();
+                ((AddGroupActivity)getActivity()).changePayment(groupData);
             }
         });
         return view;
@@ -90,10 +90,12 @@ public class RegistGroupInfoFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mAdapter.clear();
-        groupData.personList = ((GroupData) data.getSerializableExtra(EXTRA_RESULT)).personList;
-        for (PersonData personData : groupData.personList) {
-            mAdapter.add(personData);
+        if(data != null) {
+            mAdapter.clear();
+            groupData.personList = ((GroupData) data.getSerializableExtra(EXTRA_RESULT)).personList;
+            for (PersonData personData : groupData.personList) {
+                mAdapter.add(personData);
+            }
         }
     }
 }
