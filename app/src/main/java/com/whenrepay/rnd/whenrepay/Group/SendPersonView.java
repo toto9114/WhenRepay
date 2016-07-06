@@ -20,7 +20,7 @@ public class SendPersonView extends FrameLayout {
     }
 
     public void setData(PersonData data){
-        nameView.setText(data.name);
-        moneyView.setText(""+data.money);
+        nameView.setText(data.getName());
+        moneyView.setText(""+data.getMoney());
     }
 }

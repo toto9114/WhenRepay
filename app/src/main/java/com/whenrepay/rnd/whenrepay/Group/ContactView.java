@@ -11,11 +11,6 @@ import com.whenrepay.rnd.whenrepay.R;
  */
 public class ContactView extends FrameLayout {
 
-    OnItemCheckedListener itemCheckedListener;
-    public void setOnItemCheckedListener(OnItemCheckedListener listener){
-        itemCheckedListener = listener;
-    }
-
     CheckBox nameView;
     public ContactView(Context context) {
         super(context);
@@ -29,12 +24,11 @@ public class ContactView extends FrameLayout {
 //                }
 //            }
 //        });
-
     }
 
     PersonData data;
     public void setData(PersonData data){
         this.data = data;
-        nameView.setText(data.name);
+        nameView.setText(data.getName());
     }
 }

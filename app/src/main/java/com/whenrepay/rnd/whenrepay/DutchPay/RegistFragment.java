@@ -127,8 +127,8 @@ public class RegistFragment extends Fragment {
             String name = cursor.getString(0);
             String phone = cursor.getString(1);
             PersonData personData = new PersonData();
-            personData.name = name;
-            personData.phone = phone;
+            personData.setName(name);
+            personData.setPhone(phone);
             mAdapter.setData(personData);
             mAdapter.add(null);
         }

@@ -64,7 +64,7 @@ public class SwitcherView extends RecyclerView.ViewHolder {
             if(view.getId() == R.id.person){
                 switcher.showNext();
             }
-            person.setName(data.name);
+            person.setName(data.getName());
         }else{
             View view = switcher.getNextView();
             if(view.getId()!=R.id.person){

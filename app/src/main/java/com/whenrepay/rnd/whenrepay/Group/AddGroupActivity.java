@@ -36,9 +36,10 @@ public class AddGroupActivity extends AppCompatActivity {
         }
     }
     public void changePayment(GroupData data){
-        groupData.personList = data.personList;
-        groupData.groupName = data.groupName;
-
+//        groupData.personList = data.personList;
+//        groupData.groupName = data.groupName;
+        groupData.setPersonList(data.getPersonList());
+        groupData.setGroupName(data.getGroupName());
         PaymentSettingFragment f = new PaymentSettingFragment();
         Bundle args = new Bundle();
         args.putSerializable(PaymentSettingFragment.EXTRA_GROUP_DATA, groupData);
@@ -51,9 +52,13 @@ public class AddGroupActivity extends AppCompatActivity {
     }
 
     public void changeSend(GroupData data){
-        groupData.moneyPerPerson = data.moneyPerPerson;
-        groupData.paymentDate = data.paymentDate;
-        groupData.account = data.account;
+//        groupData.moneyPerPerson = data.moneyPerPerson;
+//        groupData.paymentDate = data.paymentDate;
+//        groupData.account = data.account;
+
+        groupData.setMoneyPerPerson(data.getMoneyPerPerson());
+        groupData.setPaymentDate(data.getPaymentDate());
+        groupData.setAccount(data.getAccount());
         SendGroupFragment f = new SendGroupFragment();
         Bundle args = new Bundle();
         args.putSerializable(SendGroupFragment.EXTRA_GROUP_DATA,groupData);

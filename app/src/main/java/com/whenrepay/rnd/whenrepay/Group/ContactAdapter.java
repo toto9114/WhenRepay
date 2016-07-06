@@ -60,7 +60,7 @@ public class ContactAdapter extends BaseAdapter {
         checkBox.setFocusable(false);
         checkBox.setClickable(false);
 
-        checkBox.setText(items.get(position).name);
+        checkBox.setText(items.get(position).getName());
         return view;
     }
 }

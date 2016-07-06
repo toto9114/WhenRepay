@@ -79,8 +79,9 @@ public class RegistGroupInfoFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                groupData.groupName = titleView.getText().toString();
-                ((AddGroupActivity)getActivity()).changePayment(groupData);
+//                groupData.groupName = titleView.getText().toString();
+                groupData.setGroupName(titleView.getText().toString());
+                ((AddGroupActivity) getActivity()).changePayment(groupData);
             }
         });
         return view;
@@ -92,8 +93,9 @@ public class RegistGroupInfoFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if(data != null) {
             mAdapter.clear();
-            groupData.personList = ((GroupData) data.getSerializableExtra(EXTRA_RESULT)).personList;
-            for (PersonData personData : groupData.personList) {
+//            groupData.personList = ((GroupData) data.getSerializableExtra(EXTRA_RESULT)).personList;
+            groupData.setPersonList(((GroupData) data.getSerializableExtra(EXTRA_RESULT)).getPersonList());
+            for (PersonData personData : groupData.getPersonList()) {
                 mAdapter.add(personData);
             }
         }

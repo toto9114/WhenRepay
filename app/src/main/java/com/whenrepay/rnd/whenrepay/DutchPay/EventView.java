@@ -31,11 +31,11 @@ public class EventView extends FrameLayout {
 
         for (int i = 0; i < data.size(); i++) {
             final CheckBox checkBox = new CheckBox(getContext());
-            checkBox.setText(data.get(i).name);
+            checkBox.setText(data.get(i).getName());
             checkBox.setId(i);
             checkBox.setChecked(true);
             DutchPersonData person = new DutchPersonData();
-            person.name = data.get(i).name;
+            person.name = data.get(i).getName();
             person.attended = true;
 
             personList.add(person);

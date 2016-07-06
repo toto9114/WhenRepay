@@ -154,7 +154,7 @@ public class SendDutchFragment extends Fragment {
 //        }
         for(int i = 0 ; i< dutchPayData.personList.size() ; i++){
             DutchResultData data = new DutchResultData();
-            data.name = dutchPayData.personList.get(i).name;
+            data.name = dutchPayData.personList.get(i).getName();
             data.attendList = new ArrayList<>();
             for(int j = 0 ; j<dutchPayData.eventList.size() ; j++){
                 if(dutchPayData.eventList.get(j).people.get(i).attended){

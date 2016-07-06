@@ -13,12 +13,45 @@ import java.util.List;
 /**
  * Created by RND on 2016-06-23.
  */
-public class GroupAdapter extends RecyclerView.Adapter{
+public class GroupAdapter extends RecyclerView.Adapter implements OnItemCheckedListener{
     List<GroupData> items = new ArrayList<>();
     public void add(GroupData data){
         items.add(data);
         notifyDataSetChanged();
     }
+
+    public void addAll(List<GroupData> list){
+        items.addAll(list);
+        notifyDataSetChanged();
+    }
+
+    public void clear(){
+        items.clear();
+        notifyDataSetChanged();
+    }
+
+    public GroupData getItem(int position){
+        return items.get(position);
+    }
+    boolean mCheckBoxStable = false;
+    public void setCheckBoxVisible(boolean isVisible){
+        mCheckBoxStable =isVisible;
+        notifyDataSetChanged();
+    }
+
+
+    OnItemCheckedListener itemCheckedListener;
+    public void setOnItemCheckedListener(OnItemCheckedListener listener){
+        itemCheckedListener = listener;
+    }
+
+    @Override
+    public void OnItemChecked(boolean isChecked, int position) {
+        if(itemCheckedListener!=null){
+            itemCheckedListener.OnItemChecked(isChecked,position);
+        }
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
@@ -28,7 +61,9 @@ public class GroupAdapter extends RecyclerView.Adapter{
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((GroupViewHolder)holder).setData(items.get(position));
+        ((GroupViewHolder)holder).setData(items.get(position),mCheckBoxStable);
+        ((GroupViewHolder)holder).setOnItemCheckedListener(this);
+
     }
 
     @Override
