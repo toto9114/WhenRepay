@@ -39,6 +39,7 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_transaction);
+        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out_background);
 
         Intent i = getIntent();
         accountData = (AccountData) i.getSerializableExtra(EXTRA_ACCOUNT_DATA); //리스트에서 뽑아온 AccountData
@@ -211,5 +212,11 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
         data.date = sdf.format(date);
         DataManager.getInstance().insertTransaction(accountData._id, data.repay, data.remain, data.type, data.date);
         mAdapter.add(data);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_left_in_background, R.anim.slide_right_out);
     }
 }

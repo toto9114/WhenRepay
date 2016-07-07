@@ -25,7 +25,7 @@ public class RegistGroupInfoFragment extends Fragment {
     public RegistGroupInfoFragment() {
         // Required empty public constructor
     }
-
+    public static final int REQUEST_PERSON_LIST = 200;
     EditText titleView;
     RecyclerView recyclerView;
     MemberListAdapter mAdapter;
@@ -63,7 +63,9 @@ public class RegistGroupInfoFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(getContext(), ContractActivity.class), ContractActivity.REQUEST_PERSON_LIST);
+                Intent i = new Intent(getContext(), ContractActivity.class);
+                i.putExtra(ContractActivity.EXTRA_TYPE, ContractActivity.TYPE_GROUP);
+                startActivityForResult(i, REQUEST_PERSON_LIST);
             }
         });
 

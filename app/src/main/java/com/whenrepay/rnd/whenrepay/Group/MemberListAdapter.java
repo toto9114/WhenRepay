@@ -21,6 +21,11 @@ public class MemberListAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
+    public void addAll(List<PersonData> list){
+        items.addAll(list);
+        notifyDataSetChanged();
+    }
+
     public void clear(){
         items.clear();
     }

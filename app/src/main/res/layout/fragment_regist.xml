@@ -37,11 +37,30 @@
         android:layout_alignParentStart="true"
         android:layout_marginLeft="16dp" />
 
+    <LinearLayout
+        android:id="@+id/linear1"
+        android:layout_below="@+id/textView55"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btn_contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="연락처에서"/>
+        <Button
+            android:id="@+id/btn_direct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="직접입력"/>
+    </LinearLayout>
+
     <cn.iwgang.familiarrecyclerview.FamiliarRecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recycler"
-        android:layout_below="@+id/textView55"
+        android:layout_below="@+id/linear1"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_above="@+id/btn_done"

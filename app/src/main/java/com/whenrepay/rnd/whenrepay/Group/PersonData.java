@@ -6,6 +6,8 @@ import java.io.Serializable;
  * Created by RND on 2016-06-23.
  */
 public class PersonData implements Serializable{
+    public static final int INVALID_ID = -1;
+    public int _id = INVALID_ID;
     public int group;
     private String name;
     private String phone;

@@ -1,4 +1,4 @@
-package com.whenrepay.rnd.whenrepay.Group;
+package com.whenrepay.rnd.whenrepay.Group.PaymentManage;
 
 import android.view.View;
 import android.view.ViewGroup;

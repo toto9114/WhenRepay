@@ -20,6 +20,7 @@ public class DetailThingsTransactionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_things_transaction);
+        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out_background);
         Intent i = getIntent();
         thingsData = (ThingsData)i.getSerializableExtra(EXTRA_THINGS_DATA);
         pictureVIew = (ImageView)findViewById(R.id.image_picture);
@@ -29,5 +30,11 @@ public class DetailThingsTransactionActivity extends AppCompatActivity {
     public Bitmap byteArrayToBitmap(byte[] $byteArray) {
         Bitmap bitmap = BitmapFactory.decodeByteArray($byteArray, 0, $byteArray.length);
         return bitmap;
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_left_in_background, R.anim.slide_right_out);
     }
 }

@@ -23,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whenrepay.rnd.whenrepay.Manager.DBContants;
+import com.whenrepay.rnd.whenrepay.Manager.DataManager;
 import com.whenrepay.rnd.whenrepay.MyProfile;
 import com.whenrepay.rnd.whenrepay.R;
 
@@ -30,7 +31,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import io.realm.Realm;
 
@@ -101,6 +104,7 @@ public class SendDutchFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DataManager.getInstance().insertDutchPay(dutchPayData);
                 if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED) {
                     if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
@@ -137,6 +141,12 @@ public class SendDutchFragment extends Fragment {
     Realm mRealm;
 
     private void initData() {
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+        dateView.setText(sdf.format(date));
+        bottomDateView.setText(sdf.format(date));
+        dutchPayData.date = sdf.format(date);
+
         mRealm = Realm.getInstance(getContext());
         totalView.setText("" + dutchPayData.totalPrice);
         accountView.setText(mRealm.where(MyProfile.class).findFirst().getName() + " " + mRealm.where(MyProfile.class).findFirst().getAccount());

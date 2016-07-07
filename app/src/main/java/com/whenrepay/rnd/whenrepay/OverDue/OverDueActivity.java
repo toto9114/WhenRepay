@@ -1,6 +1,5 @@
 package com.whenrepay.rnd.whenrepay.OverDue;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +11,7 @@ import com.whenrepay.rnd.whenrepay.BorrowMoney.AccountData;
 import com.whenrepay.rnd.whenrepay.Manager.DataManager;
 import com.whenrepay.rnd.whenrepay.R;
 import com.whenrepay.rnd.whenrepay.TransactionData;
-import com.whenrepay.rnd.whenrepay.Transactions.IOUActivity;
+import com.whenrepay.rnd.whenrepay.Transactions.IOUDialog;
 import com.whenrepay.rnd.whenrepay.Transactions.TransactionFragment;
 
 import java.text.SimpleDateFormat;
@@ -30,7 +29,7 @@ public class OverDueActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_over_due);
-
+        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out_background);
         recyclerView = (FamiliarRecyclerView)findViewById(R.id.recycler);
         mAdapter = new OverDueAdapter();
         layoutManager = new LinearLayoutManager(this, OrientationHelper.VERTICAL,false);
@@ -42,9 +41,14 @@ public class OverDueActivity extends AppCompatActivity {
             public void onItemClick(FamiliarRecyclerView familiarRecyclerView, View view, int position) {
 //                Toast.makeText(OverDueActivity.this, "" + mAdapter.getItem(position).getPrice(),Toast.LENGTH_SHORT).show();
                 if(mAdapter.getItem(position) instanceof AccountData){
-                    Intent i = new Intent(OverDueActivity.this, IOUActivity.class);
-                    i.putExtra(IOUActivity.EXTRA_ACCOUNT_DATA,(AccountData)mAdapter.getItem(position));
-                    startActivity(i);
+//                    Intent i = new Intent(OverDueActivity.this, IOUActivity.class);
+//                    i.putExtra(IOUActivity.EXTRA_ACCOUNT_DATA,(AccountData)mAdapter.getItem(position));
+//                    startActivity(i);
+                    IOUDialog dialog = new IOUDialog();
+                    Bundle args = new Bundle();
+                    args.putSerializable(IOUDialog.EXTRA_ACCOUNT_DATA, (AccountData) mAdapter.getItem(position));
+                    dialog.setArguments(args);
+                    dialog.show(getSupportFragmentManager(),"dialog");
                 }else{
                     Toast.makeText(OverDueActivity.this,"not yet",Toast.LENGTH_SHORT).show();
                 }
@@ -74,5 +78,11 @@ public class OverDueActivity extends AppCompatActivity {
             }
         }
         mAdapter.sort();
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_left_in_background, R.anim.slide_right_out);
     }
 }

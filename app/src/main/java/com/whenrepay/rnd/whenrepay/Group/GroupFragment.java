@@ -74,12 +74,12 @@ public class GroupFragment extends Fragment {
             }
         });
 
-        Button btn = (Button)view.findViewById(R.id.btn_delete_group);
+        Button btn = (Button) view.findViewById(R.id.btn_delete_group);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for(int i = 0 ; i < checkedList.length; i++){
-                    if(checkedList[i]){
+                for (int i = 0; i < checkedList.length; i++) {
+                    if (checkedList[i]) {
                         DataManager.getInstance().deleteGroup(mAdapter.getItem(i));
                     }
                 }
@@ -97,7 +97,8 @@ public class GroupFragment extends Fragment {
         recyclerView.setOnItemClickListener(new FamiliarRecyclerView.OnItemClickListener() {
             @Override
             public void onItemClick(FamiliarRecyclerView familiarRecyclerView, View view, int position) {
-                Intent i = new Intent(getContext(),GroupManageActivity.class);
+                Intent i = new Intent(getContext(), GroupManageActivity.class);
+                i.putExtra(GroupManageActivity.EXTRA_GROUP_ID, mAdapter.getItem(position)._id);
                 startActivity(i);
             }
         });
@@ -111,14 +112,15 @@ public class GroupFragment extends Fragment {
     }
 
     boolean[] checkedList;
+
     private void initData() {
         mAdapter.clear();
-        if(DataManager.getInstance().getGroupList().size()>0) {
+        if (DataManager.getInstance().getGroupList().size() > 0) {
             mAdapter.addAll(DataManager.getInstance().getGroupList());
             checkedList = new boolean[DataManager.getInstance().getGroupList().size()];
-            if(DataManager.getInstance().getMemberList(1).size()>0){
-                List<PersonData> list =  DataManager.getInstance().getMemberList(1);
-                for(int i = 0 ; i < list.size() ; i++) {
+            if (DataManager.getInstance().getMemberList(1).size() > 0) {
+                List<PersonData> list = DataManager.getInstance().getMemberList(1);
+                for (int i = 0; i < list.size(); i++) {
                     Log.i("member", list.get(i).getName());
                 }
             }

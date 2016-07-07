@@ -1,5 +1,6 @@
 package com.whenrepay.rnd.whenrepay.Transactions;
 
+
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,10 +13,13 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -35,7 +39,15 @@ import java.io.IOException;
 
 import io.realm.Realm;
 
-public class IOUActivity extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class IOUDialog extends DialogFragment {
+
+
+    public IOUDialog() {
+        // Required empty public constructor
+    }
 
     public static final String EXTRA_ACCOUNT_DATA = "account";
 
@@ -50,26 +62,30 @@ public class IOUActivity extends AppCompatActivity {
     private static final int REQUEST_SEND_IMAGE = 200;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_iou);
-        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out_background);
+        if(getArguments()!= null){
+            accountData = (AccountData)getArguments().getSerializable(EXTRA_ACCOUNT_DATA);
+        }
+    }
 
-        Intent i = getIntent();
-        accountData = (AccountData) i.getSerializableExtra(EXTRA_ACCOUNT_DATA);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_ioudialog, container, false);
+        creditorName = (TextView) view.findViewById(R.id.text_creditor);
+        borrowerName = (TextView) view.findViewById(R.id.text_borrower);
+        priceView = (TextView) view.findViewById(R.id.text_money);
+        interestView = (TextView) view.findViewById(R.id.text_interest);
+        dateView = (TextView) view.findViewById(R.id.text_date);
+        userAccountView = (TextView) view.findViewById(R.id.text_user_account);
+        bottomDate = (TextView) view.findViewById(R.id.text_bottom_date);
+        borrowerSign = (ImageView) view.findViewById(R.id.image_borrower_sign);
+        mySign = (ImageView) view.findViewById(R.id.image_mysign);
+        iou = (RelativeLayout) view.findViewById(R.id.iou);
 
-        creditorName = (TextView) findViewById(R.id.text_creditor);
-        borrowerName = (TextView) findViewById(R.id.text_borrower);
-        priceView = (TextView) findViewById(R.id.text_money);
-        interestView = (TextView) findViewById(R.id.text_interest);
-        dateView = (TextView) findViewById(R.id.text_date);
-        userAccountView = (TextView) findViewById(R.id.text_user_account);
-        bottomDate = (TextView) findViewById(R.id.text_bottom_date);
-        borrowerSign = (ImageView) findViewById(R.id.image_borrower_sign);
-        mySign = (ImageView) findViewById(R.id.image_mysign);
-        iou = (RelativeLayout) findViewById(R.id.iou);
-
-        mRealm = Realm.getInstance(this);
+        mRealm = Realm.getInstance(getContext());
         MyProfile profile = mRealm.where(MyProfile.class).findFirst();
         byte[] byteArray = profile.getSignature();
         Bitmap mSignature = byteArrayToBitmap(byteArray);
@@ -89,18 +105,18 @@ public class IOUActivity extends AppCompatActivity {
             bottomDate.setText(accountData.date);
             borrowerSign.setImageBitmap(byteArrayToBitmap(accountData.sign));
         }
-        Button btn = (Button) findViewById(R.id.btn_done);
+        Button btn = (Button) view.findViewById(R.id.btn_done);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (accountData != null) {
                     DataManager.getInstance().insertContract(accountData);
-                    if (ContextCompat.checkSelfPermission(IOUActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
                             != PackageManager.PERMISSION_GRANTED) {
-                        if (ActivityCompat.shouldShowRequestPermissionRationale(IOUActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 
                         } else {
-                            ActivityCompat.requestPermissions(IOUActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_STORAGE);
+                            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_STORAGE);
                         }
                     } else {
                         saveIOU();
@@ -110,15 +126,15 @@ public class IOUActivity extends AppCompatActivity {
                 sendIOU();
             }
         });
+        return view;
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_WRITE_EXTERNAL_STORAGE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 saveIOU();
-                Toast.makeText(IOUActivity.this, "done", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "done", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -161,14 +177,14 @@ public class IOUActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_SEND_IMAGE) {
-            Toast.makeText(this, "전송되었습니다", Toast.LENGTH_SHORT).show();
+            dismiss();
+            Toast.makeText(getContext(), "전송되었습니다", Toast.LENGTH_SHORT).show();
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    finish();
+                    getActivity().finish();
                 }
             }, 1000);
-
         }
     }
 
@@ -195,11 +211,5 @@ public class IOUActivity extends AppCompatActivity {
     public Bitmap byteArrayToBitmap(byte[] $byteArray) {
         Bitmap bitmap = BitmapFactory.decodeByteArray($byteArray, 0, $byteArray.length);
         return bitmap;
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-        overridePendingTransition(R.anim.slide_left_in_background, R.anim.slide_right_out);
     }
 }

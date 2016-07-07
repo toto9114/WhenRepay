@@ -1,4 +1,4 @@
-package com.whenrepay.rnd.whenrepay.Group;
+package com.whenrepay.rnd.whenrepay.Group.PaymentManage;
 
 
 import android.os.Bundle;
@@ -21,6 +21,7 @@ public class GroupPaymentManageFragment extends Fragment {
     }
 
     ExpandableListView listView;
+    PaymentManageAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,7 +30,10 @@ public class GroupPaymentManageFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_group_payment_manage, container, false);
 
         listView = (ExpandableListView)view.findViewById(R.id.expandableListView);
+        mAdapter = new PaymentManageAdapter();
         listView.setIndicatorBounds(listView.getRight() -40, listView.getWidth());
+
+        listView.setAdapter(mAdapter);
 
         return view;
     }
