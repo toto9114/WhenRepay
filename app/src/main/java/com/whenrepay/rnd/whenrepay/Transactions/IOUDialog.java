@@ -177,12 +177,12 @@ public class IOUDialog extends DialogFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_SEND_IMAGE) {
-            dismiss();
             Toast.makeText(getContext(), "전송되었습니다", Toast.LENGTH_SHORT).show();
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     getActivity().finish();
+                    dismiss();
                 }
             }, 1000);
         }

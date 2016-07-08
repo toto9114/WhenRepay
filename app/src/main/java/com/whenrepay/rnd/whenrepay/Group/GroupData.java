@@ -17,8 +17,6 @@ public class GroupData implements Serializable{
     private int totalPaidMoney;
     private List<PersonData> personList;
 
-
-
     public String getGroupName() {
         return groupName;
     }

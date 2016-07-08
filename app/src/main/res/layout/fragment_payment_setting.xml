@@ -55,11 +55,13 @@
             android:text="납부일"
             android:id="@+id/textView67" />
 
-        <EditText
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:id="@+id/edit_date"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:hint="여기를 클릭해주세요"
+            android:gravity="center" />
     </LinearLayout>
 
     <TextView

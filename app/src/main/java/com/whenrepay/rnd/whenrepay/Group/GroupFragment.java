@@ -8,9 +8,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
@@ -38,6 +40,7 @@ public class GroupFragment extends Fragment {
     GroupAdapter mAdapter;
     LinearLayoutManager layoutManager;
 
+    boolean isDelete= false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,7 +63,8 @@ public class GroupFragment extends Fragment {
             public void onClick(View v) {
                 mAdapter.setCheckBoxVisible(true);
 //                DataManager.getInstance().deleteGroup(mAdapter.getItem(0));
-
+                isDelete = true;
+                getActivity().invalidateOptionsMenu();
                 initData();
                 groupMenu.collapse();
             }
@@ -74,19 +78,6 @@ public class GroupFragment extends Fragment {
             }
         });
 
-        Button btn = (Button) view.findViewById(R.id.btn_delete_group);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                for (int i = 0; i < checkedList.length; i++) {
-                    if (checkedList[i]) {
-                        DataManager.getInstance().deleteGroup(mAdapter.getItem(i));
-                    }
-                }
-                initData();
-                mAdapter.setCheckBoxVisible(false);
-            }
-        });
         mAdapter.setOnItemCheckedListener(new OnItemCheckedListener() {
             @Override
             public void OnItemChecked(boolean isChecked, int position) {
@@ -98,11 +89,44 @@ public class GroupFragment extends Fragment {
             @Override
             public void onItemClick(FamiliarRecyclerView familiarRecyclerView, View view, int position) {
                 Intent i = new Intent(getContext(), GroupManageActivity.class);
-                i.putExtra(GroupManageActivity.EXTRA_GROUP_ID, mAdapter.getItem(position)._id);
+                i.putExtra(GroupManageActivity.EXTRA_GROUP_ID, mAdapter.getItem(position));
                 startActivity(i);
             }
         });
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_delete, menu);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        if(isDelete) {
+            menu.getItem(1).setVisible(true);
+        }else{
+            menu.getItem(1).setVisible(false);
+        }
+        super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.group_delete){
+            isDelete= false;
+            mAdapter.setCheckBoxVisible(false);
+            getActivity().invalidateOptionsMenu();
+            for (int i = 0; i < checkedList.length; i++) {
+                if (checkedList[i]) {
+                    DataManager.getInstance().deleteGroup(mAdapter.getItem(i));
+                }
+            }
+            initData();
+        }
+        return true;
     }
 
     @Override
@@ -126,5 +150,6 @@ public class GroupFragment extends Fragment {
             }
         }
     }
+
 
 }

@@ -33,7 +33,7 @@
         android:text="New Text" />
 
     <TextView
-        android:id="@+id/text_number"
+        android:id="@+id/text_member"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imageView7"

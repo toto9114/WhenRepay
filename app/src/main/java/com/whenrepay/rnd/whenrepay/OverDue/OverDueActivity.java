@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -25,14 +26,17 @@ public class OverDueActivity extends AppCompatActivity {
     FamiliarRecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     OverDueAdapter mAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_over_due);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out_background);
-        recyclerView = (FamiliarRecyclerView)findViewById(R.id.recycler);
+        recyclerView = (FamiliarRecyclerView) findViewById(R.id.recycler);
         mAdapter = new OverDueAdapter();
-        layoutManager = new LinearLayoutManager(this, OrientationHelper.VERTICAL,false);
+        layoutManager = new LinearLayoutManager(this, OrientationHelper.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
 
@@ -40,17 +44,18 @@ public class OverDueActivity extends AppCompatActivity {
             @Override
             public void onItemClick(FamiliarRecyclerView familiarRecyclerView, View view, int position) {
 //                Toast.makeText(OverDueActivity.this, "" + mAdapter.getItem(position).getPrice(),Toast.LENGTH_SHORT).show();
-                if(mAdapter.getItem(position) instanceof AccountData){
-//                    Intent i = new Intent(OverDueActivity.this, IOUActivity.class);
-//                    i.putExtra(IOUActivity.EXTRA_ACCOUNT_DATA,(AccountData)mAdapter.getItem(position));
-//                    startActivity(i);
+                if (mAdapter.getItem(position) instanceof AccountData) {
+//                    NiftyDialogBuilder builder = NiftyDialogBuilder.getInstance(OverDueActivity.this);
+//                    builder.setCustomView(R.layout.fragment_ioudialog, OverDueActivity.this)
+//                            .withEffect(Effectstype.SlideBottom)
+//                            .show();
                     IOUDialog dialog = new IOUDialog();
                     Bundle args = new Bundle();
                     args.putSerializable(IOUDialog.EXTRA_ACCOUNT_DATA, (AccountData) mAdapter.getItem(position));
                     dialog.setArguments(args);
-                    dialog.show(getSupportFragmentManager(),"dialog");
-                }else{
-                    Toast.makeText(OverDueActivity.this,"not yet",Toast.LENGTH_SHORT).show();
+                    dialog.show(getSupportFragmentManager(), "dialog");
+                } else {
+                    Toast.makeText(OverDueActivity.this, "not yet", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -58,8 +63,8 @@ public class OverDueActivity extends AppCompatActivity {
         initData();
     }
 
-    private void initData(){
-        if(DataManager.getInstance().getContractList(TransactionFragment.SORT_TYPE_DATE).size() != 0) {
+    private void initData() {
+        if (DataManager.getInstance().getContractList(TransactionFragment.SORT_TYPE_DATE).size() != 0) {
             for (TransactionData data : DataManager.getInstance().getContractList(TransactionFragment.SORT_TYPE_DATE)) {
                 Calendar c = Calendar.getInstance();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
@@ -78,6 +83,16 @@ public class OverDueActivity extends AppCompatActivity {
             }
         }
         mAdapter.sort();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == android.R.id.home){
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -24,6 +24,8 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.bumptech.glide.Glide;
+import com.whenrepay.rnd.whenrepay.BorrowMoney.DirectlyEditDialog;
+import com.whenrepay.rnd.whenrepay.BorrowMoney.OnButtonClickListener;
 import com.whenrepay.rnd.whenrepay.BorrowMoney.PersonView;
 import com.whenrepay.rnd.whenrepay.R;
 
@@ -40,7 +42,7 @@ public class ContractThingsFragment extends Fragment {
     }
 
     LinearLayout cameraView, galleryView;
-    ViewSwitcher viewSwitcher;
+    ViewSwitcher contactSwitcher;
     ImageView pictureView;
     EditText nameView, memoView;
     PersonView personView;
@@ -69,7 +71,7 @@ public class ContractThingsFragment extends Fragment {
             }
         });
         thingsData = new ThingsData();
-        viewSwitcher = (ViewSwitcher) view.findViewById(R.id.view_switcher_contact);
+        contactSwitcher = (ViewSwitcher) view.findViewById(R.id.view_switcher_contact);
         cameraView = (LinearLayout) view.findViewById(R.id.btn_camera);
         galleryView = (LinearLayout) view.findViewById(R.id.btn_gallery);
         pictureView = (ImageView) view.findViewById(R.id.image_things);
@@ -123,6 +125,23 @@ public class ContractThingsFragment extends Fragment {
                 startActivityForResult(intent, REQUEST_CONTACT);
             }
         });
+
+        btn = (Button) view.findViewById(R.id.btn_direct);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DirectlyEditDialog dialog = new DirectlyEditDialog();
+                dialog.setOnButtonClickListener(new OnButtonClickListener() {
+                    @Override
+                    public void OnButtonClick(String name, String phone) {
+                        personView.setName(name);
+                        contactSwitcher.showNext();
+                    }
+                });
+                dialog.show(getActivity().getSupportFragmentManager(),"dialog");
+            }
+        });
+
         return view;
     }
 
@@ -171,7 +190,7 @@ public class ContractThingsFragment extends Fragment {
                     String name = cursor.getString(0);        //0은 이름을 얻어옵니다.
                     thingsData.borrowerName = name;
                     personView.setName(name);
-                    viewSwitcher.showNext();
+                    contactSwitcher.showNext();
                     cursor.close();
                 }
                 break;

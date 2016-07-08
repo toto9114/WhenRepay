@@ -78,10 +78,10 @@
         <activity android:name=".Main.SettingActivity" />
         <activity android:name=".OverDue.OverDueActivity" />
         <activity
-            android:name=".Group.GroupManageActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".Group.GroupManageActivity"/>
         <activity android:name=".Main.EditInfoActivity" />
-        <activity android:name=".Transactions.DetailDutchActivity"></activity>
+        <activity android:name=".Transactions.DetailDutchActivity" />
+        <activity android:name=".Main.BankListActivity"></activity>
     </application>
 
 </manifest>

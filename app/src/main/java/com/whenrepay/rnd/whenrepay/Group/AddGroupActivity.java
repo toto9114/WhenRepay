@@ -52,9 +52,6 @@ public class AddGroupActivity extends AppCompatActivity {
     }
 
     public void changeSend(GroupData data){
-//        groupData.moneyPerPerson = data.moneyPerPerson;
-//        groupData.paymentDate = data.paymentDate;
-//        groupData.account = data.account;
 
         groupData.setMoneyPerPerson(data.getMoneyPerPerson());
         groupData.setPaymentDate(data.getPaymentDate());

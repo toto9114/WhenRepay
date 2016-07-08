@@ -38,7 +38,11 @@ public class GroupViewHolder extends RecyclerView.ViewHolder{
 
     public void setData(GroupData data,boolean isCheckBoxVisible){
         titleView.setText(data.getGroupName());
-        numberView.setText(""+ DataManager.getInstance().getMemberList(data._id).size()+"명");
+        if(DataManager.getInstance().getMemberList(data._id).size()>0) {
+            numberView.setText(DataManager.getInstance().getMemberList(data._id).get(0).getName() + " 외 " +
+                    (DataManager.getInstance().getMemberList(data._id).size() - 1) + "명");
+        }
+        checkBox.setChecked(false);
         if(isCheckBoxVisible){
             checkBox.setVisibility(View.VISIBLE);
         }else{
@@ -46,7 +50,4 @@ public class GroupViewHolder extends RecyclerView.ViewHolder{
         }
     }
 
-    public boolean isChecked(){
-        return checkBox.isChecked();
-    }
 }

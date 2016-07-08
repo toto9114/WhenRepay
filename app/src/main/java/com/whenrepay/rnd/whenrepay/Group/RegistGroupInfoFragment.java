@@ -7,12 +7,14 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.whenrepay.rnd.whenrepay.R;
 
@@ -25,6 +27,7 @@ public class RegistGroupInfoFragment extends Fragment {
     public RegistGroupInfoFragment() {
         // Required empty public constructor
     }
+
     public static final int REQUEST_PERSON_LIST = 200;
     EditText titleView;
     RecyclerView recyclerView;
@@ -33,24 +36,14 @@ public class RegistGroupInfoFragment extends Fragment {
     GroupData groupData;
 
     public static final String EXTRA_RESULT = "result";
+    View view;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_regist_group_info, container, false);
-        view.setFocusableInTouchMode(true);
-        view.requestFocus();
-        view.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    getActivity().finish();
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        });
+        view = inflater.inflate(R.layout.fragment_regist_group_info, container, false);
+
         titleView = (EditText) view.findViewById(R.id.edit_group_name);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
         mAdapter = new MemberListAdapter();
@@ -83,17 +76,38 @@ public class RegistGroupInfoFragment extends Fragment {
             public void onClick(View v) {
 //                groupData.groupName = titleView.getText().toString();
                 groupData.setGroupName(titleView.getText().toString());
-                ((AddGroupActivity) getActivity()).changePayment(groupData);
+                if (groupData.getPersonList().size() > 0 && !TextUtils.isEmpty(groupData.getGroupName())) {
+                    ((AddGroupActivity) getActivity()).changePayment(groupData);
+                } else {
+                    Toast.makeText(getContext(), "필수정보를 입력하세요", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    getActivity().finish();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(data != null) {
+        if (data != null) {
             mAdapter.clear();
 //            groupData.personList = ((GroupData) data.getSerializableExtra(EXTRA_RESULT)).personList;
             groupData.setPersonList(((GroupData) data.getSerializableExtra(EXTRA_RESULT)).getPersonList());

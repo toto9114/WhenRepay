@@ -8,7 +8,8 @@
         android:id="@+id/iou"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/btn_done">
+        android:layout_above="@+id/btn_done"
+        android:padding="16dp">
         <TextView
             android:id="@+id/textView26"
             android:layout_width="wrap_content"
@@ -25,7 +26,7 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/textView26"
             android:layout_marginTop="72dp"
-            android:text="원금 :" />
+            android:text="원금 : " />
 
         <TextView
             android:id="@+id/text_money"
@@ -43,7 +44,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/textView27"
-            android:text="이자율 :" />
+            android:text="이자율 : " />
 
         <TextView
             android:id="@+id/text_interest"
@@ -61,7 +62,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/textView29"
-            android:text="변제기일 :" />
+            android:text="변제기일 : " />
 
         <TextView
             android:id="@+id/text_date"
@@ -79,7 +80,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/textView31"
-            android:text="입금처 :" />
+            android:text="입금처 : " />
 
         <TextView
             android:id="@+id/text_user_account"

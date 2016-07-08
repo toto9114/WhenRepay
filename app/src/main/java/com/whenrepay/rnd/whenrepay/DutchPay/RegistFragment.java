@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.whenrepay.rnd.whenrepay.Group.ContractActivity;
 import com.whenrepay.rnd.whenrepay.Group.MemberListAdapter;
@@ -48,25 +50,12 @@ public class RegistFragment extends Fragment {
 
     DutchPayData dutchPayData;
     public static final int REQUEST_PERSON_LIST = 200;
+    View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_regist, container, false);
-
-        view.setFocusableInTouchMode(true);
-        view.requestFocus();
-        view.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    getActivity().finish();
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        });
+        view = inflater.inflate(R.layout.fragment_regist, container, false);
 
         dutchPayData = new DutchPayData();
         editEvent = (EditText) view.findViewById(R.id.edit_event);
@@ -82,11 +71,19 @@ public class RegistFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dutchPayData.title = editEvent.getText().toString();
-                Date date = new Date();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
-                dutchPayData.date = sdf.format(date);  //더치페이 날짜
-                ((DutchPayActivity) getActivity()).changeEditMoney(dutchPayData);
+                if(dutchPayData.personList != null && !TextUtils.isEmpty(editEvent.getText().toString())) {
+                    if(dutchPayData.personList.size() ==0){
+                        Toast.makeText(getContext(),"필수정보를 입력하세요",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    dutchPayData.title = editEvent.getText().toString();
+                    Date date = new Date();
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+                    dutchPayData.date = sdf.format(date);  //더치페이 날짜
+                    ((DutchPayActivity) getActivity()).changeEditMoney(dutchPayData);
+                }else{
+                    Toast.makeText(getContext(), "필수정보를 입력하세요", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -133,17 +130,31 @@ public class RegistFragment extends Fragment {
         return view;
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    getActivity().finish();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_PERSON_LIST && resultCode == Activity.RESULT_OK) {
             if (data != null) {
                 mAdapter.clear();
-//            groupData.personList = ((GroupData) data.getSerializableExtra(EXTRA_RESULT)).personList;
-//                groupData.setPersonList(((GroupData) data.getSerializableExtra(EXTRA_RESULT)).getPersonList());
-//                for (PersonData personData : groupData.getPersonList()) {
-//                    mAdapter.add(personData);
-//                }
                 dutchPayData.personList = ((DutchPayData)data.getSerializableExtra(EXTRA_RESULT)).personList;
                 for(PersonData personData : dutchPayData.personList){
                     mAdapter.add(personData);

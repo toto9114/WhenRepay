@@ -28,49 +28,50 @@ public class EventView extends FrameLayout {
         inflate(getContext(), R.layout.view_edit_event, this);
         editMoney = (EditText) findViewById(R.id.edit_money);
         group = (LinearLayout) findViewById(R.id.check_group);
+        if (data != null) {
+            for (int i = 0; i < data.size(); i++) {
+                final CheckBox checkBox = new CheckBox(getContext());
+                checkBox.setText(data.get(i).getName());
+                checkBox.setId(i);
+                checkBox.setChecked(true);
+                DutchPersonData person = new DutchPersonData();
+                person.name = data.get(i).getName();
+                person.attended = true;
 
-        for (int i = 0; i < data.size(); i++) {
-            final CheckBox checkBox = new CheckBox(getContext());
-            checkBox.setText(data.get(i).getName());
-            checkBox.setId(i);
-            checkBox.setChecked(true);
-            DutchPersonData person = new DutchPersonData();
-            person.name = data.get(i).getName();
-            person.attended = true;
-
-            personList.add(person);
-            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        DutchPersonData data = personList.get(buttonView.getId());
-                        data.attended = true;
-                        personList.set(buttonView.getId(), data);
-                    } else {
-                        DutchPersonData data = personList.get(buttonView.getId());
-                        data.attended = false;
-                        personList.set(buttonView.getId(), data);
+                personList.add(person);
+                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked) {
+                            DutchPersonData data = personList.get(buttonView.getId());
+                            data.attended = true;
+                            personList.set(buttonView.getId(), data);
+                        } else {
+                            DutchPersonData data = personList.get(buttonView.getId());
+                            data.attended = false;
+                            personList.set(buttonView.getId(), data);
+                        }
                     }
-                }
-            });
-            group.addView(checkBox);
+                });
+                group.addView(checkBox);
+            }
         }
     }
 
     public EventData getData() {
         EventData data = new EventData();
         int count = 0;
-        for(DutchPersonData personData : personList){
-            if(personData.attended){
+        for (DutchPersonData personData : personList) {
+            if (personData.attended) {
                 count++;
             }
         }
         if (!TextUtils.isEmpty(editMoney.getText().toString())) {
             data.money = Integer.parseInt(editMoney.getText().toString());
-            for(int i = 0 ; i < personList.size() ; i++){
-                if(personList.get(i).attended){
-                    personList.get(i).dutchMoney = data.money/count;
-                }else{
+            for (int i = 0; i < personList.size(); i++) {
+                if (personList.get(i).attended) {
+                    personList.get(i).dutchMoney = data.money / count;
+                } else {
                     personList.get(i).dutchMoney = 0;
                 }
             }
