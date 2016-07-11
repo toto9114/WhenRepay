@@ -16,7 +16,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,8 +95,8 @@ public class IOUDialog extends DialogFragment {
         if (accountData != null) {
             borrowerName.setText(accountData.name);
             priceView.setText("" + accountData.money);
-            if (!TextUtils.isEmpty(accountData.interest)) {
-                interestView.setText(accountData.interest);
+            if (accountData.interest != 0) {
+                interestView.setText(""+accountData.interest);
             } else {
                 interestView.setText("해당없음");
             }

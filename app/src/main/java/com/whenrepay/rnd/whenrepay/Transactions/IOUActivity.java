@@ -14,7 +14,6 @@ import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -80,7 +79,7 @@ public class IOUActivity extends AppCompatActivity {
         if (accountData != null) {
             borrowerName.setText(accountData.name);
             priceView.setText("" + accountData.money);
-            if (!TextUtils.isEmpty(accountData.interest)) {
+            if (accountData.interest != 0) {
                 interestView.setText(accountData.interest);
             } else {
                 interestView.setText("해당없음");

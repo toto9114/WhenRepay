@@ -35,6 +35,8 @@ public class GroupManageActivity extends AppCompatActivity {
 
         titleView = (TextView)findViewById(R.id.text_title);
         memberView = (TextView)findViewById(R.id.text_member);
+        paymentView = (TextView)findViewById(R.id.text_payment);
+
         init();
 
         Button btn = (Button)findViewById(R.id.btn_payment_manage);
@@ -63,9 +65,11 @@ public class GroupManageActivity extends AppCompatActivity {
     }
 
     private void init(){
+
         titleView.setText(groupData.getGroupName());
         memberView.setText(DataManager.getInstance().getMemberList(groupData._id).get(0).getName() +" 외 "+
                 (DataManager.getInstance().getMemberList(groupData._id).size()-1) +"인");
+        paymentView.setText("매 달"+ groupData.getPaymentDate() +"일/" + groupData.getMoneyPerPerson() +"원");
     }
 
     @Override

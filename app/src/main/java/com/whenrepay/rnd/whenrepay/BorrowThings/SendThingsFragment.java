@@ -13,6 +13,7 @@ import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -169,7 +170,11 @@ public class SendThingsFragment extends Fragment {
         mySignView.setImageBitmap(byteArrayToBitmap(profile.getSignature()));
         borrowerNameView.setText(thingsData.borrowerName);
         borrowerSignView.setImageBitmap(byteArrayToBitmap(borrowerData.byteBitmap));
-        Glide.with(getContext()).load(thingsData.pictureUri).into(thingsView);
+        if(!TextUtils.isEmpty(thingsData.pictureUri)) {
+            Glide.with(getContext()).load(thingsData.pictureUri).into(thingsView);
+        }else{
+//            thingsView.setImageResource();
+        }
 
     }
 

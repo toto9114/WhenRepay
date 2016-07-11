@@ -14,6 +14,7 @@ public class ThingsData implements Serializable, TransactionData {
     public String thingsName;
     public String memo;
     public String date;
+    public String repayDate;
     public String pictureUri;
     public byte[] picture;
     public byte[] sign;
@@ -26,5 +27,10 @@ public class ThingsData implements Serializable, TransactionData {
     @Override
     public int getPrice() {
         return 0;
+    }
+
+    @Override
+    public String getRepayDate() {
+        return repayDate;
     }
 }

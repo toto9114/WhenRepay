@@ -104,6 +104,7 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
                 }
             }
         });
+
         btn = (Button) findViewById(R.id.btn_repay_all);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override

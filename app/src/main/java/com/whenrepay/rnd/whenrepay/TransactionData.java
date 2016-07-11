@@ -6,4 +6,5 @@ package com.whenrepay.rnd.whenrepay;
 public interface TransactionData {
     public String getDate();
     public int getPrice();
+    public String getRepayDate();
 }

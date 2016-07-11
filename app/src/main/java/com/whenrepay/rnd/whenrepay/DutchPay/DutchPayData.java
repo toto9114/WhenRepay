@@ -27,4 +27,9 @@ public class DutchPayData implements Serializable,TransactionData{
     public int getPrice() {
         return totalPrice;
     }
+
+    @Override
+    public String getRepayDate() {
+        return null;
+    }
 }

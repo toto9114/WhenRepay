@@ -44,28 +44,6 @@
                 android:id="@+id/image_borrow_thing" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/manage"
-                android:scaleType="centerCrop"
-                android:id="@+id/image_manage" />
-
-            <ImageView
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/dutch"
-                android:scaleType="centerCrop"
-                android:id="@+id/image_dutch" />
-        </LinearLayout>
     </LinearLayout>
 
 
