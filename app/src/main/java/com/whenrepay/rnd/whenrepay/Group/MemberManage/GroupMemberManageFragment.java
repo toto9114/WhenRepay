@@ -45,7 +45,7 @@ public class GroupMemberManageFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_group_member_manage, container, false);
-        recyclerView = (RecyclerView)view.findViewById(R.id.recycler);
+        recyclerView = (RecyclerView)view.findViewById(R.id.recycler_overdue);
         layoutManager = new LinearLayoutManager(getContext(), OrientationHelper.VERTICAL,false);
         mAdapter = new MemberListAdapter();
         recyclerView.setLayoutManager(layoutManager);

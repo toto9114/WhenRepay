@@ -85,7 +85,7 @@ public class SendThingsFragment extends Fragment {
         borrowerSignView = (ImageView) view.findViewById(R.id.image_borrower_sign);
         iou = (RelativeLayout) view.findViewById(R.id.iou);
 
-        Button btn = (Button) view.findViewById(R.id.btn_send);
+        Button btn = (Button) view.findViewById(R.id.btn_dun);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

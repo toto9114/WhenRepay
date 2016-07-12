@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".Main.MainActivity">
     <item
-        android:id="@+id/setting"
+        android:id="@+id/caculator"
         android:orderInCategory="100"
-        android:title="@string/action_search"
-        android:icon="@drawable/ic_settings_white"
+        android:title="@string/action_calulator"
+        android:icon="@android:drawable/ic_dialog_dialer"
         app:showAsAction="always" />
 </menu>

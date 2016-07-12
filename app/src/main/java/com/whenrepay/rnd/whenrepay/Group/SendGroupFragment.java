@@ -81,7 +81,7 @@ public class SendGroupFragment extends Fragment {
         initData();
 //        listView.setEnabled(false);
 
-        Button btn = (Button) view.findViewById(R.id.btn_send);
+        Button btn = (Button) view.findViewById(R.id.btn_dun);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

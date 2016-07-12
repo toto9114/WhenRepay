@@ -25,7 +25,7 @@ public class OverDueActivity extends AppCompatActivity {
     public static final String EXTRA_OVERDUE = "overdue";
     FamiliarRecyclerView recyclerView;
     LinearLayoutManager layoutManager;
-    OverDueAdapter mAdapter;
+    DetailOverDueAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +34,8 @@ public class OverDueActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out_background);
-        recyclerView = (FamiliarRecyclerView) findViewById(R.id.recycler);
-        mAdapter = new OverDueAdapter();
+        recyclerView = (FamiliarRecyclerView) findViewById(R.id.recycler_overdue);
+        mAdapter = new DetailOverDueAdapter();
         layoutManager = new LinearLayoutManager(this, OrientationHelper.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
@@ -45,10 +45,6 @@ public class OverDueActivity extends AppCompatActivity {
             public void onItemClick(FamiliarRecyclerView familiarRecyclerView, View view, int position) {
 //                Toast.makeText(OverDueActivity.this, "" + mAdapter.getItem(position).getPrice(),Toast.LENGTH_SHORT).show();
                 if (mAdapter.getItem(position) instanceof AccountData) {
-//                    NiftyDialogBuilder builder = NiftyDialogBuilder.getInstance(OverDueActivity.this);
-//                    builder.setCustomView(R.layout.fragment_ioudialog, OverDueActivity.this)
-//                            .withEffect(Effectstype.SlideBottom)
-//                            .show();
                     IOUDialog dialog = new IOUDialog();
                     Bundle args = new Bundle();
                     args.putSerializable(IOUDialog.EXTRA_ACCOUNT_DATA, (AccountData) mAdapter.getItem(position));
@@ -59,7 +55,6 @@ public class OverDueActivity extends AppCompatActivity {
                 }
             }
         });
-
         initData();
     }
 
@@ -82,7 +77,6 @@ public class OverDueActivity extends AppCompatActivity {
                 }
             }
         }
-        mAdapter.sort();
     }
 
     @Override

@@ -100,7 +100,7 @@ public class SendDutchFragment extends Fragment {
         accountView = (TextView) view.findViewById(R.id.text_account);
         iou = (RelativeLayout) view.findViewById(R.id.iou);
 
-        Button btn = (Button) view.findViewById(R.id.btn_send);
+        Button btn = (Button) view.findViewById(R.id.btn_dun);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

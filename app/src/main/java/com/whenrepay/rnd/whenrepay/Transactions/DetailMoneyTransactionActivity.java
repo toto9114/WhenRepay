@@ -46,7 +46,7 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
         totalView = (TextView) findViewById(R.id.text_total);
         nameView = (TextView) findViewById(R.id.text_name);
         dateView = (TextView) findViewById(R.id.text_date);
-        recyclerView = (FamiliarRecyclerView) findViewById(R.id.recycler);
+        recyclerView = (FamiliarRecyclerView) findViewById(R.id.recycler_overdue);
         mAdapter = new DetailTransactionAdapter();
         layoutManager = new LinearLayoutManager(this, OrientationHelper.VERTICAL, false);
         layoutManager.setReverseLayout(true);

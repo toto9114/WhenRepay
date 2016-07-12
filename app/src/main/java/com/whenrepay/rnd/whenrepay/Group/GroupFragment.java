@@ -50,7 +50,7 @@ public class GroupFragment extends Fragment {
         setHasOptionsMenu(true);
 
         groupMenu = (FloatingActionsMenu) view.findViewById(R.id.floating_menu);
-        recyclerView = (FamiliarRecyclerView) view.findViewById(R.id.recycler);
+        recyclerView = (FamiliarRecyclerView) view.findViewById(R.id.recycler_overdue);
         mAdapter = new GroupAdapter();
         layoutManager = new LinearLayoutManager(getContext(), OrientationHelper.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);

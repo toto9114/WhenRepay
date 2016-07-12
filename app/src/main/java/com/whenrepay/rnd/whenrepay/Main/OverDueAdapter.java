@@ -1,4 +1,4 @@
-package com.whenrepay.rnd.whenrepay.OverDue;
+package com.whenrepay.rnd.whenrepay.Main;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,11 +23,21 @@ public class OverDueAdapter extends RecyclerView.Adapter {
     List<TransactionData> items = new ArrayList<>();
 
 
+    public void clear(){
+        items.clear();
+        notifyDataSetChanged();
+    }
     public void add(TransactionData data) {
         items.add(data);
         notifyDataSetChanged();
     }
 
+    public TransactionData getItemAtPosition(int position){
+        if (position < items.size()) {
+            return items.get(position);
+        }
+        return null;
+    }
     public void sort() {
         Collections.sort(items, new Comparator<TransactionData>() {
             @Override
@@ -41,6 +51,7 @@ public class OverDueAdapter extends RecyclerView.Adapter {
     public TransactionData getItem(int position){
         return items.get(position);
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
