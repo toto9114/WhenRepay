@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.whenrepay.rnd.whenrepay.Contact.ContractActivity;
 import com.whenrepay.rnd.whenrepay.R;
 
 /**

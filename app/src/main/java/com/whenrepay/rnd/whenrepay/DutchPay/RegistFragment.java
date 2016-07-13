@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.whenrepay.rnd.whenrepay.Group.ContractActivity;
+import com.whenrepay.rnd.whenrepay.Contact.ContractActivity;
 import com.whenrepay.rnd.whenrepay.Group.MemberListAdapter;
 import com.whenrepay.rnd.whenrepay.Group.PersonData;
 import com.whenrepay.rnd.whenrepay.R;
@@ -79,7 +79,7 @@ public class RegistFragment extends Fragment {
                     dutchPayData.title = editEvent.getText().toString();
                     Date date = new Date();
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
-                    dutchPayData.date = sdf.format(date);  //더치페이 날짜
+//                    dutchPayData.date = sdf.format(date);  //더치페이 날짜
                     ((DutchPayActivity) getActivity()).changeEditMoney(dutchPayData);
                 }else{
                     Toast.makeText(getContext(), "필수정보를 입력하세요", Toast.LENGTH_SHORT).show();

@@ -14,12 +14,12 @@ public class DutchPayData implements Serializable,TransactionData{
     public long _id = INVALID_ID;
     public String title;
     public int totalPrice;
-    public String date;
+    public long date;
     public List<PersonData> personList;
     public List<EventData> eventList;
 
     @Override
-    public String getDate() {
+    public long getDate() {
         return date;
     }
 

@@ -13,14 +13,14 @@ public class ThingsData implements Serializable, TransactionData {
     public String borrowerName;
     public String thingsName;
     public String memo;
-    public String date;
+    public long date;
     public String repayDate;
     public String pictureUri;
     public byte[] picture;
     public byte[] sign;
 
     @Override
-    public String getDate() {
+    public long getDate() {
         return date;
     }
 

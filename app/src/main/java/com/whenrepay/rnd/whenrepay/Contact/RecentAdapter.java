@@ -1,4 +1,4 @@
-package com.whenrepay.rnd.whenrepay.Group;
+package com.whenrepay.rnd.whenrepay.Contact;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,23 +12,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by RND on 2016-07-04.
+ * Created by RND on 2016-07-13.
  */
-public class ContactAdapter extends BaseAdapter {
-    List<PersonData> items = new ArrayList<>();
+public class RecentAdapter extends BaseAdapter {
+    List<String> items = new ArrayList<>();
 
-    public void add(PersonData data){
+    public void add(String data) {
         items.add(data);
         notifyDataSetChanged();
     }
 
-    public void addAll(List<PersonData> list){
+    public void addAll(List<String> list) {
         items.addAll(list);
-        notifyDataSetChanged();
-    }
-
-    public void clear(){
-        items.clear();
         notifyDataSetChanged();
     }
 
@@ -38,7 +33,7 @@ public class ContactAdapter extends BaseAdapter {
     }
 
     @Override
-    public PersonData getItem(int position) {
+    public String getItem(int position) {
         return items.get(position);
     }
 
@@ -48,19 +43,19 @@ public class ContactAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         ContactView view;
-        if(convertView == null){
+        if (convertView == null) {
             view = new ContactView(parent.getContext());
-        }else{
-            view = (ContactView)convertView;
+        } else {
+            view = (ContactView) convertView;
         }
-        CheckBox checkBox = (CheckBox)view.findViewById(R.id.checkBox_name);
+        CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox_name);
         checkBox.setChecked(((ListView) parent).isItemChecked(position));
         checkBox.setFocusable(false);
         checkBox.setClickable(false);
 
-        checkBox.setText(items.get(position).getName());
+        checkBox.setText(items.get(position));
         return view;
     }
 }

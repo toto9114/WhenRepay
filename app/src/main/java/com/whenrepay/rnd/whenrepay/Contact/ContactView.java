@@ -1,4 +1,4 @@
-package com.whenrepay.rnd.whenrepay.Group;
+package com.whenrepay.rnd.whenrepay.Contact;
 
 import android.content.Context;
 import android.widget.CheckBox;
@@ -26,9 +26,7 @@ public class ContactView extends FrameLayout {
 //        });
     }
 
-    PersonData data;
-    public void setData(PersonData data){
-        this.data = data;
-        nameView.setText(data.getName());
+    public void setData(String name){
+        nameView.setText(name);
     }
 }

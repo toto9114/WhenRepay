@@ -7,7 +7,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.whenrepay.rnd.whenrepay.Intro.OnItemClickListener;
 import com.whenrepay.rnd.whenrepay.MyProfile;
 import com.whenrepay.rnd.whenrepay.R;
 
@@ -15,8 +14,10 @@ import io.realm.Realm;
 
 public class SettingActivity extends AppCompatActivity {
 
-    TextView nameView, accountView;
+    TextView nameView;
     TextView bankView;
+
+    TextView changeNameView, changeBankView;
     Realm mRealm;
 
     public static final String RESULT_INFO = "info";
@@ -34,46 +35,38 @@ public class SettingActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out_background);
 
         nameView = (TextView) findViewById(R.id.text_name);
-        accountView = (TextView) findViewById(R.id.text_account);
-        bankView = (TextView) findViewById(R.id.text_bank);
+        bankView = (TextView) findViewById(R.id.text_bank_account);
+        changeNameView = (TextView)findViewById(R.id.text_change_name);
+        changeBankView = (TextView)findViewById(R.id.text_change_bank);
+
+
+        changeNameView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingActivity.this, EditNameActivity.class);
+//                startActivityForResult(intent, REQUEST_NAME);
+                startActivity(intent);
+            }
+        });
+
+
+        changeBankView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingActivity.this, EditBankActivity.class);
+//                startActivityForResult(intent, REQUEST_ACCOUNT);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         mRealm = Realm.getInstance(this);
         nameView.setText(mRealm.where(MyProfile.class).findFirst().getName());
-        bankView.setText(mRealm.where(MyProfile.class).findFirst().getBank());
-        accountView.setText(mRealm.where(MyProfile.class).findFirst().getAccount());
-
-        nameView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SettingActivity.this, EditInfoActivity.class);
-                intent.putExtra(EditInfoActivity.EXTRA_TYPE, EditInfoActivity.TYPE_NAME);
-                startActivityForResult(intent, REQUEST_NAME);
-            }
-        });
-
-        accountView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SettingActivity.this, EditInfoActivity.class);
-                intent.putExtra(EditInfoActivity.EXTRA_TYPE, EditInfoActivity.TYPE_ACCOUNT);
-                startActivityForResult(intent, REQUEST_ACCOUNT);
-            }
-        });
-
-        bankView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BankListDialog dialog = new BankListDialog();
-                dialog.setOnItemClickListener(new OnItemClickListener() {
-                    @Override
-                    public void OnItemClick(String bank) {
-                        bankView.setText(bank);
-                    }
-                });
-                dialog.show(SettingActivity.this.getSupportFragmentManager(), "dialog");
-//                startActivityForResult(new Intent(SettingActivity.this,BankListActivity.class),REQUEST_BANK);
-            }
-        });
-
+        bankView.setText(mRealm.where(MyProfile.class).findFirst().getBank() + "/" + mRealm.where(MyProfile.class).findFirst().getAccount());
     }
 
     @Override
@@ -87,19 +80,19 @@ public class SettingActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (data != null) {
-            if (requestCode == REQUEST_NAME && resultCode != RESULT_CANCELED) {
-                nameView.setText(data.getStringExtra(RESULT_INFO));
-            } else if (requestCode == REQUEST_ACCOUNT && resultCode != RESULT_CANCELED) {
-                accountView.setText(data.getStringExtra(RESULT_INFO));
-            } else {
-                bankView.setText(data.getStringExtra(RESULT_INFO));
-            }
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (data != null) {
+//            if (requestCode == REQUEST_NAME && resultCode != RESULT_CANCELED) {
+//                nameView.setText(data.getStringExtra(RESULT_INFO));
+//            } else if (requestCode == REQUEST_ACCOUNT && resultCode != RESULT_CANCELED) {
+//                accountView.setText(data.getStringExtra(RESULT_INFO));
+//            } else {
+//                bankView.setText(data.getStringExtra(RESULT_INFO));
+//            }
+//        }
+//    }
 
     @Override
     public void finish() {

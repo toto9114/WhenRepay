@@ -1,6 +1,5 @@
 package com.whenrepay.rnd.whenrepay.Main;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -14,14 +13,14 @@ import com.whenrepay.rnd.whenrepay.R;
 
 import io.realm.Realm;
 
-public class EditInfoActivity extends AppCompatActivity {
+public class EditNameActivity extends AppCompatActivity {
 
     public static final String EXTRA_TYPE = "type";
     public static final String TYPE_NAME = "name";
     public static final String TYPE_ACCOUNT = "account";
 
     TextView titleVIew;
-    EditText editView;
+    EditText nameView;
 
     Realm mRealm;
 
@@ -35,19 +34,13 @@ public class EditInfoActivity extends AppCompatActivity {
         MyProfile profile = mRealm.where(MyProfile.class).findFirst();
 
         titleVIew = (TextView) findViewById(R.id.text_message);
-        editView = (EditText) findViewById(R.id.edit_info);
+        nameView = (EditText) findViewById(R.id.edit_info);
 
-        if (getIntent().getStringExtra(EXTRA_TYPE).equals(TYPE_NAME)) {
-            titleVIew.setText("본인 이름을 입력해주세요.");
-            editView.setText(profile.getName());
-        } else {
-            titleVIew.setText("본인 계좌번호를 입력해주세요");
-            editView.setText(profile.getAccount());
-        }
+        titleVIew.setText("본인 이름을 입력해주세요.");
+        nameView.setText(profile.getName());
 
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -59,11 +52,16 @@ public class EditInfoActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.done) {
-            if (!TextUtils.isEmpty(editView.getText().toString())) {
-                Intent i = new Intent();
-                String info = editView.getText().toString();
-                i.putExtra(SettingActivity.RESULT_INFO, info);
-                setResult(RESULT_OK, i);
+            if (!TextUtils.isEmpty(nameView.getText().toString())) {
+//                Intent i = new Intent();
+//                String info = nameView.getText().toString();
+//                i.putExtra(SettingActivity.RESULT_INFO, info);
+//                setResult(RESULT_OK, i);
+//                finish();
+
+                mRealm.beginTransaction();
+                mRealm.where(MyProfile.class).findFirst().setName(nameView.getText().toString());
+                mRealm.commitTransaction();
                 finish();
             }
         }

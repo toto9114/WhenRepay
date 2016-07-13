@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name=".MyApplication"
@@ -56,7 +57,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Group.ContractActivity"
+            android:name=".Contact.ContractActivity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
         <activity
             android:name=".BorrowMoney.LendMoneyActivity"
@@ -79,7 +81,7 @@
         <activity android:name=".Main.SettingActivity" />
         <activity android:name=".OverDue.OverDueActivity" />
         <activity android:name=".Group.GroupManageActivity" />
-        <activity android:name=".Main.EditInfoActivity" />
+        <activity android:name=".Main.EditNameActivity" />
         <activity android:name=".Transactions.DetailDutchActivity" />
         <activity android:name=".Main.BankListActivity" />
 
@@ -87,12 +89,13 @@
             android:name=".MyService"
             android:exported="true" />
 
-        <receiver
-            android:name=".BootReceiver">
+        <receiver android:name=".BootReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".Main.EditBankActivity"></activity>
     </application>
 
 </manifest>

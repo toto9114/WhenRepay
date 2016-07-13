@@ -75,7 +75,7 @@ public class SignatureThingsFragment extends Fragment {
                 byte[] byteArray = stream.toByteArray();
                 data.byteBitmap = byteArray;
                 thingsData.sign = byteArray;
-                thingsData.date = dateView.getText().toString(); //상환일자 가져오기
+                thingsData.repayDate = dateView.getText().toString(); //상환일자 가져오기
                 ((LendThingsActivity)getActivity()).changeSend(data,thingsData);
             }
         });

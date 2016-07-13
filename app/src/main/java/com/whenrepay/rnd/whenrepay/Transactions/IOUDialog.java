@@ -35,6 +35,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import io.realm.Realm;
 
@@ -100,8 +102,9 @@ public class IOUDialog extends DialogFragment {
             } else {
                 interestView.setText("해당없음");
             }
-            dateView.setText(accountData.date);
-            bottomDate.setText(accountData.date);
+            dateView.setText(accountData.repayDate);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+            bottomDate.setText(sdf.format(new Date()));
             borrowerSign.setImageBitmap(byteArrayToBitmap(accountData.sign));
         }
         Button btn = (Button) view.findViewById(R.id.btn_done);

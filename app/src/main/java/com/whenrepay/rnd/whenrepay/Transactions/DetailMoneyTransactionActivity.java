@@ -124,7 +124,9 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
         data.type = TYPE_ADD;
         data.repay = accountData.money;
         data.remain = accountData.money;
-        data.date = accountData.date;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+        Date date = new Date(accountData.date);
+        data.date = sdf.format(date);
         mAdapter.add(data);
 
         if (DataManager.getInstance().getTransactionList(accountData._id).size() > 0) {
@@ -136,7 +138,7 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
         NumberFormat nf = NumberFormat.getInstance();
         totalView.setText(nf.format(accountData.money));
         nameView.setText(accountData.name);
-        dateView.setText(accountData.date);
+        dateView.setText(sdf.format(date));
     }
 
     public Bitmap byteArrayToBitmap(byte[] $byteArray) {

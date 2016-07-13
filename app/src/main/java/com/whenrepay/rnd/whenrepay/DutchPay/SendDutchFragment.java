@@ -145,7 +145,7 @@ public class SendDutchFragment extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
         dateView.setText(sdf.format(date));
         bottomDateView.setText(sdf.format(date));
-        dutchPayData.date = sdf.format(date);
+//        dutchPayData.date = sdf.format(date);
 
         mRealm = Realm.getInstance(getContext());
         totalView.setText("" + dutchPayData.totalPrice);

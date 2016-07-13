@@ -63,7 +63,8 @@ public class OverDueActivity extends AppCompatActivity {
             for (TransactionData data : DataManager.getInstance().getContractList(TransactionFragment.SORT_TYPE_DATE)) {
                 Calendar c = Calendar.getInstance();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
-                if (data.getDate().compareTo(sdf.format(c.getTime())) < 0) {
+                if (data.getRepayDate().compareTo(sdf.format(c.getTime())) < 0) {
+//                if (data.getRepayDate()- c.getTimeInMillis() < 1000*60*60*24) {
                     mAdapter.add(data);
                 }
             }
@@ -72,7 +73,8 @@ public class OverDueActivity extends AppCompatActivity {
             for (TransactionData data : DataManager.getInstance().getContractThingsList()) {
                 Calendar c = Calendar.getInstance();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
-                if (data.getDate().compareTo(sdf.format(c.getTime())) < 0) {
+                if (data.getRepayDate().compareTo(sdf.format(c.getTime())) < 0) {
+//                if (data.getDate()- c.getTimeInMillis() < 0) {
                     mAdapter.add(data);
                 }
             }

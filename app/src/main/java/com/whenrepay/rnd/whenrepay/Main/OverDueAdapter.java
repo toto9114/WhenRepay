@@ -42,7 +42,7 @@ public class OverDueAdapter extends RecyclerView.Adapter {
         Collections.sort(items, new Comparator<TransactionData>() {
             @Override
             public int compare(TransactionData item1, TransactionData item2) {
-                return item1.getDate().compareTo(item2.getDate());
+                return item1.getDate() -item2.getDate()>0 ? 1:-1;
             }
         });
         notifyDataSetChanged();

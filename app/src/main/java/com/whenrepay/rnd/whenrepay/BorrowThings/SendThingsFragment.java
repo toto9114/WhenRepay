@@ -35,6 +35,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import io.realm.Realm;
 
@@ -164,7 +166,9 @@ public class SendThingsFragment extends Fragment {
 
     private void initData() {
         thingsNameView.setText(thingsData.thingsName);
-        dateView.setText(thingsData.date);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+        Date date = new Date();
+        dateView.setText(sdf.format(date));
         MyProfile profile = mRealm.where(MyProfile.class).findFirst();
         myNameView.setText(profile.getName());
         mySignView.setImageBitmap(byteArrayToBitmap(profile.getSignature()));
