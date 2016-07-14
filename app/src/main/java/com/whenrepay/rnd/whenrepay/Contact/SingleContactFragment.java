@@ -20,69 +20,50 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.whenrepay.rnd.whenrepay.DutchPay.DutchPayData;
-import com.whenrepay.rnd.whenrepay.DutchPay.RegistFragment;
-import com.whenrepay.rnd.whenrepay.Group.GroupData;
+import com.whenrepay.rnd.whenrepay.BorrowMoney.ContractFragment;
 import com.whenrepay.rnd.whenrepay.Group.PersonData;
-import com.whenrepay.rnd.whenrepay.Group.RegistGroupInfoFragment;
 import com.whenrepay.rnd.whenrepay.R;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ContactFragment extends Fragment {
+public class SingleContactFragment extends Fragment {
 
-    private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
 
-    public static final String EXTRA_TYPE = "type";
-
-    int type = -1;
-
-    public ContactFragment() {
+    public SingleContactFragment() {
         // Required empty public constructor
     }
 
     EditText keywordView;
     ListView listView;
-    ContactAdapter mAdapter;
+    SingleContactAdapter mAdapter;
     String mKeyword;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            type = getArguments().getInt(EXTRA_TYPE);
-        }
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_contact, container, false);
+        View view = inflater.inflate(R.layout.fragment_single_contact, container, false);
         keywordView = (EditText) view.findViewById(R.id.edit_keyword);
         listView = (ListView) view.findViewById(R.id.listView);
 
 //        TelephonyManager telManager = (TelephonyManager)getContext().getSystemService(getContext().TELEPHONY_SERVICE);
 //        phoneView.setText(telManager.getLine1Number());
 
-        mAdapter = new ContactAdapter();
-//        mAdapter = new SimpleCursorAdapter(this, R.layout.view_contact, null, from, to, 0);
+        mAdapter = new SingleContactAdapter();
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         listView.setAdapter(mAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mAdapter.notifyDataSetChanged();
+                Intent i = new Intent();
+                i.putExtra(ContractFragment.EXTRA_RESULT,(PersonData)mAdapter.getItem(position));
+                getActivity().setResult(Activity.RESULT_OK,i);
+                getActivity().finish();
             }
         });
 
@@ -105,45 +86,9 @@ public class ContactFragment extends Fragment {
             }
         });
 
-
-        Button btn = (Button) view.findViewById(R.id.btn_done);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (type == ContractActivity.TYPE_GROUP) {
-                    Intent intent = new Intent();
-                    GroupData data = new GroupData();
-                    List<PersonData> list = new ArrayList<PersonData>();
-                    for (int i = 0; i < mAdapter.getCount(); i++) {
-                        if (listView.isItemChecked(i)) {
-                            list.add(mAdapter.getItem(i));
-                        }
-                    }
-                    data.setPersonList(list);
-                    intent.putExtra(RegistGroupInfoFragment.EXTRA_RESULT, data);
-                    getActivity().setResult(Activity.RESULT_OK, intent);
-                } else {
-                    Intent intent = new Intent();
-                    DutchPayData data = new DutchPayData();
-                    List<PersonData> list = new ArrayList<PersonData>();
-                    for (int i = 0; i < mAdapter.getCount(); i++) {
-                        if (listView.isItemChecked(i)) {
-                            list.add(mAdapter.getItem(i));
-                        }
-                    }
-                    data.personList = list;
-                    intent.putExtra(RegistFragment.EXTRA_RESULT, data);
-                    getActivity().setResult(Activity.RESULT_OK, intent);
-                }
-                getActivity().finish();
-            }
-        });
-        for (int i = 0; i < mAdapter.getCount(); i++) {
-            listView.setItemChecked(i, false);
-        }
         return view;
     }
-
+    private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
     @Override
     public void onResume() {
         super.onResume();
@@ -200,7 +145,7 @@ public class ContactFragment extends Fragment {
     private void searchContacts() {
         mAdapter.clear();
         ContentResolver resolver = getActivity().getContentResolver();
-//        Uri uri = ContactsContract.Contacts.CONTENT_URI;
+
         Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
         if (!TextUtils.isEmpty(mKeyword)) {
             uri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI, Uri.encode(mKeyword));

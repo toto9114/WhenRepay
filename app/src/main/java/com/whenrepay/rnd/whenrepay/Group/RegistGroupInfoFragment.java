@@ -16,7 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.whenrepay.rnd.whenrepay.Contact.ContractActivity;
+import com.whenrepay.rnd.whenrepay.Contact.MultiContractActivity;
+import com.whenrepay.rnd.whenrepay.DutchPay.MemberListAdapter;
 import com.whenrepay.rnd.whenrepay.R;
 
 /**
@@ -57,8 +58,8 @@ public class RegistGroupInfoFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getContext(), ContractActivity.class);
-                i.putExtra(ContractActivity.EXTRA_TYPE, ContractActivity.TYPE_GROUP);
+                Intent i = new Intent(getContext(), MultiContractActivity.class);
+                i.putExtra(MultiContractActivity.EXTRA_TYPE, MultiContractActivity.TYPE_GROUP);
                 startActivityForResult(i, REQUEST_PERSON_LIST);
             }
         });

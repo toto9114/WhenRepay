@@ -33,7 +33,7 @@ public class DutchFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_dutch, container, false);
         moneyView = (EditText)view.findViewById(R.id.edit_money);
         personnelView = (EditText)view.findViewById(R.id.edit_personnel);
-        resultView = (TextView)view.findViewById(R.id.text_result);
+        resultView = (TextView)view.findViewById(R.id.text_operation);
 
         Button btn = (Button)view.findViewById(R.id.btn_regist);
         btn.setOnClickListener(new View.OnClickListener() {

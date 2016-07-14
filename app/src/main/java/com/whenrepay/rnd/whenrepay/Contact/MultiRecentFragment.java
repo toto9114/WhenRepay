@@ -19,6 +19,7 @@ import com.whenrepay.rnd.whenrepay.DutchPay.RegistFragment;
 import com.whenrepay.rnd.whenrepay.Group.PersonData;
 import com.whenrepay.rnd.whenrepay.Manager.DBContants;
 import com.whenrepay.rnd.whenrepay.Manager.DataManager;
+import com.whenrepay.rnd.whenrepay.MyProfile;
 import com.whenrepay.rnd.whenrepay.R;
 import com.whenrepay.rnd.whenrepay.TransactionData;
 
@@ -27,18 +28,20 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
+import io.realm.Realm;
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RecentFragment extends Fragment {
+public class MultiRecentFragment extends Fragment {
 
 
-    public RecentFragment() {
+    public MultiRecentFragment() {
         // Required empty public constructor
     }
 
     ListView listView;
-    RecentAdapter mAdapter;
+    MultiRecentAdapter mAdapter;
 
     public static final String EXTRA_TYPE = "type";
     int type = -1;
@@ -51,15 +54,19 @@ public class RecentFragment extends Fragment {
         }
     }
 
+    MyContactFooterView myContactView;
+    Realm mRealm;
+    boolean isMyContactChecked = true;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_recent, container, false);
 
+        myContactView = (MyContactFooterView) view.findViewById(R.id.view_add_me);
         listView = (ListView) view.findViewById(R.id.listView);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        mAdapter = new RecentAdapter();
+        mAdapter = new MultiRecentAdapter();
         listView.setAdapter(mAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -69,11 +76,17 @@ public class RecentFragment extends Fragment {
             }
         });
 
+        myContactView.setOnCheckedListener(new MyContactFooterView.OnCheckedListener() {
+            @Override
+            public void OnChecked(boolean isChecked) {
+                isMyContactChecked = isChecked;
+            }
+        });
         Button btn = (Button)view.findViewById(R.id.btn_done);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (type == ContractActivity.TYPE_GROUP) {
+                if (type == MultiContractActivity.TYPE_GROUP) {
 //                    Intent intent = new Intent();
 //                    GroupData data = new GroupData();
 //                    List<String> list = new ArrayList<String>();
@@ -90,6 +103,12 @@ public class RecentFragment extends Fragment {
                     DutchPayData data = new DutchPayData();
                     List<PersonData> list = new ArrayList<PersonData>();
                     for (int i = 0; i < mAdapter.getCount(); i++) {
+                        if(isMyContactChecked){
+                            mRealm = Realm.getInstance(getContext());
+                            PersonData me = new PersonData();
+                            me.setName(mRealm.where(MyProfile.class).findFirst().getName());
+                            list.add(me);
+                        }
                         if (listView.isItemChecked(i)) {
                             PersonData personData = new PersonData();
                             personData.setName(mAdapter.getItem(i));

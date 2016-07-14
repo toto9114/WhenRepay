@@ -16,8 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.whenrepay.rnd.whenrepay.Contact.ContractActivity;
-import com.whenrepay.rnd.whenrepay.Group.MemberListAdapter;
+import com.whenrepay.rnd.whenrepay.BorrowMoney.OnDelButtonClickListener;
+import com.whenrepay.rnd.whenrepay.Contact.MultiContractActivity;
 import com.whenrepay.rnd.whenrepay.Group.PersonData;
 import com.whenrepay.rnd.whenrepay.R;
 
@@ -50,7 +50,9 @@ public class RegistFragment extends Fragment {
 
     DutchPayData dutchPayData;
     public static final int REQUEST_PERSON_LIST = 200;
+    public static final int REQUEST_PERSON = 300;
     View view;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,9 +73,9 @@ public class RegistFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(dutchPayData.personList != null && !TextUtils.isEmpty(editEvent.getText().toString())) {
-                    if(dutchPayData.personList.size() ==0){
-                        Toast.makeText(getContext(),"필수정보를 입력하세요",Toast.LENGTH_SHORT).show();
+                if (dutchPayData.personList != null && !TextUtils.isEmpty(editEvent.getText().toString())) {
+                    if (dutchPayData.personList.size() == 0) {
+                        Toast.makeText(getContext(), "필수정보를 입력하세요", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     dutchPayData.title = editEvent.getText().toString();
@@ -81,7 +83,7 @@ public class RegistFragment extends Fragment {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
 //                    dutchPayData.date = sdf.format(date);  //더치페이 날짜
                     ((DutchPayActivity) getActivity()).changeEditMoney(dutchPayData);
-                }else{
+                } else {
                     Toast.makeText(getContext(), "필수정보를 입력하세요", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -91,8 +93,8 @@ public class RegistFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getContext(), ContractActivity.class);
-                i.putExtra(ContractActivity.EXTRA_TYPE,ContractActivity.TYPE_DUTCH);
+                Intent i = new Intent(getContext(), MultiContractActivity.class);
+                i.putExtra(MultiContractActivity.EXTRA_TYPE, MultiContractActivity.TYPE_DUTCH);
                 startActivityForResult(i, REQUEST_PERSON_LIST);
             }
         });
@@ -105,6 +107,12 @@ public class RegistFragment extends Fragment {
             }
         });
 
+        mAdapter.setOnDelButtonClickListener(new OnDelButtonClickListener() {
+            @Override
+            public void onDelButtonClick(View view, int position) {
+                mAdapter.remove(position);
+            }
+        });
 //        mAdapter.setOnItemClickListener(new OnItemClickListener() {
 //            @Override
 //            public void onItemClick(View v, int position) {
@@ -154,9 +162,9 @@ public class RegistFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_PERSON_LIST && resultCode == Activity.RESULT_OK) {
             if (data != null) {
-                mAdapter.clear();
-                dutchPayData.personList = ((DutchPayData)data.getSerializableExtra(EXTRA_RESULT)).personList;
-                for(PersonData personData : dutchPayData.personList){
+//                mAdapter.clear();
+                dutchPayData.personList = ((DutchPayData) data.getSerializableExtra(EXTRA_RESULT)).personList;
+                for (PersonData personData : dutchPayData.personList) {
                     mAdapter.add(personData);
                 }
             }

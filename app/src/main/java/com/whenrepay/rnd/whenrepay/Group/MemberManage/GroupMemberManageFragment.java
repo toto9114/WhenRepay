@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.whenrepay.rnd.whenrepay.Group.MemberListAdapter;
+import com.whenrepay.rnd.whenrepay.DutchPay.MemberListAdapter;
 import com.whenrepay.rnd.whenrepay.Group.PersonData;
 import com.whenrepay.rnd.whenrepay.Manager.DataManager;
 import com.whenrepay.rnd.whenrepay.R;

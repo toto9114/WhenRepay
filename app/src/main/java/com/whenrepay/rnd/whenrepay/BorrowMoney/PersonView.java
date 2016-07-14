@@ -15,7 +15,7 @@ import com.whenrepay.rnd.whenrepay.R;
 public class PersonView extends FrameLayout{
     TextView borrowerName;
 
-    private OnDelButtonClickListener onDelButtonClickListener;
+    public OnDelButtonClickListener onDelButtonClickListener;
     public void setOnDelButtonClickListener(OnDelButtonClickListener listener){
         onDelButtonClickListener = listener;
     }

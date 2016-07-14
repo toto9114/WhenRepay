@@ -52,24 +52,13 @@ public class ContractThingsFragment extends Fragment {
 
     ThingsData thingsData;
 
+    View view;
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_contract_things, container, false);
-        view.setFocusableInTouchMode(true);
-        view.requestFocus();
-        view.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    getActivity().finish();
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        });
+        view = inflater.inflate(R.layout.fragment_contract_things, container, false);
+
         thingsData = new ThingsData();
         contactSwitcher = (ViewSwitcher) view.findViewById(R.id.view_switcher_contact);
         cameraView = (LinearLayout) view.findViewById(R.id.btn_camera);
@@ -214,5 +203,22 @@ public class ContractThingsFragment extends Fragment {
         v.setDrawingCacheBackgroundColor(color);
 
         return bitmap;
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    getActivity().finish();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
     }
 }

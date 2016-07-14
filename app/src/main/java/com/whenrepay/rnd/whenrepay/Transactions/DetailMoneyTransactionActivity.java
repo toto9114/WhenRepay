@@ -208,12 +208,14 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
         } else {
             data.repay = mAdapter.getLastItem().remain;
         }
+        accountData.isCompleted =true;
         data.type = TYPE_COMPLETE;
         data.remain = 0;
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("MM월 dd일");
         data.date = sdf.format(date);
         DataManager.getInstance().insertTransaction(accountData._id, data.repay, data.remain, data.type, data.date);
+        DataManager.getInstance().updateContract(accountData);
         mAdapter.add(data);
     }
 

@@ -3,21 +3,17 @@ package com.whenrepay.rnd.whenrepay.Contact;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
-import android.widget.ListView;
 
 import com.whenrepay.rnd.whenrepay.Group.PersonData;
-import com.whenrepay.rnd.whenrepay.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by RND on 2016-07-04.
+ * Created by RND on 2016-07-14.
  */
-public class ContactAdapter extends BaseAdapter {
+public class SingleContactAdapter extends BaseAdapter {
     List<PersonData> items = new ArrayList<>();
-
     public void add(PersonData data){
         items.add(data);
         notifyDataSetChanged();
@@ -32,14 +28,13 @@ public class ContactAdapter extends BaseAdapter {
         items.clear();
         notifyDataSetChanged();
     }
-
     @Override
     public int getCount() {
         return items.size();
     }
 
     @Override
-    public PersonData getItem(int position) {
+    public Object getItem(int position) {
         return items.get(position);
     }
 
@@ -49,19 +44,14 @@ public class ContactAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        ContactView view;
+    public View getView(int position, View convertView, ViewGroup parent) {
+        SingleContactView view;
         if(convertView == null){
-            view = new ContactView(parent.getContext());
-        }else{
-            view = (ContactView)convertView;
+            view = new SingleContactView(parent.getContext());
+        }else {
+            view = (SingleContactView)convertView;
         }
-        CheckBox checkBox = (CheckBox)view.findViewById(R.id.checkBox_name);
-        checkBox.setChecked(((ListView) parent).isItemChecked(position));
-        checkBox.setFocusable(false);
-        checkBox.setClickable(false);
-
-        checkBox.setText(items.get(position).getName());
+        view.setData(items.get(position));
         return view;
     }
 }

@@ -54,7 +54,7 @@
         android:layout_height="100dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
-        android:id="@+id/text_result"
+        android:id="@+id/text_operation"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -68,7 +68,7 @@
         android:layout_height="wrap_content"
         android:text="ok"
         android:id="@+id/btn_regist"
-        android:layout_alignBottom="@+id/text_result"
+        android:layout_alignBottom="@+id/text_operation"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 </RelativeLayout>

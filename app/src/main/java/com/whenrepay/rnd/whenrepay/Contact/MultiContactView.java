@@ -9,12 +9,12 @@ import com.whenrepay.rnd.whenrepay.R;
 /**
  * Created by RND on 2016-07-04.
  */
-public class ContactView extends FrameLayout {
+public class MultiContactView extends FrameLayout {
 
     CheckBox nameView;
-    public ContactView(Context context) {
+    public MultiContactView(Context context) {
         super(context);
-        inflate(getContext(), R.layout.view_contact, this);
+        inflate(getContext(), R.layout.view_multi_contact, this);
 //        nameView = (CheckBox)findViewById(R.id.checkBox_name);
 //        nameView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //            @Override
