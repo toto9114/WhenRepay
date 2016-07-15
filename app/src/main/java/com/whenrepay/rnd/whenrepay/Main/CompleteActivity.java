@@ -5,11 +5,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.whenrepay.rnd.whenrepay.BorrowMoney.AccountData;
 import com.whenrepay.rnd.whenrepay.BorrowThings.ThingsData;
 import com.whenrepay.rnd.whenrepay.DutchPay.DutchPayData;
+import com.whenrepay.rnd.whenrepay.Group.OnItemCheckedListener;
 import com.whenrepay.rnd.whenrepay.Manager.DBContants;
 import com.whenrepay.rnd.whenrepay.Manager.DataManager;
 import com.whenrepay.rnd.whenrepay.R;
@@ -17,23 +21,24 @@ import com.whenrepay.rnd.whenrepay.TransactionData;
 import com.whenrepay.rnd.whenrepay.Transactions.DetailDutchActivity;
 import com.whenrepay.rnd.whenrepay.Transactions.DetailMoneyTransactionActivity;
 import com.whenrepay.rnd.whenrepay.Transactions.DetailThingsTransactionActivity;
-import com.whenrepay.rnd.whenrepay.Transactions.TransactionAdapter;
 
 import cn.iwgang.familiarrecyclerview.FamiliarRecyclerView;
 
 public class CompleteActivity extends AppCompatActivity {
 
     FamiliarRecyclerView recycler;
-    TransactionAdapter mAdapter;
+    CompleteAdapter mAdapter;
     LinearLayoutManager layoutManager;
 
+    boolean[] checkedList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complete);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out_background);
         recycler = (FamiliarRecyclerView) findViewById(R.id.recycler);
-        mAdapter = new TransactionAdapter();
+        mAdapter = new CompleteAdapter();
         layoutManager = new LinearLayoutManager(this, OrientationHelper.VERTICAL, false);
         recycler.setAdapter(mAdapter);
         recycler.setLayoutManager(layoutManager);
@@ -58,9 +63,17 @@ public class CompleteActivity extends AppCompatActivity {
                 }
             }
         });
+        mAdapter.setOnCheckedListener(new OnItemCheckedListener() {
+            @Override
+            public void OnItemChecked(boolean isChecked, int position) {
+                checkedList[position] = isChecked;
+            }
+        });
     }
 
     private void initData() {
+        mAdapter.clear();
+        checkedList = new boolean[DataManager.getInstance().getContractList(DBContants.SORT_TYPE_DATE).size()];
         if (DataManager.getInstance().getContractList(DBContants.SORT_TYPE_DATE).size() > 0) {
             for (TransactionData data : DataManager.getInstance().getContractList(DBContants.SORT_TYPE_DATE)) {
                 AccountData accountData = (AccountData) data;
@@ -70,6 +83,59 @@ public class CompleteActivity extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_repayment, menu);
+        return true;
+    }
+
+    boolean isDelClicked = false;
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if(!isDelClicked){
+            menu.getItem(0).setTitle("삭제");
+        }else{
+            menu.getItem(0).setTitle("완료");
+        }
+        return true;
+//        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
+        if (id == R.id.repayment) {
+            mAdapter.setCheckBoxVisible(false);
+            if(isDelClicked){
+                for(int i = 0 ; i<checkedList.length ; i++){
+                    if(checkedList[i]){
+                        TransactionData data = mAdapter.getItemAtPosition(i);
+                        Log.i("checkedList", "" + i + "," + data.getPrice());
+                    }
+                }
+                isDelClicked = false;
+                invalidateOptionsMenu();
+
+            }else{
+                mAdapter.setCheckBoxVisible(true);
+                isDelClicked = true;
+                invalidateOptionsMenu();
+
+            }
+            initData();
+
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     public void finish() {
         super.finish();

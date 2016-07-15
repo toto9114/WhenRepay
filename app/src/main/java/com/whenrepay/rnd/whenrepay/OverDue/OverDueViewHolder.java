@@ -28,7 +28,7 @@ public class OverDueViewHolder extends RecyclerView.ViewHolder {
     public OverDueViewHolder(View itemView) {
         super(itemView);
         titleView = (TextView) itemView.findViewById(R.id.text_title);
-        descView = (TextView) itemView.findViewById(R.id.text_desc);
+        descView = (TextView) itemView.findViewById(R.id.text_type);
         moneyView = (TextView) itemView.findViewById(R.id.text_money);
 
     }

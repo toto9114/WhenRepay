@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,8 +21,10 @@ import com.whenrepay.rnd.whenrepay.R;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import cn.iwgang.familiarrecyclerview.FamiliarRecyclerView;
+import io.realm.Realm;
 import jp.wasabeef.recyclerview.animators.FadeInDownAnimator;
 
 public class DetailMoneyTransactionActivity extends AppCompatActivity implements TransactionDialog.OnEditButtonClickListener {
@@ -28,12 +32,14 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
     public static final String EXTRA_ACCOUNT_DATA = "account";
 
     TextView totalView, nameView, dateView;
-    FamiliarRecyclerView recyclerView;
-    DetailTransactionAdapter mAdapter;
-    LinearLayoutManager layoutManager;
+
     int remainPrice;
     TransactionDialog dialog;
     AccountData accountData;
+    FamiliarRecyclerView recyclerView;
+    DetailTransactionAdapter mAdapter;
+    LinearLayoutManager layoutManager;
+    Realm mRealm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +47,7 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_detail_transaction);
         overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out_background);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent i = getIntent();
         accountData = (AccountData) i.getSerializableExtra(EXTRA_ACCOUNT_DATA); //리스트에서 뽑아온 AccountData
         totalView = (TextView) findViewById(R.id.text_total);
@@ -54,8 +61,11 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
 
-        dialog = new TransactionDialog();
         recyclerView.setItemAnimator(new FadeInDownAnimator());
+
+        mRealm = Realm.getInstance(this);
+
+        dialog = new TransactionDialog();
 
         initData(accountData);
         Button btn = (Button) findViewById(R.id.btn_back);
@@ -117,29 +127,24 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
             }
         });
 
+
+        btn = (Button) findViewById(R.id.btn_detail_contract);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initData(accountData);
+            }
+        });
+
+        btn = (Button) findViewById(R.id.btn_notify);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeNotify();
+            }
+        });
     }
 
-    private void initData(AccountData accountData) {
-        DetailTransData data = new DetailTransData();
-        data.type = TYPE_ADD;
-        data.repay = accountData.money;
-        data.remain = accountData.money;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
-        Date date = new Date(accountData.date);
-        data.date = sdf.format(date);
-        mAdapter.add(data);
-
-        if (DataManager.getInstance().getTransactionList(accountData._id).size() > 0) {
-            mAdapter.addAll(DataManager.getInstance().getTransactionList(accountData._id));
-            remainPrice = mAdapter.getLastItem().remain;
-        } else {
-            remainPrice = accountData.money;
-        }
-        NumberFormat nf = NumberFormat.getInstance();
-        totalView.setText(nf.format(accountData.money));
-        nameView.setText(accountData.name);
-        dateView.setText(sdf.format(date));
-    }
 
     public Bitmap byteArrayToBitmap(byte[] $byteArray) {
         Bitmap bitmap = BitmapFactory.decodeByteArray($byteArray, 0, $byteArray.length);
@@ -162,6 +167,29 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
     public static final int TYPE_SUB = 1;   //금액차감
     public static final int TYPE_COMPLETE = 2;  //완전상환
 
+    private void initData(AccountData accountData) {
+        mAdapter.clear();
+        DetailTransData data = new DetailTransData();
+        data.type = TYPE_ADD;
+        data.repay = accountData.money;
+        data.remain = accountData.money;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+        Date date = new Date(accountData.date);
+        data.date = sdf.format(date);
+        mAdapter.add(data);
+
+        if (DataManager.getInstance().getTransactionList(accountData._id).size() > 0) {
+            mAdapter.addAll(DataManager.getInstance().getTransactionList(accountData._id));
+            remainPrice = mAdapter.getLastItem().remain;
+        } else {
+            remainPrice = accountData.money;
+        }
+        NumberFormat nf = NumberFormat.getInstance();
+        totalView.setText(nf.format(accountData.money));
+        nameView.setText(accountData.name);
+        dateView.setText(sdf.format(date));
+    }
+
     public void addTrans(int price) {
         DetailTransData data = new DetailTransData();
         if (DataManager.getInstance().getTransactionList(accountData._id).size() > 0) {
@@ -173,7 +201,7 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("MM월 dd일");
         data.date = sdf.format(date);
-        DataManager.getInstance().insertTransaction(accountData._id,data.repay,data.remain,data.type,data.date);
+        DataManager.getInstance().insertTransaction(accountData._id, data.repay, data.remain, data.type, data.date);
         mAdapter.add(data);
 //        mAdapter.add(data);
     }
@@ -208,7 +236,7 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
         } else {
             data.repay = mAdapter.getLastItem().remain;
         }
-        accountData.isCompleted =true;
+        accountData.isCompleted = true;
         data.type = TYPE_COMPLETE;
         data.remain = 0;
         Date date = new Date();
@@ -217,6 +245,30 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
         DataManager.getInstance().insertTransaction(accountData._id, data.repay, data.remain, data.type, data.date);
         DataManager.getInstance().updateContract(accountData);
         mAdapter.add(data);
+    }
+
+    public void changeNotify() {
+        mAdapter.clear();
+        if (accountData.isCompleted) {
+
+
+        }
+        List<DunData> list = mRealm.where(DunData.class).equalTo("_id", accountData._id).findAll();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+        for (DunData data : list) {
+            Date date = new Date(data.getDate());
+            Log.i("detail", "date : " + sdf.format(date));
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == android.R.id.home){
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

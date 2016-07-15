@@ -32,6 +32,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import io.realm.Realm;
@@ -154,7 +155,12 @@ public class IOUActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("image/jpg");
         intent.putExtra(Intent.EXTRA_STREAM, uri);
-
+        mRealm.beginTransaction();
+        DunData data = mRealm.createObject(DunData.class);
+        data.set_id(accountData._id);
+        Calendar c = Calendar.getInstance();
+        data.setDate(c.getTimeInMillis());
+        mRealm.commitTransaction();
         startActivityForResult(Intent.createChooser(intent, "공유"), REQUEST_SEND_IMAGE);
     }
 

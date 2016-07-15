@@ -61,11 +61,13 @@ public class OverDueActivity extends AppCompatActivity {
     private void initData() {
         if (DataManager.getInstance().getContractList(TransactionFragment.SORT_TYPE_DATE).size() != 0) {
             for (TransactionData data : DataManager.getInstance().getContractList(TransactionFragment.SORT_TYPE_DATE)) {
+                AccountData accountData = (AccountData)data;
                 Calendar c = Calendar.getInstance();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
-                if (data.getRepayDate().compareTo(sdf.format(c.getTime())) < 0) {
-//                if (data.getRepayDate()- c.getTimeInMillis() < 1000*60*60*24) {
-                    mAdapter.add(data);
+                if(!accountData.isCompleted) {
+                    if (accountData.getRepayDate().compareTo(sdf.format(c.getTime())) < 0) {
+                        mAdapter.add(accountData);
+                    }
                 }
             }
         }

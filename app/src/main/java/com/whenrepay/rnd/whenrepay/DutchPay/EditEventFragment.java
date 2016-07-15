@@ -77,6 +77,7 @@ public class EditEventFragment extends Fragment {
     }
 
     private void init() {
+        eventList.clear();
         eventView = new EventView(getContext(), dutchPayData.personList);
         mFlowLayout.addView(eventView);
     }

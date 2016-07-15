@@ -16,6 +16,7 @@
         android:theme="@style/AppTheme.PopupOverlay">
 
     </com.whenrepay.rnd.whenrepay.MainToolbar>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,10 +24,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-
-
+            android:layout_height="match_parent">
 
 
             <LinearLayout
@@ -59,8 +57,6 @@
                     android:layout_gravity="right"
                     android:text="독촉하러가기" />
             </LinearLayout>
-
-
 
 
             <cn.iwgang.familiarrecyclerview.FamiliarRecyclerView
@@ -124,6 +120,7 @@
 
         </RelativeLayout>
     </ScrollView>
+
     <ImageView
         android:id="@+id/image_opacity"
         android:layout_width="match_parent"
@@ -132,9 +129,11 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:background="@color/opacity_background"
+        android:fitsSystemWindows="true"
         android:clickable="true"
         android:focusable="true"
         android:visibility="gone" />
+
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/floating_menu"
         android:layout_width="wrap_content"

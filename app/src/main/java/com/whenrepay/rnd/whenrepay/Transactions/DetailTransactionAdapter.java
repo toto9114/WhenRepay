@@ -27,6 +27,11 @@ public class DetailTransactionAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
+    public void clear(){
+        items.clear();
+        notifyDataSetChanged();
+    }
+
     public DetailTransData getLastItem(){
         return items.get(items.size()-1);
     }
