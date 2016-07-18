@@ -1,5 +1,6 @@
 package com.whenrepay.rnd.whenrepay.Contact;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +9,12 @@ import com.whenrepay.rnd.whenrepay.R;
 
 public class SingleContactActivity extends AppCompatActivity {
 
+    public static final String EXTRA_TYPE = "type";
+    public static final String TYPE_MONEY = "money";
+    public static final String TYPE_THINGS = "things";
+
     TabLayout tabLayout;
+    String type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,6 +22,8 @@ public class SingleContactActivity extends AppCompatActivity {
         setTitle("Contract");
         overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out_background);
 
+        Intent i = getIntent();
+        type = i.getStringExtra(EXTRA_TYPE);
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
 
         tabLayout.addTab(tabLayout.newTab().setText("연락처"));
@@ -64,6 +72,10 @@ public class SingleContactActivity extends AppCompatActivity {
                     .add(R.id.container, f)
                     .commit();
         }
+    }
+
+    public String getType(){
+        return type;
     }
     @Override
     public void finish() {

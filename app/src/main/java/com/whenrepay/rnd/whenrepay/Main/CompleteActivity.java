@@ -21,8 +21,10 @@ import com.whenrepay.rnd.whenrepay.TransactionData;
 import com.whenrepay.rnd.whenrepay.Transactions.DetailDutchActivity;
 import com.whenrepay.rnd.whenrepay.Transactions.DetailMoneyTransactionActivity;
 import com.whenrepay.rnd.whenrepay.Transactions.DetailThingsTransactionActivity;
+import com.whenrepay.rnd.whenrepay.Transactions.DunData;
 
 import cn.iwgang.familiarrecyclerview.FamiliarRecyclerView;
+import io.realm.Realm;
 
 public class CompleteActivity extends AppCompatActivity {
 
@@ -31,6 +33,7 @@ public class CompleteActivity extends AppCompatActivity {
     LinearLayoutManager layoutManager;
 
     boolean[] checkedList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +45,7 @@ public class CompleteActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this, OrientationHelper.VERTICAL, false);
         recycler.setAdapter(mAdapter);
         recycler.setLayoutManager(layoutManager);
+        mRealm = Realm.getInstance(this);
         initData();
 
         recycler.setOnItemClickListener(new FamiliarRecyclerView.OnItemClickListener() {
@@ -94,14 +98,16 @@ public class CompleteActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if(!isDelClicked){
+        if (!isDelClicked) {
             menu.getItem(0).setTitle("삭제");
-        }else{
+        } else {
             menu.getItem(0).setTitle("완료");
         }
         return true;
 //        return super.onPrepareOptionsMenu(menu);
     }
+
+    Realm mRealm;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -113,17 +119,39 @@ public class CompleteActivity extends AppCompatActivity {
         }
         if (id == R.id.repayment) {
             mAdapter.setCheckBoxVisible(false);
-            if(isDelClicked){
-                for(int i = 0 ; i<checkedList.length ; i++){
-                    if(checkedList[i]){
+            if (isDelClicked) {
+                for (int i = 0; i < checkedList.length; i++) {
+                    if (checkedList[i]) {
                         TransactionData data = mAdapter.getItemAtPosition(i);
+                        if (data instanceof AccountData) {
+                            DataManager.getInstance().deleteContract((AccountData) data);
+                            mRealm.beginTransaction();
+                            if (mRealm.where(DunData.class).equalTo("_id", ((AccountData) data)._id).findAll().size() > 0) {
+                                mRealm.where(DunData.class).equalTo("_id", ((AccountData) data)._id).findAll().clear();
+                            }
+                            mRealm.commitTransaction();
+                        } else if (data instanceof ThingsData) {
+                            DataManager.getInstance().deleteThingsContract(((ThingsData) data));
+                            mRealm.beginTransaction();
+                            if (mRealm.where(DunData.class).equalTo("_id", ((ThingsData) data)._id).findAll().size() > 0) {
+                                mRealm.where(DunData.class).equalTo("_id", ((ThingsData) data)._id).findAll().clear();
+                            }
+                            mRealm.commitTransaction();
+                        } else {
+                            DataManager.getInstance().deleteDutchData(((DutchPayData) data));
+                            mRealm.beginTransaction();
+                            if(mRealm.where(DunData.class).equalTo("_id",((DutchPayData)data)._id).findAll().size()>0){
+                                mRealm.where(DunData.class).equalTo("_id",((DutchPayData)data)._id).findAll().clear();
+                            }
+                            mRealm.commitTransaction();
+                        }
                         Log.i("checkedList", "" + i + "," + data.getPrice());
                     }
                 }
                 isDelClicked = false;
                 invalidateOptionsMenu();
 
-            }else{
+            } else {
                 mAdapter.setCheckBoxVisible(true);
                 isDelClicked = true;
                 invalidateOptionsMenu();

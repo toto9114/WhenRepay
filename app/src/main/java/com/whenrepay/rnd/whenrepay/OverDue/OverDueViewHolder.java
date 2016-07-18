@@ -20,7 +20,7 @@ import java.util.Date;
  * Created by RND on 2016-07-12.
  */
 public class OverDueViewHolder extends RecyclerView.ViewHolder {
-    TextView titleView, descView, moneyView;
+    TextView titleView, descView, moneyView,categoryView;
 
     int year, month, day;
     Calendar today = Calendar.getInstance();
@@ -28,9 +28,9 @@ public class OverDueViewHolder extends RecyclerView.ViewHolder {
     public OverDueViewHolder(View itemView) {
         super(itemView);
         titleView = (TextView) itemView.findViewById(R.id.text_title);
-        descView = (TextView) itemView.findViewById(R.id.text_type);
+        descView = (TextView) itemView.findViewById(R.id.text_date);
         moneyView = (TextView) itemView.findViewById(R.id.text_money);
-
+        categoryView = (TextView)itemView.findViewById(R.id.text_category);
     }
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
@@ -44,8 +44,9 @@ public class OverDueViewHolder extends RecyclerView.ViewHolder {
 
         if (data instanceof AccountData) {
             AccountData accountData = (AccountData) data;
+            categoryView.setText(R.string.category_money);
             titleView.setText(accountData.name);
-            moneyView.setText(nf.format(accountData.money));
+            moneyView.setText(nf.format(accountData.money)+"원");
             try {
                 Date date = sdf.parse(accountData.repayDate);
                 Calendar c = Calendar.getInstance();
@@ -60,6 +61,7 @@ public class OverDueViewHolder extends RecyclerView.ViewHolder {
             descView.setText(sdf.format(date) + "/" + "상환일 " + diff + "일 지남");
         } else if (data instanceof ThingsData) {
             ThingsData thingsData = (ThingsData) data;
+            categoryView.setText(R.string.category_things);
             titleView.setText(thingsData.borrowerName);
             moneyView.setText(thingsData.thingsName);
             try {
@@ -76,17 +78,18 @@ public class OverDueViewHolder extends RecyclerView.ViewHolder {
             descView.setText(sdf.format(date) + "/" + "상환일 " + diff + "일 지남");
         } else {
             DutchPayData dutchPayData = (DutchPayData) data;
+            categoryView.setText(R.string.category_dutch);
             titleView.setText(dutchPayData.title);
-            moneyView.setText(nf.format(dutchPayData.totalPrice));
-            try {
-                Date date = sdf.parse(dutchPayData.getRepayDate());
-                Calendar c = Calendar.getInstance();
-                c.setTime(date);
-                long b = (today.getTimeInMillis() - c.getTimeInMillis()) / 1000;
+            moneyView.setText(nf.format(dutchPayData.totalPrice)+"원");
+//            try {
+//                Date date = sdf.parse(dutchPayData.getRepayDate());
+//                Calendar c = Calendar.getInstance();
+//                c.setTime(date);
+                long b = (today.getTimeInMillis() - dutchPayData.date) / 1000;
                 diff =  b / (60 * 60 * 24);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
             Date date = new Date(dutchPayData.date);
             descView.setText(sdf.format(date));

@@ -1,4 +1,4 @@
-package com.whenrepay.rnd.whenrepay.Transactions;
+package com.whenrepay.rnd.whenrepay.Main;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.PopupWindow;
 
 import com.whenrepay.rnd.whenrepay.R;
+import com.whenrepay.rnd.whenrepay.Transactions.OnFilterItemClickListener;
 
 /**
  * Created by RND on 2016-06-24.

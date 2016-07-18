@@ -5,81 +5,106 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/lienar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <CheckBox
+            android:id="@+id/checkBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/checkBox"
-            android:checked="false" />
+            android:checked="false"
+            android:visibility="gone" />
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1">
 
-            <TextView
-                android:id="@+id/text_title"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:text="New Text" />
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/text_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/text_title"
-                android:text="New Text" />
+                <TextView
+                    android:id="@+id/text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New Text" />
 
-            <TextView
-                android:id="@+id/text_money"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/text_type"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:text="New Text" />
+                <TextView
+                    android:id="@+id/text_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_below="@+id/text_title"
+                    android:text="New Text" />
+            </LinearLayout>
+
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/text_type"
-                android:orientation="horizontal">
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/button6"
+                <TextView
+                    android:id="@+id/text_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="귀여운독촉" />
+                    android:layout_above="@+id/text_money"
 
-                <Button
-                    android:id="@+id/button7"
+                    android:text="New Text"
+                    android:layout_gravity="right" />
+
+                <TextView
+                    android:id="@+id/text_money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="New Button" />
-
-                <Button
-                    android:id="@+id/button8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="New Button" />
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:text="New Text"
+                    android:layout_gravity="right" />
             </LinearLayout>
+
 
         </RelativeLayout>
 
 
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/lienar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
+        <Button
+            android:id="@+id/button6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="귀여운독촉" />
+
+        <Button
+            android:id="@+id/button7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="무서운독촉" />
+
+        <Button
+            android:id="@+id/button8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="애절한독촉" />
     </LinearLayout>
 
 </RelativeLayout>

@@ -24,8 +24,8 @@ import com.whenrepay.rnd.whenrepay.R;
 import com.whenrepay.rnd.whenrepay.TransactionData;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import io.realm.Realm;
@@ -57,6 +57,7 @@ public class MultiRecentFragment extends Fragment {
     MyContactFooterView myContactView;
     Realm mRealm;
     boolean isMyContactChecked = true;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -82,7 +83,7 @@ public class MultiRecentFragment extends Fragment {
                 isMyContactChecked = isChecked;
             }
         });
-        Button btn = (Button)view.findViewById(R.id.btn_done);
+        Button btn = (Button) view.findViewById(R.id.btn_done);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +104,7 @@ public class MultiRecentFragment extends Fragment {
                     DutchPayData data = new DutchPayData();
                     List<PersonData> list = new ArrayList<PersonData>();
                     for (int i = 0; i < mAdapter.getCount(); i++) {
-                        if(isMyContactChecked){
+                        if (isMyContactChecked) {
                             mRealm = Realm.getInstance(getContext());
                             PersonData me = new PersonData();
                             me.setName(mRealm.where(MyProfile.class).findFirst().getName());
@@ -126,31 +127,71 @@ public class MultiRecentFragment extends Fragment {
         return view;
     }
 
-    List<String> list = new ArrayList<>();
+    List<TransactionData> list = new ArrayList<>();
 
     private void initData() {
         if (DataManager.getInstance().getContractList(DBContants.SORT_TYPE_DATE).size() != 0) {
             for (TransactionData data : DataManager.getInstance().getContractList(DBContants.SORT_TYPE_DATE)) {
                 AccountData accountData = (AccountData) data;
-                list.add(accountData.name);
+                list.add(accountData);
             }
         }
         if (DataManager.getInstance().getContractThingsList().size() != 0) {
             for (TransactionData data : DataManager.getInstance().getContractThingsList()) {
                 ThingsData thingsData = (ThingsData) data;
-                list.add(thingsData.borrowerName);
+                list.add(thingsData);
             }
         }
         if (DataManager.getInstance().getDutchPayList().size() != 0) {
             for (TransactionData data : DataManager.getInstance().getDutchPayList()) {
-
+                DutchPayData dutchPayData = (DutchPayData) data;
+                list.add(dutchPayData);
             }
         }
-        HashSet hs = new HashSet(list);
+        sort();
+        List<String> nameList = new ArrayList<>();
 
-        Iterator it = hs.iterator();
-        while (it.hasNext()) {
-            mAdapter.add(it.next().toString());
+        for (int i = 0 ; i < list.size() ; i++) {
+//            if (data instanceof AccountData) {
+                addRecentList(list.get(i),i);
+//                Log.i("list", "list : " + ((AccountData) data).name);
+//            } else if (data instanceof ThingsData) {
+//                nameList.add(((ThingsData) data).borrowerName);
+//                Log.i("list", "list : " + ((ThingsData) data).borrowerName);
+//            } else {
+//                nameList.add(((DutchPayData) data).title);
+//                Log.i("list", "list : " + ((DutchPayData) data).title);
+//            }
         }
+        for(TransactionData s: list){
+            nameList.add(s.getName());
+        }
+        mAdapter.addAll(nameList);
+//        HashSet hs = new HashSet(nameList);
+//
+//        Iterator it = hs.iterator();
+//        while (it.hasNext()) {
+//            mAdapter.add(it.next().toString());
+//        }
+
+
+    }
+
+    private void addRecentList(TransactionData data,int position) {
+        for(int i = position+1 ; i<list.size() ; i++){
+            if(list.get(i).getName().equals(data.getName())){
+//                mAdapter.add(data.getName());
+                list.remove(i);
+            }
+        }
+    }
+
+    public void sort() {
+        Collections.sort(list, new Comparator<TransactionData>() {
+            @Override
+            public int compare(TransactionData item1, TransactionData item2) {
+                return item1.getDate() - item2.getDate() > 0 ? -1 : 1;
+            }
+        });
     }
 }

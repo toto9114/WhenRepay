@@ -100,14 +100,22 @@
         android:layout_below="@+id/linearLayout7"
         android:text="거래내용 확인 후 서명을 입력해 주세요" />
 
-    <com.whenrepay.rnd.whenrepay.BorrowMoney.FingerPaintView
+
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/sign"
-        android:layout_below="@+id/textView24"
+        android:layout_above="@+id/linear_btn"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/linear_btn" />
+        android:layout_below="@+id/textView24"
+        android:layout_margin="16dp"
+        android:background="@drawable/sign_area">
+        <com.whenrepay.rnd.whenrepay.BorrowMoney.FingerPaintView
+            android:id="@+id/sign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+    </FrameLayout>
     <LinearLayout
         android:id="@+id/linear_btn"
         android:layout_width="match_parent"

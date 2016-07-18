@@ -71,9 +71,18 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:text="New Text" />
+<FrameLayout
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:layout_below="@+id/image_category"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp">
 
     <LinearLayout
-        android:id="@+id/linearLayout9"
+        android:id="@+id/linear_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -105,7 +114,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="완전상환" />
-    </LinearLayout>
+
+    </LinearLayout> <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:text="완전상환 되었습니다"
+    android:visibility="gone"
+    android:id="@+id/text_complete" />
+</FrameLayout>
+
 
     <LinearLayout
         android:id="@+id/linear_tab"
@@ -113,7 +131,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/linearLayout9"
+        android:layout_below="@+id/linearLayout"
         android:layout_marginBottom="16dp"
         android:orientation="horizontal">
 

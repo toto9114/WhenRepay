@@ -19,6 +19,11 @@ public class DutchPayData implements Serializable,TransactionData{
     public List<EventData> eventList;
 
     @Override
+    public String getName() {
+        return title;
+    }
+
+    @Override
     public long getDate() {
         return date;
     }

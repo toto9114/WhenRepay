@@ -48,11 +48,33 @@
             android:layout_height="wrap_content">
         </com.whenrepay.rnd.whenrepay.BorrowMoney.PersonView>
     </ViewSwitcher>
+
+    <LinearLayout
+        android:id="@+id/linear_name"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@+id/view_switcher_contact">
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="이름"
+            android:gravity="center"
+            android:layout_gravity="center_vertical" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_name"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:text="이름 추가" />
+    </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/view_switcher_contact"
+       android:layout_below="@+id/linear_name"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/linearLayout5">

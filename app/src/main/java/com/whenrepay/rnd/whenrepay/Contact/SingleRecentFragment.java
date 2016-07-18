@@ -1,14 +1,18 @@
 package com.whenrepay.rnd.whenrepay.Contact;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.whenrepay.rnd.whenrepay.BorrowMoney.AccountData;
+import com.whenrepay.rnd.whenrepay.BorrowMoney.ContractFragment;
 import com.whenrepay.rnd.whenrepay.BorrowThings.ThingsData;
 import com.whenrepay.rnd.whenrepay.Group.PersonData;
 import com.whenrepay.rnd.whenrepay.Manager.DBContants;
@@ -42,6 +46,16 @@ public class SingleRecentFragment extends Fragment {
         listView = (ListView) view.findViewById(R.id.listView);
         mAdapter = new SingleContactAdapter();
         listView.setAdapter(mAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent();
+                i.putExtra(ContractFragment.EXTRA_RESULT, (PersonData) mAdapter.getItem(position));
+                getActivity().setResult(Activity.RESULT_OK, i);
+                getActivity().finish();
+            }
+        });
         initData();
         return view;
     }

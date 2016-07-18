@@ -21,4 +21,7 @@
     <string name="alert_send_iou">입력한 차용증에 문제가 없으며\n해당 내용을 홍길동 님에게\n보내시겠습니까?</string>
     <string name="group_iou_message">상기 회원들은 해당 납부기일에\n회비를 납부하여 주시기 바랍니다.</string>
 
+    <string name="category_money">돈 빌려주기</string>
+    <string name="category_things">물건 빌려주기</string>
+    <string name="category_dutch">더치페이</string>
 </resources>

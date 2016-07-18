@@ -20,6 +20,11 @@ public class ThingsData implements Serializable, TransactionData {
     public byte[] sign;
 
     @Override
+    public String getName() {
+        return borrowerName;
+    }
+
+    @Override
     public long getDate() {
         return date;
     }

@@ -42,6 +42,7 @@ public class SingleContactFragment extends Fragment {
     ListView listView;
     SingleContactAdapter mAdapter;
     String mKeyword;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,9 +61,11 @@ public class SingleContactFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 Intent i = new Intent();
-                i.putExtra(ContractFragment.EXTRA_RESULT,(PersonData)mAdapter.getItem(position));
-                getActivity().setResult(Activity.RESULT_OK,i);
+                i.putExtra(ContractFragment.EXTRA_RESULT, (PersonData) mAdapter.getItem(position));
+                getActivity().setResult(Activity.RESULT_OK, i);
+
                 getActivity().finish();
             }
         });
@@ -88,7 +91,9 @@ public class SingleContactFragment extends Fragment {
 
         return view;
     }
+
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
+
     @Override
     public void onResume() {
         super.onResume();

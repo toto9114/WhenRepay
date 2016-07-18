@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +40,9 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
     FamiliarRecyclerView recyclerView;
     DetailTransactionAdapter mAdapter;
     LinearLayoutManager layoutManager;
+    LinearLayout btnLayout;
     Realm mRealm;
+    TextView completeView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,8 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
         totalView = (TextView) findViewById(R.id.text_total);
         nameView = (TextView) findViewById(R.id.text_name);
         dateView = (TextView) findViewById(R.id.text_date);
+        btnLayout = (LinearLayout) findViewById(R.id.linear_btn);
+        completeView = (TextView) findViewById(R.id.text_complete);
         recyclerView = (FamiliarRecyclerView) findViewById(R.id.recycler_overdue);
         mAdapter = new DetailTransactionAdapter();
         layoutManager = new LinearLayoutManager(this, OrientationHelper.VERTICAL, false);
@@ -82,7 +87,6 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
                 Intent i = new Intent(DetailMoneyTransactionActivity.this, IOUActivity.class);
                 i.putExtra(IOUActivity.EXTRA_ACCOUNT_DATA, accountData);
                 startActivity(i);
-
             }
         });
 
@@ -169,6 +173,10 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
 
     private void initData(AccountData accountData) {
         mAdapter.clear();
+        if (accountData.isCompleted) {
+            btnLayout.setVisibility(View.GONE);
+            completeView.setVisibility(View.VISIBLE);
+        }
         DetailTransData data = new DetailTransData();
         data.type = TYPE_ADD;
         data.repay = accountData.money;
@@ -230,6 +238,8 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
     }
 
     public void complete() {
+        btnLayout.setVisibility(View.GONE);
+        completeView.setVisibility(View.VISIBLE);
         DetailTransData data = new DetailTransData();
         if (DataManager.getInstance().getTransactionList(accountData._id).size() == 0) { //부분상환된게 없다면
             data.repay = accountData.money;
@@ -249,22 +259,22 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
 
     public void changeNotify() {
         mAdapter.clear();
-        if (accountData.isCompleted) {
-
-
-        }
         List<DunData> list = mRealm.where(DunData.class).equalTo("_id", accountData._id).findAll();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
         for (DunData data : list) {
             Date date = new Date(data.getDate());
             Log.i("detail", "date : " + sdf.format(date));
         }
+        if(accountData.isCompleted){
+            Log.i("detail","complete");
+        }
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id == android.R.id.home){
+        if (id == android.R.id.home) {
             finish();
             return true;
         }

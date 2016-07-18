@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.whenrepay.rnd.whenrepay.BorrowMoney.AccountData;
+import com.whenrepay.rnd.whenrepay.DutchPay.DutchPayData;
 import com.whenrepay.rnd.whenrepay.Manager.DataManager;
 import com.whenrepay.rnd.whenrepay.R;
 import com.whenrepay.rnd.whenrepay.TransactionData;
@@ -17,6 +18,7 @@ import com.whenrepay.rnd.whenrepay.Transactions.TransactionFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import cn.iwgang.familiarrecyclerview.FamiliarRecyclerView;
 
@@ -78,6 +80,17 @@ public class OverDueActivity extends AppCompatActivity {
                 if (data.getRepayDate().compareTo(sdf.format(c.getTime())) < 0) {
 //                if (data.getDate()- c.getTimeInMillis() < 0) {
                     mAdapter.add(data);
+                }
+            }
+        }
+        if (DataManager.getInstance().getDutchPayList().size() != 0) {
+            for (TransactionData data : DataManager.getInstance().getDutchPayList()) {
+                DutchPayData dutchPayData = (DutchPayData)data;
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+                if (sdf.format(new Date(dutchPayData.date)).compareTo(sdf.format(c.getTime())) < 0) {
+//                if (data.getDate()- c.getTimeInMillis() < 0) {
+                    mAdapter.add(dutchPayData);
                 }
             }
         }

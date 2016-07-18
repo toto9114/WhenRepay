@@ -12,15 +12,16 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:layout_alignParentTop="true"
-        android:theme="@style/AppTheme.PopupOverlay">
+        android:layout_alignParentTop="true">
 
     </com.whenrepay.rnd.whenrepay.MainToolbar>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar">
+        android:layout_below="@+id/toolbar"
+        android:fillViewport="false"
+        android:id="@+id/scrollview">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -35,7 +36,8 @@
 
                 android:orientation="horizontal"
                 android:paddingLeft="16dp"
-                android:paddingRight="16dp">
+                android:paddingRight="16dp"
+                android:background="#eeeeee">
 
                 <TextView
                     android:id="@+id/text_overdue"
@@ -65,6 +67,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
+                app:frv_divider="#696969"
+                app:frv_dividerHeight="0.5dp"
                 android:layout_below="@+id/linear_overdue" />
 
             <LinearLayout
@@ -74,7 +78,8 @@
                 android:layout_below="@+id/recycler_overdue"
                 android:orientation="horizontal"
                 android:paddingLeft="16dp"
-                android:paddingRight="16dp">
+                android:paddingRight="16dp"
+                android:background="#eeeeee">
 
                 <TextView
                     android:id="@+id/text_contract"
@@ -107,7 +112,10 @@
                 <cn.iwgang.familiarrecyclerview.FamiliarRecyclerView
                     android:id="@+id/recycler_contract"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    app:frv_footerDividersEnabled="true"
+                    app:frv_divider="#696969"
+                    app:frv_dividerHeight="0.5dp" />
 
                 <TextView
                     android:id="@+id/text_alert"

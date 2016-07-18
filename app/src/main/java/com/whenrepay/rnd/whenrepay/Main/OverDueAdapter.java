@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.whenrepay.rnd.whenrepay.BorrowMoney.AccountData;
 import com.whenrepay.rnd.whenrepay.BorrowThings.ThingsData;
+import com.whenrepay.rnd.whenrepay.DutchPay.DutchPayData;
 import com.whenrepay.rnd.whenrepay.R;
 import com.whenrepay.rnd.whenrepay.TransactionData;
 import com.whenrepay.rnd.whenrepay.Transactions.TransactionViewHolder;
@@ -64,8 +65,11 @@ public class OverDueAdapter extends RecyclerView.Adapter {
         if (items.get(position) instanceof AccountData) {
             AccountData data = (AccountData) items.get(position);
             ((TransactionViewHolder) holder).setAddressData(data);
-        } else {
+        } else if(items.get(position) instanceof ThingsData){
             ThingsData data = (ThingsData) items.get(position);
+            ((TransactionViewHolder) holder).setAddressData(data);
+        }else{
+            DutchPayData data = (DutchPayData) items.get(position);
             ((TransactionViewHolder) holder).setAddressData(data);
         }
     }

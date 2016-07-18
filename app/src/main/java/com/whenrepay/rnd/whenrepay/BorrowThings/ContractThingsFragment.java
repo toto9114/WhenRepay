@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -20,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
@@ -27,6 +27,8 @@ import com.bumptech.glide.Glide;
 import com.whenrepay.rnd.whenrepay.BorrowMoney.DirectlyEditDialog;
 import com.whenrepay.rnd.whenrepay.BorrowMoney.OnButtonClickListener;
 import com.whenrepay.rnd.whenrepay.BorrowMoney.PersonView;
+import com.whenrepay.rnd.whenrepay.Contact.SingleContactActivity;
+import com.whenrepay.rnd.whenrepay.Group.PersonData;
 import com.whenrepay.rnd.whenrepay.R;
 
 import java.io.ByteArrayOutputStream;
@@ -44,11 +46,14 @@ public class ContractThingsFragment extends Fragment {
     LinearLayout cameraView, galleryView;
     ViewSwitcher contactSwitcher;
     ImageView pictureView;
-    EditText nameView, memoView;
+    EditText thingsView, memoView;
+    TextView nameView;
     PersonView personView;
     private static final int REQUEST_CAMERA = 100;
     private static final int REQUEST_GALLERY = 200;
     private static final int REQUEST_CONTACT = 300;
+
+    public static final String EXTRA_RESULT = "result";
 
     ThingsData thingsData;
 
@@ -61,10 +66,11 @@ public class ContractThingsFragment extends Fragment {
 
         thingsData = new ThingsData();
         contactSwitcher = (ViewSwitcher) view.findViewById(R.id.view_switcher_contact);
+        nameView = (TextView)view.findViewById(R.id.edit_name);
         cameraView = (LinearLayout) view.findViewById(R.id.btn_camera);
         galleryView = (LinearLayout) view.findViewById(R.id.btn_gallery);
         pictureView = (ImageView) view.findViewById(R.id.image_things);
-        nameView = (EditText) view.findViewById(R.id.edit_things);
+        thingsView = (EditText) view.findViewById(R.id.edit_things);
         memoView = (EditText) view.findViewById(R.id.edit_memo);
         personView = (PersonView) view.findViewById(R.id.person);
 
@@ -90,8 +96,8 @@ public class ContractThingsFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!TextUtils.isEmpty(thingsData.borrowerName) || !TextUtils.isEmpty(nameView.getText().toString())) {
-                    thingsData.thingsName = nameView.getText().toString();
+                if(!TextUtils.isEmpty(thingsData.borrowerName) || !TextUtils.isEmpty(thingsView.getText().toString())) {
+                    thingsData.thingsName = thingsView.getText().toString();
                     thingsData.memo = memoView.getText().toString();
                     Bitmap bitmap = getViewBitmap(pictureView);
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -109,12 +115,23 @@ public class ContractThingsFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setData(ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
-                startActivityForResult(intent, REQUEST_CONTACT);
+//                Intent intent = new Intent(Intent.ACTION_PICK);
+//                intent.setData(ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
+//                startActivityForResult(intent, REQUEST_CONTACT);
+                Intent i = new Intent(getContext(), SingleContactActivity.class);
+                i.putExtra(SingleContactActivity.EXTRA_TYPE, SingleContactActivity.TYPE_THINGS);
+                startActivityForResult(i, REQUEST_CONTACT);
             }
         });
 
+        nameView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), SingleContactActivity.class);
+                i.putExtra(SingleContactActivity.EXTRA_TYPE, SingleContactActivity.TYPE_THINGS);
+                startActivityForResult(i, REQUEST_CONTACT);
+            }
+        });
         btn = (Button) view.findViewById(R.id.btn_direct);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,15 +189,20 @@ public class ContractThingsFragment extends Fragment {
                 break;
             case REQUEST_CONTACT:
                 if (resultCode != Activity.RESULT_CANCELED) {
-                    Cursor cursor = getActivity().getContentResolver().query(data.getData(),
-                            new String[]{ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
-                                    ContactsContract.CommonDataKinds.Phone.NUMBER}, null, null, null);
-                    cursor.moveToFirst();
-                    String name = cursor.getString(0);        //0은 이름을 얻어옵니다.
-                    thingsData.borrowerName = name;
-                    personView.setName(name);
+//                    Cursor cursor = getActivity().getContentResolver().query(data.getData(),
+//                            new String[]{ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+//                                    ContactsContract.CommonDataKinds.Phone.NUMBER}, null, null, null);
+//                    cursor.moveToFirst();
+//                    String name = cursor.getString(0);        //0은 이름을 얻어옵니다.
+//                    thingsData.borrowerName = name;
+//                    personView.setName(name);
+//                    contactSwitcher.showNext();
+//                    cursor.close();
+                    PersonData personData = (PersonData)data.getSerializableExtra(EXTRA_RESULT);
+                    thingsData.borrowerName = personData.getName();
+                    personView.setName(personData.getName());
                     contactSwitcher.showNext();
-                    cursor.close();
+                    nameView.setText(personData.getName());
                 }
                 break;
         }
