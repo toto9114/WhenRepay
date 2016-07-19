@@ -86,6 +86,11 @@ public class CompleteActivity extends AppCompatActivity {
                 }
             }
         }
+        if(DataManager.getInstance().getContractThingsList().size()>0){
+            for(TransactionData data : DataManager.getInstance().getContractThingsList()){
+                ThingsData thingsData = (ThingsData)data;
+            }
+        }
     }
 
     @Override

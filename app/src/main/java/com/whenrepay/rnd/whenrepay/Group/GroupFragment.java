@@ -62,7 +62,7 @@ public class GroupFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mAdapter.setCheckBoxVisible(true);
-//                DataManager.getInstance().deleteGroup(mAdapter.getItem(0));
+//                DataManager.getInstance().deleteGroup(mAdapter.getItemAtPosition(0));
                 isDelete = true;
                 getActivity().invalidateOptionsMenu();
                 initData();

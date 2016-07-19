@@ -157,9 +157,6 @@ public class MultiContactFragment extends Fragment {
                 getActivity().finish();
             }
         });
-        for (int i = 0; i < mAdapter.getCount(); i++) {
-            listView.setItemChecked(i, false);
-        }
         return view;
     }
 
@@ -192,6 +189,9 @@ public class MultiContactFragment extends Fragment {
             }
         } else {
             searchContacts();
+        }
+        for (int i = 0; i < mAdapter.getCount(); i++) {
+            listView.setItemChecked(i, false);
         }
     }
 

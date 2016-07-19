@@ -1,30 +1,42 @@
 package com.whenrepay.rnd.whenrepay.Main;
 
-import android.support.v7.widget.RecyclerView;
+import android.content.Context;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.whenrepay.rnd.whenrepay.R;
 
 /**
- * Created by RND on 2016-07-14.
+ * Created by RND on 2016-07-19.
  */
-public class OverDueHeaderView extends RecyclerView.ViewHolder {
+public class OverDueHeaderView extends FrameLayout {
+    public interface OnOverDueHeaderClickListener{
+        public void OnOverDueHeaderClick();
+    }
+
+    public OnOverDueHeaderClickListener overDueHeaderClickListener;
+    public void setOnOverDueHeaderClickListener(OnOverDueHeaderClickListener listener){
+        overDueHeaderClickListener = listener;
+    }
     TextView overDueView;
-    public OverDueHeaderView(View itemView) {
-        super(itemView);
-        overDueView = (TextView)itemView.findViewById(R.id.text_overdue);
-        Button btn = (Button)itemView.findViewById(R.id.btn_dun);
+    public OverDueHeaderView(Context context) {
+        super(context);
+        inflate(getContext(), R.layout.view_header_overdue,this);
+        overDueView = (TextView)findViewById(R.id.text_overdue);
+        Button btn = (Button)findViewById(R.id.btn_dun);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (overDueHeaderClickListener != null) {
+                    overDueHeaderClickListener.OnOverDueHeaderClick();
+                }
             }
         });
     }
-
     public void setOverDueView(int count){
+        overDueView.setText("연체내역 (" + count + "건)");
 
     }
 }

@@ -16,132 +16,6 @@
 
     </com.whenrepay.rnd.whenrepay.MainToolbar>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
-        android:fillViewport="false"
-        android:id="@+id/scrollview">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-            <LinearLayout
-                android:id="@+id/linear_overdue"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_alignParentLeft="true"
-
-                android:orientation="horizontal"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:background="#eeeeee">
-
-                <TextView
-                    android:id="@+id/text_overdue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical" />
-
-                <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-                <Button
-                    android:id="@+id/btn_dun"
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:text="독촉하러가기" />
-            </LinearLayout>
-
-
-            <cn.iwgang.familiarrecyclerview.FamiliarRecyclerView
-                android:id="@+id/recycler_overdue"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                app:frv_divider="#696969"
-                app:frv_dividerHeight="0.5dp"
-                android:layout_below="@+id/linear_overdue" />
-
-            <LinearLayout
-                android:id="@+id/linear_complete"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_below="@+id/recycler_overdue"
-                android:orientation="horizontal"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:background="#eeeeee">
-
-                <TextView
-                    android:id="@+id/text_contract"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical" />
-
-                <TextView
-                    android:id="@+id/textView10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-                <Button
-                    android:id="@+id/btn_complete"
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:text="완료내역보기" />
-            </LinearLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/linear_complete">
-
-                <cn.iwgang.familiarrecyclerview.FamiliarRecyclerView
-                    android:id="@+id/recycler_contract"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:frv_footerDividersEnabled="true"
-                    app:frv_divider="#696969"
-                    app:frv_dividerHeight="0.5dp" />
-
-                <TextView
-                    android:id="@+id/text_alert"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="거래내역이 없습니다"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-            </FrameLayout>
-
-        </RelativeLayout>
-    </ScrollView>
-
-    <ImageView
-        android:id="@+id/image_opacity"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="@color/opacity_background"
-        android:fitsSystemWindows="true"
-        android:clickable="true"
-        android:focusable="true"
-        android:visibility="gone" />
-
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/floating_menu"
         android:layout_width="wrap_content"
@@ -177,4 +51,36 @@
             fab:fab_title="더치페이하기" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+    <cn.iwgang.familiarrecyclerview.FamiliarRecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recycler"
+        android:layout_below="@+id/toolbar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:id="@+id/image_opacity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/opacity_background"
+        android:fitsSystemWindows="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/alert_empty_contract"
+        android:id="@+id/text_alert"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:visibility="gone" />
 </RelativeLayout>

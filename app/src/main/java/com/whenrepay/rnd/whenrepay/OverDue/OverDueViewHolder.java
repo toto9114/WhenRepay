@@ -2,11 +2,14 @@ package com.whenrepay.rnd.whenrepay.OverDue;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.whenrepay.rnd.whenrepay.BorrowMoney.AccountData;
 import com.whenrepay.rnd.whenrepay.BorrowThings.ThingsData;
 import com.whenrepay.rnd.whenrepay.DutchPay.DutchPayData;
+import com.whenrepay.rnd.whenrepay.Group.OnItemCheckedListener;
 import com.whenrepay.rnd.whenrepay.R;
 import com.whenrepay.rnd.whenrepay.TransactionData;
 
@@ -20,22 +23,41 @@ import java.util.Date;
  * Created by RND on 2016-07-12.
  */
 public class OverDueViewHolder extends RecyclerView.ViewHolder {
-    TextView titleView, descView, moneyView,categoryView;
+    public OnItemCheckedListener itemCheckedListener;
+    public void setOnCheckedListener(OnItemCheckedListener listener){
+        itemCheckedListener = listener;
+    }
 
+    TextView titleView, descView, moneyView,categoryView;
     int year, month, day;
     Calendar today = Calendar.getInstance();
-
+    CheckBox checkBox;
     public OverDueViewHolder(View itemView) {
         super(itemView);
         titleView = (TextView) itemView.findViewById(R.id.text_title);
         descView = (TextView) itemView.findViewById(R.id.text_date);
         moneyView = (TextView) itemView.findViewById(R.id.text_money);
         categoryView = (TextView)itemView.findViewById(R.id.text_category);
+        checkBox = (CheckBox)itemView.findViewById(R.id.checkBox);
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(itemCheckedListener != null){
+                    itemCheckedListener.OnItemChecked(isChecked,getAdapterPosition());
+                }
+            }
+        });
     }
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
 
-    public void setData(TransactionData data) {
+    public void setData(TransactionData data,boolean isCheckBoxVisible) {
+        checkBox.setChecked(false);
+        if(isCheckBoxVisible){
+            checkBox.setVisibility(View.VISIBLE);
+        }else{
+            checkBox.setVisibility(View.GONE);
+        }
         NumberFormat nf = NumberFormat.getInstance();
         year = today.get(Calendar.YEAR);
         month = today.get(Calendar.MONTH);

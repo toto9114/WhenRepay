@@ -4,15 +4,20 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.whenrepay.rnd.whenrepay.BorrowMoney.AccountData;
+import com.whenrepay.rnd.whenrepay.BorrowThings.ThingsData;
 import com.whenrepay.rnd.whenrepay.DutchPay.DutchPayData;
+import com.whenrepay.rnd.whenrepay.Group.OnItemCheckedListener;
 import com.whenrepay.rnd.whenrepay.Manager.DataManager;
 import com.whenrepay.rnd.whenrepay.R;
 import com.whenrepay.rnd.whenrepay.TransactionData;
+import com.whenrepay.rnd.whenrepay.Transactions.DunData;
 import com.whenrepay.rnd.whenrepay.Transactions.IOUDialog;
 import com.whenrepay.rnd.whenrepay.Transactions.TransactionFragment;
 
@@ -21,6 +26,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import cn.iwgang.familiarrecyclerview.FamiliarRecyclerView;
+import io.realm.Realm;
 
 public class OverDueActivity extends AppCompatActivity {
 
@@ -29,6 +35,7 @@ public class OverDueActivity extends AppCompatActivity {
     LinearLayoutManager layoutManager;
     DetailOverDueAdapter mAdapter;
 
+    Realm mRealm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,15 +48,16 @@ public class OverDueActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this, OrientationHelper.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
+        mRealm = Realm.getInstance(this);
 
         recyclerView.setOnItemClickListener(new FamiliarRecyclerView.OnItemClickListener() {
             @Override
             public void onItemClick(FamiliarRecyclerView familiarRecyclerView, View view, int position) {
-//                Toast.makeText(OverDueActivity.this, "" + mAdapter.getItem(position).getPrice(),Toast.LENGTH_SHORT).show();
-                if (mAdapter.getItem(position) instanceof AccountData) {
+//                Toast.makeText(OverDueActivity.this, "" + mAdapter.getItemAtPosition(position).getPrice(),Toast.LENGTH_SHORT).show();
+                if (mAdapter.getItemAtPosition(position) instanceof AccountData) {
                     IOUDialog dialog = new IOUDialog();
                     Bundle args = new Bundle();
-                    args.putSerializable(IOUDialog.EXTRA_ACCOUNT_DATA, (AccountData) mAdapter.getItem(position));
+                    args.putSerializable(IOUDialog.EXTRA_ACCOUNT_DATA, (AccountData) mAdapter.getItemAtPosition(position));
                     dialog.setArguments(args);
                     dialog.show(getSupportFragmentManager(), "dialog");
                 } else {
@@ -58,9 +66,17 @@ public class OverDueActivity extends AppCompatActivity {
             }
         });
         initData();
+
+        mAdapter.setOnCheckedListener(new OnItemCheckedListener() {
+            @Override
+            public void OnItemChecked(boolean isChecked, int position) {
+                checkedList[position] = isChecked;
+            }
+        });
     }
 
     private void initData() {
+        mAdapter.clear();
         if (DataManager.getInstance().getContractList(TransactionFragment.SORT_TYPE_DATE).size() != 0) {
             for (TransactionData data : DataManager.getInstance().getContractList(TransactionFragment.SORT_TYPE_DATE)) {
                 AccountData accountData = (AccountData)data;
@@ -94,13 +110,78 @@ public class OverDueActivity extends AppCompatActivity {
                 }
             }
         }
+        checkedList = new boolean[mAdapter.getItemCount()];
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_repayment, menu);
+        return true;
+    }
+
+    boolean isDelClicked = false;
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (!isDelClicked) {
+            menu.getItem(0).setTitle("삭제");
+        } else {
+            menu.getItem(0).setTitle("완료");
+        }
+        return true;
+//        return super.onPrepareOptionsMenu(menu);
+    }
+
+    boolean[] checkedList;
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == android.R.id.home){
             finish();
+            return true;
+        }
+        if (id == R.id.repayment) {
+            mAdapter.setCheckBoxVisible(false);
+            if (isDelClicked) {
+                for (int i = 0; i < checkedList.length; i++) {
+                    if (checkedList[i]) {
+                        TransactionData data = mAdapter.getItemAtPosition(i);
+                        if (data instanceof AccountData) {
+                            DataManager.getInstance().deleteContract((AccountData) data);
+                            mRealm.beginTransaction();
+                            if (mRealm.where(DunData.class).equalTo("_id", ((AccountData) data)._id).findAll().size() > 0) {
+                                mRealm.where(DunData.class).equalTo("_id", ((AccountData) data)._id).findAll().clear();
+                            }
+                            mRealm.commitTransaction();
+                        } else if (data instanceof ThingsData) {
+                            DataManager.getInstance().deleteThingsContract(((ThingsData) data));
+                            mRealm.beginTransaction();
+                            if (mRealm.where(DunData.class).equalTo("_id", ((ThingsData) data)._id).findAll().size() > 0) {
+                                mRealm.where(DunData.class).equalTo("_id", ((ThingsData) data)._id).findAll().clear();
+                            }
+                            mRealm.commitTransaction();
+                        } else {
+                            DataManager.getInstance().deleteDutchData(((DutchPayData) data));
+                            mRealm.beginTransaction();
+                            if(mRealm.where(DunData.class).equalTo("_id",((DutchPayData)data)._id).findAll().size()>0){
+                                mRealm.where(DunData.class).equalTo("_id",((DutchPayData)data)._id).findAll().clear();
+                            }
+                            mRealm.commitTransaction();
+                        }
+                        Log.i("checkedList", "" + i + "," + data.getPrice());
+                    }
+                }
+                isDelClicked = false;
+                invalidateOptionsMenu();
+
+            } else {
+                mAdapter.setCheckBoxVisible(true);
+                isDelClicked = true;
+                invalidateOptionsMenu();
+
+            }
+            initData();
+
             return true;
         }
         return super.onOptionsItemSelected(item);

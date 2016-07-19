@@ -11,6 +11,15 @@ import com.whenrepay.rnd.whenrepay.R;
  * Created by RND on 2016-07-14.
  */
 public class ContractHeaderView extends RecyclerView.ViewHolder {
+
+    public interface OnContractHeaderClickListener{
+        public void OnContractHeaderClick();
+    }
+
+    public OnContractHeaderClickListener contractHeaderClickListener;
+    public void setOnOverDueHeaderClickListener(OnContractHeaderClickListener listener){
+        contractHeaderClickListener = listener;
+    }
     TextView contractView;
     public ContractHeaderView(View itemView) {
         super(itemView);
@@ -20,12 +29,13 @@ public class ContractHeaderView extends RecyclerView.ViewHolder {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(contractHeaderClickListener!= null) {
+                    contractHeaderClickListener.OnContractHeaderClick();
+                }
             }
         });
     }
-
     public void setContractView(int count){
-
+        contractView.setText("거래내역(진행중 " + count + "건)");
     }
 }

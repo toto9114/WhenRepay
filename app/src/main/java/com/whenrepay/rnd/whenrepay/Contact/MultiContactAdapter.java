@@ -18,17 +18,17 @@ import java.util.List;
 public class MultiContactAdapter extends BaseAdapter {
     List<PersonData> items = new ArrayList<>();
 
-    public void add(PersonData data){
+    public void add(PersonData data) {
         items.add(data);
         notifyDataSetChanged();
     }
 
-    public void addAll(List<PersonData> list){
+    public void addAll(List<PersonData> list) {
         items.addAll(list);
         notifyDataSetChanged();
     }
 
-    public void clear(){
+    public void clear() {
         items.clear();
         notifyDataSetChanged();
     }
@@ -48,20 +48,26 @@ public class MultiContactAdapter extends BaseAdapter {
         return position;
     }
 
+//    CheckBox checkBox;
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         MultiContactView view;
-        if(convertView == null){
+        if (convertView == null) {
             view = new MultiContactView(parent.getContext());
-        }else{
-            view = (MultiContactView)convertView;
+        } else {
+            view = (MultiContactView) convertView;
         }
-        CheckBox checkBox = (CheckBox)view.findViewById(R.id.checkBox_name);
+        CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox_name);
         checkBox.setChecked(((ListView) parent).isItemChecked(position));
         checkBox.setFocusable(false);
         checkBox.setClickable(false);
 
         checkBox.setText(items.get(position).getName());
         return view;
+    }
+
+    public void initCheckBox(){
+
     }
 }

@@ -93,7 +93,7 @@ public class MultiRecentFragment extends Fragment {
 //                    List<String> list = new ArrayList<String>();
 //                    for (int i = 0; i < mAdapter.getCount(); i++) {
 //                        if (listView.isItemChecked(i)) {
-//                            list.add(mAdapter.getItem(i));
+//                            list.add(mAdapter.getItemAtPosition(i));
 //                        }
 //                    }
 //                    data.setPersonList(list);
@@ -103,13 +103,13 @@ public class MultiRecentFragment extends Fragment {
                     Intent intent = new Intent();
                     DutchPayData data = new DutchPayData();
                     List<PersonData> list = new ArrayList<PersonData>();
+                    if (isMyContactChecked) {
+                        mRealm = Realm.getInstance(getContext());
+                        PersonData me = new PersonData();
+                        me.setName(mRealm.where(MyProfile.class).findFirst().getName());
+                        list.add(me);
+                    }
                     for (int i = 0; i < mAdapter.getCount(); i++) {
-                        if (isMyContactChecked) {
-                            mRealm = Realm.getInstance(getContext());
-                            PersonData me = new PersonData();
-                            me.setName(mRealm.where(MyProfile.class).findFirst().getName());
-                            list.add(me);
-                        }
                         if (listView.isItemChecked(i)) {
                             PersonData personData = new PersonData();
                             personData.setName(mAdapter.getItem(i));
@@ -128,6 +128,14 @@ public class MultiRecentFragment extends Fragment {
     }
 
     List<TransactionData> list = new ArrayList<>();
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        for(int i = 0 ; i<mAdapter.getCount() ; i++){
+            listView.setItemChecked(i,false);
+        }
+    }
 
     private void initData() {
         if (DataManager.getInstance().getContractList(DBContants.SORT_TYPE_DATE).size() != 0) {
@@ -152,29 +160,12 @@ public class MultiRecentFragment extends Fragment {
         List<String> nameList = new ArrayList<>();
 
         for (int i = 0 ; i < list.size() ; i++) {
-//            if (data instanceof AccountData) {
                 addRecentList(list.get(i),i);
-//                Log.i("list", "list : " + ((AccountData) data).name);
-//            } else if (data instanceof ThingsData) {
-//                nameList.add(((ThingsData) data).borrowerName);
-//                Log.i("list", "list : " + ((ThingsData) data).borrowerName);
-//            } else {
-//                nameList.add(((DutchPayData) data).title);
-//                Log.i("list", "list : " + ((DutchPayData) data).title);
-//            }
         }
         for(TransactionData s: list){
             nameList.add(s.getName());
         }
         mAdapter.addAll(nameList);
-//        HashSet hs = new HashSet(nameList);
-//
-//        Iterator it = hs.iterator();
-//        while (it.hasNext()) {
-//            mAdapter.add(it.next().toString());
-//        }
-
-
     }
 
     private void addRecentList(TransactionData data,int position) {

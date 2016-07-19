@@ -1,8 +1,6 @@
 package com.whenrepay.rnd.whenrepay.Transactions;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -38,7 +36,8 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
     TransactionDialog dialog;
     AccountData accountData;
     FamiliarRecyclerView recyclerView;
-    DetailTransactionAdapter mAdapter;
+    DetailTransactionAdapter transAdapter;
+    NotifyAdapter notifyAdapter;
     LinearLayoutManager layoutManager;
     LinearLayout btnLayout;
     Realm mRealm;
@@ -59,13 +58,13 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
         btnLayout = (LinearLayout) findViewById(R.id.linear_btn);
         completeView = (TextView) findViewById(R.id.text_complete);
         recyclerView = (FamiliarRecyclerView) findViewById(R.id.recycler_overdue);
-        mAdapter = new DetailTransactionAdapter();
+        transAdapter = new DetailTransactionAdapter();
+        notifyAdapter = new NotifyAdapter();
         layoutManager = new LinearLayoutManager(this, OrientationHelper.VERTICAL, false);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(mAdapter);
-
+        recyclerView.setAdapter(transAdapter);
         recyclerView.setItemAnimator(new FadeInDownAnimator());
 
         mRealm = Realm.getInstance(this);
@@ -149,12 +148,6 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
         });
     }
 
-
-    public Bitmap byteArrayToBitmap(byte[] $byteArray) {
-        Bitmap bitmap = BitmapFactory.decodeByteArray($byteArray, 0, $byteArray.length);
-        return bitmap;
-    }
-
     @Override
     public void onButtonClick(int type, int price) {  //금액 입력 다이얼로그로부터 받는 값
         switch (type) {
@@ -172,7 +165,9 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
     public static final int TYPE_COMPLETE = 2;  //완전상환
 
     private void initData(AccountData accountData) {
-        mAdapter.clear();
+        recyclerView.swapAdapter(transAdapter,true);
+//
+        transAdapter.clear();
         if (accountData.isCompleted) {
             btnLayout.setVisibility(View.GONE);
             completeView.setVisibility(View.VISIBLE);
@@ -184,11 +179,11 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
         Date date = new Date(accountData.date);
         data.date = sdf.format(date);
-        mAdapter.add(data);
+        transAdapter.add(data);
 
         if (DataManager.getInstance().getTransactionList(accountData._id).size() > 0) {
-            mAdapter.addAll(DataManager.getInstance().getTransactionList(accountData._id));
-            remainPrice = mAdapter.getLastItem().remain;
+            transAdapter.addAll(DataManager.getInstance().getTransactionList(accountData._id));
+            remainPrice = transAdapter.getLastItem().remain;
         } else {
             remainPrice = accountData.money;
         }
@@ -201,7 +196,7 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
     public void addTrans(int price) {
         DetailTransData data = new DetailTransData();
         if (DataManager.getInstance().getTransactionList(accountData._id).size() > 0) {
-            remainPrice = mAdapter.getLastItem().remain;
+            remainPrice = transAdapter.getLastItem().remain;
         }
         data.type = TYPE_ADD;
         data.repay = price;
@@ -210,14 +205,14 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
         SimpleDateFormat sdf = new SimpleDateFormat("MM월 dd일");
         data.date = sdf.format(date);
         DataManager.getInstance().insertTransaction(accountData._id, data.repay, data.remain, data.type, data.date);
-        mAdapter.add(data);
-//        mAdapter.add(data);
+        transAdapter.add(data);
+//        transAdapter.add(data);
     }
 
     public void subTrans(int price) {
         DetailTransData data = new DetailTransData();
         if (DataManager.getInstance().getTransactionList(accountData._id).size() > 0) {
-            remainPrice = mAdapter.getLastItem().remain;
+            remainPrice = transAdapter.getLastItem().remain;
         }
         data.type = TYPE_SUB;
         data.repay = price;
@@ -228,7 +223,7 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
             SimpleDateFormat sdf = new SimpleDateFormat("MM월 dd일");
             data.date = sdf.format(date);
             DataManager.getInstance().insertTransaction(accountData._id, data.repay, data.remain, data.type, data.date);
-            mAdapter.add(data);
+            transAdapter.add(data);
             if (remainPrice == 0) {
                 complete();
             }
@@ -244,7 +239,7 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
         if (DataManager.getInstance().getTransactionList(accountData._id).size() == 0) { //부분상환된게 없다면
             data.repay = accountData.money;
         } else {
-            data.repay = mAdapter.getLastItem().remain;
+            data.repay = transAdapter.getLastItem().remain;
         }
         accountData.isCompleted = true;
         data.type = TYPE_COMPLETE;
@@ -254,11 +249,12 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
         data.date = sdf.format(date);
         DataManager.getInstance().insertTransaction(accountData._id, data.repay, data.remain, data.type, data.date);
         DataManager.getInstance().updateContract(accountData);
-        mAdapter.add(data);
+        transAdapter.add(data);
     }
 
     public void changeNotify() {
-        mAdapter.clear();
+        recyclerView.swapAdapter(notifyAdapter,true);
+        notifyAdapter.clear();
         List<DunData> list = mRealm.where(DunData.class).equalTo("_id", accountData._id).findAll();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
         for (DunData data : list) {

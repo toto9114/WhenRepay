@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.whenrepay.rnd.whenrepay.Group.OnItemCheckedListener;
 import com.whenrepay.rnd.whenrepay.R;
 import com.whenrepay.rnd.whenrepay.TransactionData;
 
@@ -14,7 +15,7 @@ import java.util.List;
 /**
  * Created by RND on 2016-07-12.
  */
-public class DetailOverDueAdapter extends RecyclerView.Adapter {
+public class DetailOverDueAdapter extends RecyclerView.Adapter implements OnItemCheckedListener{
     List<TransactionData> items = new ArrayList<>();
 
     public void add(TransactionData data){
@@ -25,8 +26,13 @@ public class DetailOverDueAdapter extends RecyclerView.Adapter {
         items.clear();
         notifyDataSetChanged();
     }
+    boolean mCheckBoxStable = false;
 
-    public TransactionData getItem(int position){
+    public void setCheckBoxVisible(boolean isVisible) {
+        mCheckBoxStable = isVisible;
+        notifyDataSetChanged();
+    }
+    public TransactionData getItemAtPosition(int position){
         return items.get(position);
     }
 
@@ -40,11 +46,26 @@ public class DetailOverDueAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((OverDueViewHolder)holder).setData(items.get(position));
+        ((OverDueViewHolder)holder).setData(items.get(position),mCheckBoxStable);
+        ((OverDueViewHolder)holder).setOnCheckedListener(this);
     }
 
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+
+    private OnItemCheckedListener itemCheckedListener;
+
+    public void setOnCheckedListener(OnItemCheckedListener listener) {
+        itemCheckedListener = listener;
+    }
+
+    @Override
+    public void OnItemChecked(boolean isChecked, int position) {
+        if (itemCheckedListener != null) {
+            itemCheckedListener.OnItemChecked(isChecked, position);
+        }
     }
 }
