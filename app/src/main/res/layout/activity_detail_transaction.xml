@@ -151,14 +151,14 @@
             android:text="알림" />
     </LinearLayout>
 
-    <cn.iwgang.familiarrecyclerview.FamiliarRecyclerView
-        android:id="@+id/recycler_overdue"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/linearLayout10"
+        android:layout_below="@+id/linear_tab"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/linear_tab" />
+        android:layout_above="@+id/linearLayout10"
+        android:id="@+id/container"></FrameLayout>
 
 
 </RelativeLayout>

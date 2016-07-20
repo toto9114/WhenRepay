@@ -14,9 +14,9 @@ import java.util.List;
  * Created by RND on 2016-07-19.
  */
 public class NotifyAdapter extends RecyclerView.Adapter {
-    List<DunData> items = new ArrayList<>();
+    List<NotifyData> items = new ArrayList<>();
 
-    public void add(DunData data){
+    public void add(NotifyData data){
         items.add(data);
         notifyDataSetChanged();
     }

@@ -44,9 +44,6 @@ public class DetailTransactionAdapter extends RecyclerView.Adapter {
 
             case DataManager.TRANSACTION_SUB:
                 return DetailMoneyTransactionActivity.TYPE_SUB;
-
-            case DataManager.TRANSACTION_COMPLETE:
-                return DetailMoneyTransactionActivity.TYPE_COMPLETE;
         }
         return super.getItemViewType(position);
     }
@@ -62,9 +59,6 @@ public class DetailTransactionAdapter extends RecyclerView.Adapter {
             case DataManager.TRANSACTION_SUB:
                 view = inflater.inflate(R.layout.view_detail_trans_sub, parent, false);
                 return new SubTransViewHolder(view);
-            case DataManager.TRANSACTION_COMPLETE:
-                view = inflater.inflate(R.layout.view_detail_trans_complete, parent, false);
-                return new CompleteTransViewHolder(view);
         }
         return new AddTransViewHolder(view);
     }
@@ -83,9 +77,6 @@ public class DetailTransactionAdapter extends RecyclerView.Adapter {
                 break;
             case DataManager.TRANSACTION_SUB:
                 ((SubTransViewHolder) holder).setData(data);
-                break;
-            case DataManager.TRANSACTION_COMPLETE:
-                ((CompleteTransViewHolder)holder).setData(data);
                 break;
         }
     }

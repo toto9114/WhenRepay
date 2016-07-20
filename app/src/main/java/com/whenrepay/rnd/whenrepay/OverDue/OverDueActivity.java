@@ -43,7 +43,7 @@ public class OverDueActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out_background);
-        recyclerView = (FamiliarRecyclerView) findViewById(R.id.recycler_overdue);
+        recyclerView = (FamiliarRecyclerView) findViewById(R.id.recycler);
         mAdapter = new DetailOverDueAdapter();
         layoutManager = new LinearLayoutManager(this, OrientationHelper.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);

@@ -59,7 +59,7 @@
     <cn.iwgang.familiarrecyclerview.FamiliarRecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recycler_overdue"
+        android:id="@+id/recycler"
         android:layout_below="@+id/linear1"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"

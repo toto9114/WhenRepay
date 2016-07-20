@@ -61,7 +61,7 @@ public class RegistFragment extends Fragment {
 
         dutchPayData = new DutchPayData();
         editEvent = (EditText) view.findViewById(R.id.edit_event);
-        recyclerView = (FamiliarRecyclerView) view.findViewById(R.id.recycler_overdue);
+        recyclerView = (FamiliarRecyclerView) view.findViewById(R.id.recycler);
         layoutManager = new LinearLayoutManager(getContext(), OrientationHelper.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 //        mAdapter = new PersonListAdapter();
