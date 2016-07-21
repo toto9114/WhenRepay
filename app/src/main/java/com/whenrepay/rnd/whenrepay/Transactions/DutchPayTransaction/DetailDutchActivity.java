@@ -1,9 +1,10 @@
-package com.whenrepay.rnd.whenrepay.Transactions;
+package com.whenrepay.rnd.whenrepay.Transactions.DutchPayTransaction;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import com.whenrepay.rnd.whenrepay.DutchPay.DutchPayData;
 import com.whenrepay.rnd.whenrepay.R;
@@ -12,6 +13,10 @@ public class DetailDutchActivity extends AppCompatActivity {
 
     public static final String EXTRA_DUTCH_DATA = "dutch";
     DutchPayData dutchPayData;
+
+    TextView titleView, categoryView, dateView, moneyView;
+    ViewSwitcher completeSwitcher;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,7 +25,12 @@ public class DetailDutchActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         dutchPayData = (DutchPayData)getIntent().getSerializableExtra(EXTRA_DUTCH_DATA);
 
-        Toast.makeText(DetailDutchActivity.this, dutchPayData.title , Toast.LENGTH_SHORT).show();
+        titleView = (TextView)findViewById(R.id.text_title);
+        categoryView = (TextView)findViewById(R.id.text_category);
+        dateView = (TextView)findViewById(R.id.text_date);
+        moneyView = (TextView)findViewById(R.id.text_money);
+        completeSwitcher = (ViewSwitcher)findViewById(R.id.switcher_complete);
+
     }
 
     @Override

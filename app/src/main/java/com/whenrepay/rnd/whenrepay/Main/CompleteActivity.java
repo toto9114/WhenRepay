@@ -18,10 +18,10 @@ import com.whenrepay.rnd.whenrepay.Manager.DBContants;
 import com.whenrepay.rnd.whenrepay.Manager.DataManager;
 import com.whenrepay.rnd.whenrepay.R;
 import com.whenrepay.rnd.whenrepay.TransactionData;
-import com.whenrepay.rnd.whenrepay.Transactions.DetailDutchActivity;
-import com.whenrepay.rnd.whenrepay.Transactions.DetailMoneyTransactionActivity;
-import com.whenrepay.rnd.whenrepay.Transactions.DetailThingsTransactionActivity;
-import com.whenrepay.rnd.whenrepay.Transactions.DunData;
+import com.whenrepay.rnd.whenrepay.Transactions.DutchPayTransaction.DetailDutchActivity;
+import com.whenrepay.rnd.whenrepay.Transactions.MoneyTransaction.DetailMoneyTransactionActivity;
+import com.whenrepay.rnd.whenrepay.Transactions.ThingsTransaction.DetailThingsTransactionActivity;
+import com.whenrepay.rnd.whenrepay.Transactions.MoneyTransaction.MoneyDunData;
 
 import cn.iwgang.familiarrecyclerview.FamiliarRecyclerView;
 import io.realm.Realm;
@@ -131,22 +131,22 @@ public class CompleteActivity extends AppCompatActivity {
                         if (data instanceof AccountData) {
                             DataManager.getInstance().deleteContract((AccountData) data);
                             mRealm.beginTransaction();
-                            if (mRealm.where(DunData.class).equalTo("_id", ((AccountData) data)._id).findAll().size() > 0) {
-                                mRealm.where(DunData.class).equalTo("_id", ((AccountData) data)._id).findAll().clear();
+                            if (mRealm.where(MoneyDunData.class).equalTo("_id", ((AccountData) data)._id).findAll().size() > 0) {
+                                mRealm.where(MoneyDunData.class).equalTo("_id", ((AccountData) data)._id).findAll().clear();
                             }
                             mRealm.commitTransaction();
                         } else if (data instanceof ThingsData) {
                             DataManager.getInstance().deleteThingsContract(((ThingsData) data));
                             mRealm.beginTransaction();
-                            if (mRealm.where(DunData.class).equalTo("_id", ((ThingsData) data)._id).findAll().size() > 0) {
-                                mRealm.where(DunData.class).equalTo("_id", ((ThingsData) data)._id).findAll().clear();
+                            if (mRealm.where(MoneyDunData.class).equalTo("_id", ((ThingsData) data)._id).findAll().size() > 0) {
+                                mRealm.where(MoneyDunData.class).equalTo("_id", ((ThingsData) data)._id).findAll().clear();
                             }
                             mRealm.commitTransaction();
                         } else {
                             DataManager.getInstance().deleteDutchData(((DutchPayData) data));
                             mRealm.beginTransaction();
-                            if(mRealm.where(DunData.class).equalTo("_id",((DutchPayData)data)._id).findAll().size()>0){
-                                mRealm.where(DunData.class).equalTo("_id",((DutchPayData)data)._id).findAll().clear();
+                            if(mRealm.where(MoneyDunData.class).equalTo("_id",((DutchPayData)data)._id).findAll().size()>0){
+                                mRealm.where(MoneyDunData.class).equalTo("_id",((DutchPayData)data)._id).findAll().clear();
                             }
                             mRealm.commitTransaction();
                         }

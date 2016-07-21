@@ -1,4 +1,4 @@
-package com.whenrepay.rnd.whenrepay.Transactions;
+package com.whenrepay.rnd.whenrepay.Transactions.MoneyTransaction;
 
 
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 
 import com.whenrepay.rnd.whenrepay.BorrowMoney.AccountData;
 import com.whenrepay.rnd.whenrepay.R;
+import com.whenrepay.rnd.whenrepay.Transactions.NotifyAdapter;
+import com.whenrepay.rnd.whenrepay.Transactions.NotifyData;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,11 +26,11 @@ import io.realm.Realm;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Notifyfragment extends Fragment {
+public class MoneyNotifyfragment extends Fragment {
 
 
     public static final String EXTRA_ACCOUNT_DATA = "account";
-    public Notifyfragment() {
+    public MoneyNotifyfragment() {
         // Required empty public constructor
     }
 
@@ -62,7 +64,7 @@ public class Notifyfragment extends Fragment {
 
     private void initData(){
         mAdapter.clear();
-        List<DunData> list = mRealm.where(DunData.class).equalTo("_id", accountData._id).findAll();
+        List<MoneyDunData> list = mRealm.where(MoneyDunData.class).equalTo("_id", accountData._id).findAll();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
         NotifyData notifyData;
         if (accountData.isCompleted) {
@@ -72,7 +74,7 @@ public class Notifyfragment extends Fragment {
             mAdapter.add(notifyData);
             Log.i("detail", "complete");
         }
-        for (DunData data : list) {
+        for (MoneyDunData data : list) {
             Date date = new Date(data.getDate());
             Log.i("detail", "date : " + sdf.format(date));
             notifyData = new NotifyData();

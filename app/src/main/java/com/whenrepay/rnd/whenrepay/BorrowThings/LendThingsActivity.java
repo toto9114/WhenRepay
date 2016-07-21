@@ -2,7 +2,6 @@ package com.whenrepay.rnd.whenrepay.BorrowThings;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -31,7 +30,6 @@ public class LendThingsActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
-                    .addToBackStack(null)
                     .add(R.id.container, new ContractThingsFragment())
                     .commit();
         }
@@ -66,7 +64,7 @@ public class LendThingsActivity extends AppCompatActivity {
                 .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out,R.anim.slide_left_in,R.anim.slide_right_out)
                 .replace(R.id.container, new SuccessFragment())
                 .commit();
-        getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
     }
 
     private OnKeyBackPressedListener mOnKeyBackPressedListener;

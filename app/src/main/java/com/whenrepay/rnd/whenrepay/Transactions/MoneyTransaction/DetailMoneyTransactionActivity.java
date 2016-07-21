@@ -1,9 +1,10 @@
-package com.whenrepay.rnd.whenrepay.Transactions;
+package com.whenrepay.rnd.whenrepay.Transactions.MoneyTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,8 @@ import android.widget.Toast;
 import com.whenrepay.rnd.whenrepay.BorrowMoney.AccountData;
 import com.whenrepay.rnd.whenrepay.Manager.DataManager;
 import com.whenrepay.rnd.whenrepay.R;
+import com.whenrepay.rnd.whenrepay.Transactions.IOUActivity;
+import com.whenrepay.rnd.whenrepay.Transactions.NotifyAdapter;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -25,6 +28,9 @@ import io.realm.Realm;
 public class DetailMoneyTransactionActivity extends AppCompatActivity implements TransactionDialog.OnEditButtonClickListener {
 
     public static final String EXTRA_ACCOUNT_DATA = "account";
+
+    private static final String TRANS_FRAGMENT = "trans";
+    private static final String NOTIFY_FRAGMENT = "notify";
 
     TextView totalView, nameView, dateView;
 
@@ -44,7 +50,6 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_transaction);
         overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out_background);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent i = getIntent();
         accountData = (AccountData) i.getSerializableExtra(EXTRA_ACCOUNT_DATA); //리스트에서 뽑아온 AccountData
@@ -131,7 +136,6 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//
                 changeDetailTrans();
             }
         });
@@ -143,13 +147,13 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
                 changeNotify();
             }
         });
-        if(savedInstanceState == null){
-            DetailMoneyTransFragment f= new DetailMoneyTransFragment();
+        if (savedInstanceState == null) {
+            DetailMoneyTransFragment f = new DetailMoneyTransFragment();
             Bundle args = new Bundle();
-            args.putSerializable(DetailMoneyTransFragment.EXTRA_ACCOUNT_DATA,accountData);
+            args.putSerializable(DetailMoneyTransFragment.EXTRA_ACCOUNT_DATA, accountData);
             f.setArguments(args);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container,f)
+                    .add(R.id.container, f, TRANS_FRAGMENT)
                     .commit();
         }
         initData(accountData);
@@ -187,7 +191,8 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
 //
         if (DataManager.getInstance().getTransactionList(accountData._id).size() > 0) {
 //            transAdapter.addAll(DataManager.getInstance().getTransactionList(accountData._id));
-//            remainPrice = transAdapter.getLastItem().remain;
+            remainPrice = DataManager.getInstance().getTransactionList(accountData._id).
+                    get(DataManager.getInstance().getTransactionList(accountData._id).size() - 1).remain;
         } else {
             remainPrice = accountData.money;
         }
@@ -200,7 +205,8 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
     public void addTrans(int price) {
         DetailTransData data = new DetailTransData();
         if (DataManager.getInstance().getTransactionList(accountData._id).size() > 0) {
-            remainPrice = transAdapter.getLastItem().remain;
+            remainPrice = DataManager.getInstance().getTransactionList(accountData._id).
+                    get(DataManager.getInstance().getTransactionList(accountData._id).size() - 1).remain;
         }
         data.type = TYPE_ADD;
         data.repay = price;
@@ -209,29 +215,36 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
         SimpleDateFormat sdf = new SimpleDateFormat("MM월 dd일");
         data.date = sdf.format(date);
         DataManager.getInstance().insertTransaction(accountData._id, data.repay, data.remain, data.type, data.date);
-//        transAdapter.add(data);
+        if (getSupportFragmentManager().findFragmentByTag(TRANS_FRAGMENT).isVisible()) {
+            changeDetailTrans();
+        }
     }
 
     public void subTrans(int price) {
         DetailTransData data = new DetailTransData();
         if (DataManager.getInstance().getTransactionList(accountData._id).size() > 0) {
-            remainPrice = transAdapter.getLastItem().remain;
+            remainPrice = DataManager.getInstance().getTransactionList(accountData._id).
+                    get(DataManager.getInstance().getTransactionList(accountData._id).size() - 1).remain;
         }
         data.type = TYPE_SUB;
         data.repay = price;
-        if (remainPrice - price >= 0) {
+        int subMoney = remainPrice - price;
+        if (subMoney >= 0) {
+            if (subMoney == 0) {
+                complete();
+                return;
+            }
             remainPrice = remainPrice - price;
             data.remain = remainPrice;
             Date date = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("MM월 dd일");
             data.date = sdf.format(date);
             DataManager.getInstance().insertTransaction(accountData._id, data.repay, data.remain, data.type, data.date);
-//            transAdapter.add(data);
-            if (remainPrice == 0) {
-                complete();
-            }
         } else {
             Toast.makeText(this, "잔여금보다 액수가 많습니다", Toast.LENGTH_SHORT).show();
+        }
+        if (getSupportFragmentManager().findFragmentByTag(TRANS_FRAGMENT).isVisible()) {
+            changeDetailTrans();
         }
     }
 
@@ -242,16 +255,20 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
         if (DataManager.getInstance().getTransactionList(accountData._id).size() == 0) { //부분상환된게 없다면
             data.repay = accountData.money;
         } else {
-            data.repay = transAdapter.getLastItem().remain;
+            data.repay = DataManager.getInstance().getTransactionList(accountData._id).
+                    get(DataManager.getInstance().getTransactionList(accountData._id).size() - 1).remain;
         }
         accountData.isCompleted = true;
-//        data.type = TYPE_COMPLETE;
-//        data.remain = 0;
-//        Date date = new Date();
-//        SimpleDateFormat sdf = new SimpleDateFormat("MM월 dd일");
-//        data.date = sdf.format(date);
-//        DataManager.getInstance().insertTransaction(accountData._id, data.repay, data.remain, data.type, data.date);
-//        DataManager.getInstance().updateContract(accountData);
+        data.type = TYPE_SUB;
+        data.remain = 0;
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("MM월 dd일");
+        data.date = sdf.format(date);
+        DataManager.getInstance().insertTransaction(accountData._id, data.repay, data.remain, data.type, data.date);
+        DataManager.getInstance().updateContract(accountData);
+        if (getSupportFragmentManager().findFragmentByTag(TRANS_FRAGMENT).isVisible()) {
+            changeDetailTrans();
+        }
 //        transAdapter.add(data);
     }
 
@@ -261,20 +278,26 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
         args.putSerializable(DetailMoneyTransFragment.EXTRA_ACCOUNT_DATA, accountData);
         f.setArguments(args);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, f)
+                .replace(R.id.container, f, TRANS_FRAGMENT)
                 .commit();
     }
 
     public void changeNotify() {
-        Notifyfragment f = new Notifyfragment();
+        MoneyNotifyfragment f = new MoneyNotifyfragment();
         Bundle args = new Bundle();
-        args.putSerializable(Notifyfragment.EXTRA_ACCOUNT_DATA, accountData);
+        args.putSerializable(MoneyNotifyfragment.EXTRA_ACCOUNT_DATA, accountData);
         f.setArguments(args);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, f)
+                .replace(R.id.container, f, NOTIFY_FRAGMENT)
                 .commit();
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_send_iou,menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -284,6 +307,12 @@ public class DetailMoneyTransactionActivity extends AppCompatActivity implements
             finish();
             return true;
         }
+        if(id == R.id.send_iou){
+            Intent i = new Intent(DetailMoneyTransactionActivity.this, IOUActivity.class);
+            i.putExtra(IOUActivity.EXTRA_ACCOUNT_DATA, accountData);
+            startActivity(i);
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

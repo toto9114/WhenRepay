@@ -21,12 +21,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ViewSwitcher;
 
 import com.bumptech.glide.Glide;
-import com.whenrepay.rnd.whenrepay.BorrowMoney.DirectlyEditDialog;
-import com.whenrepay.rnd.whenrepay.BorrowMoney.OnButtonClickListener;
-import com.whenrepay.rnd.whenrepay.BorrowMoney.PersonView;
 import com.whenrepay.rnd.whenrepay.Contact.SingleContactActivity;
 import com.whenrepay.rnd.whenrepay.Group.PersonData;
 import com.whenrepay.rnd.whenrepay.R;
@@ -44,11 +40,9 @@ public class ContractThingsFragment extends Fragment {
     }
 
     LinearLayout cameraView, galleryView;
-    ViewSwitcher contactSwitcher;
     ImageView pictureView;
     EditText thingsView, memoView;
     TextView nameView;
-    PersonView personView;
     private static final int REQUEST_CAMERA = 100;
     private static final int REQUEST_GALLERY = 200;
     private static final int REQUEST_CONTACT = 300;
@@ -65,15 +59,13 @@ public class ContractThingsFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_contract_things, container, false);
 
         thingsData = new ThingsData();
-        contactSwitcher = (ViewSwitcher) view.findViewById(R.id.view_switcher_contact);
+
         nameView = (TextView)view.findViewById(R.id.edit_name);
         cameraView = (LinearLayout) view.findViewById(R.id.btn_camera);
         galleryView = (LinearLayout) view.findViewById(R.id.btn_gallery);
         pictureView = (ImageView) view.findViewById(R.id.image_things);
         thingsView = (EditText) view.findViewById(R.id.edit_things);
         memoView = (EditText) view.findViewById(R.id.edit_memo);
-        personView = (PersonView) view.findViewById(R.id.person);
-
         cameraView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,40 +103,12 @@ public class ContractThingsFragment extends Fragment {
             }
         });
 
-        btn = (Button) view.findViewById(R.id.btn_contact);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent(Intent.ACTION_PICK);
-//                intent.setData(ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
-//                startActivityForResult(intent, REQUEST_CONTACT);
-                Intent i = new Intent(getContext(), SingleContactActivity.class);
-                i.putExtra(SingleContactActivity.EXTRA_TYPE, SingleContactActivity.TYPE_THINGS);
-                startActivityForResult(i, REQUEST_CONTACT);
-            }
-        });
-
         nameView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getContext(), SingleContactActivity.class);
                 i.putExtra(SingleContactActivity.EXTRA_TYPE, SingleContactActivity.TYPE_THINGS);
                 startActivityForResult(i, REQUEST_CONTACT);
-            }
-        });
-        btn = (Button) view.findViewById(R.id.btn_direct);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DirectlyEditDialog dialog = new DirectlyEditDialog();
-                dialog.setOnButtonClickListener(new OnButtonClickListener() {
-                    @Override
-                    public void OnButtonClick(String name, String phone) {
-                        personView.setName(name);
-                        contactSwitcher.showNext();
-                    }
-                });
-                dialog.show(getActivity().getSupportFragmentManager(),"dialog");
             }
         });
 
@@ -200,8 +164,6 @@ public class ContractThingsFragment extends Fragment {
 //                    cursor.close();
                     PersonData personData = (PersonData)data.getSerializableExtra(EXTRA_RESULT);
                     thingsData.borrowerName = personData.getName();
-                    personView.setName(personData.getName());
-                    contactSwitcher.showNext();
                     nameView.setText(personData.getName());
                 }
                 break;

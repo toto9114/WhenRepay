@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.whenrepay.rnd.whenrepay.BorrowMoney.OnDelButtonClickListener;
@@ -42,6 +43,7 @@ public class RegistFragment extends Fragment {
     public static final String EXTRA_RESULT = "result";
 
     EditText editEvent;
+    TextView regitPersonView, countView;
     FamiliarRecyclerView recyclerView;
     //    PersonListAdapter mAdapter;
     MemberListAdapter mAdapter;
@@ -61,6 +63,8 @@ public class RegistFragment extends Fragment {
 
         dutchPayData = new DutchPayData();
         editEvent = (EditText) view.findViewById(R.id.edit_event);
+        regitPersonView = (TextView)view.findViewById(R.id.text_regit_person);
+        countView = (TextView) view.findViewById(R.id.text_count);
         recyclerView = (FamiliarRecyclerView) view.findViewById(R.id.recycler);
         layoutManager = new LinearLayoutManager(getContext(), OrientationHelper.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
@@ -89,21 +93,12 @@ public class RegistFragment extends Fragment {
             }
         });
 
-        btn = (Button) view.findViewById(R.id.btn_contact);
-        btn.setOnClickListener(new View.OnClickListener() {
+        regitPersonView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getContext(), MultiContractActivity.class);
                 i.putExtra(MultiContractActivity.EXTRA_TYPE, MultiContractActivity.TYPE_DUTCH);
                 startActivityForResult(i, REQUEST_PERSON_LIST);
-            }
-        });
-
-        btn = (Button) view.findViewById(R.id.btn_direct);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
             }
         });
 
@@ -138,7 +133,6 @@ public class RegistFragment extends Fragment {
         return view;
     }
 
-
     @Override
     public void onStart() {
         super.onStart();
@@ -169,5 +163,6 @@ public class RegistFragment extends Fragment {
                 }
             }
         }
+        countView.setText("("+mAdapter.getItemCount()+"명)");
     }
 }

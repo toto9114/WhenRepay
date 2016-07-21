@@ -1,4 +1,4 @@
-package com.whenrepay.rnd.whenrepay.Transactions;
+package com.whenrepay.rnd.whenrepay.Transactions.MoneyTransaction;
 
 /**
  * Created by RND on 2016-06-16.

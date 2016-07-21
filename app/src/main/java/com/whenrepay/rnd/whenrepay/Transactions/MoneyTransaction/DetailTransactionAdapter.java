@@ -1,4 +1,4 @@
-package com.whenrepay.rnd.whenrepay.Transactions;
+package com.whenrepay.rnd.whenrepay.Transactions.MoneyTransaction;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

@@ -65,7 +65,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".Transactions.DetailMoneyTransactionActivity" />
+        <activity android:name=".Transactions.MoneyTransaction.DetailMoneyTransactionActivity" />
         <activity
             android:name=".BorrowThings.LendThingsActivity"
             android:screenOrientation="portrait"
@@ -77,12 +77,12 @@
             android:name=".DutchPay.DutchPayActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Transactions.IOUActivity" />
-        <activity android:name=".Transactions.DetailThingsTransactionActivity" />
+        <activity android:name=".Transactions.ThingsTransaction.DetailThingsTransactionActivity" />
         <activity android:name=".Main.SettingActivity" />
         <activity android:name=".OverDue.OverDueActivity" />
         <activity android:name=".Group.GroupManageActivity" />
         <activity android:name=".Main.EditNameActivity" />
-        <activity android:name=".Transactions.DetailDutchActivity" />
+        <activity android:name=".Transactions.DutchPayTransaction.DetailDutchActivity" />
         <activity android:name=".Main.BankListActivity" />
         <activity android:name=".Main.EditBankActivity" />
         <activity android:name=".Main.CompleteActivity" />

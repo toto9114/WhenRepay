@@ -13,7 +13,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:text="거래내용 확인" />
+        android:text="거래내역 확인" />
 
     <LinearLayout
         android:id="@+id/linearLayout7"
@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="상환일" />
+                android:text="변제일" />
 
             <TextView
                 android:id="@+id/text_date"

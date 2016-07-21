@@ -18,6 +18,7 @@ public class ThingsData implements Serializable, TransactionData {
     public String pictureUri;
     public byte[] picture;
     public byte[] sign;
+    public boolean isCompleted;
 
     @Override
     public String getName() {

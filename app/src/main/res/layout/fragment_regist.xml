@@ -3,77 +3,94 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.whenrepay.rnd.whenrepay.DutchPay.RegistFragment">
+
     <LinearLayout
+        android:id="@+id/linearLayout21"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <TextView
+            android:id="@+id/textView54"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="행사이름" />
+
+        <EditText
+            android:id="@+id/edit_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:id="@+id/linearLayout21">
+        android:layout_below="@+id/linearLayout21">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp">
+            <TextView
+                android:id="@+id/textView55"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="나눠낼 사람"
+                android:layout_marginRight="16dp" />
+            <TextView
+                android:id="@+id/text_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="행사이름"
-            android:id="@+id/textView54" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/edit_event"
-            android:layout_weight="1" />
+            android:id="@+id/text_regit_person"
+            android:layout_weight="1"
+            android:hint="더치페이 참가자를 등록하세요" />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="더치페이 인원"
-        android:id="@+id/textView55"
-        android:layout_below="@+id/linearLayout21"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="16dp" />
+    <View
+        android:id="@+id/divider"
+        android:layout_below="@+id/linearLayout"
 
-    <LinearLayout
-        android:id="@+id/linear1"
-        android:layout_below="@+id/textView55"
+        android:background="#eeeeee"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/btn_contact"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="연락처에서"/>
-        <Button
-            android:id="@+id/btn_direct"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="직접입력"/>
-    </LinearLayout>
-
+        android:layout_height="0.5dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp" />
     <cn.iwgang.familiarrecyclerview.FamiliarRecyclerView
+        android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recycler"
-        android:layout_below="@+id/linear1"
+        android:layout_above="@+id/btn_done"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/btn_done"
         android:paddingLeft="16dp"
-        android:paddingRight="16dp" />
+        android:paddingRight="16dp"
+        android:layout_below="@+id/divider" />
 
     <Button
+        android:id="@+id/btn_done"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="입력완료"
-        android:id="@+id/btn_done"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:text="입력완료" />
 
 </RelativeLayout>

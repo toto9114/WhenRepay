@@ -2,12 +2,14 @@ package com.whenrepay.rnd.whenrepay.DutchPay;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.wefika.flowlayout.FlowLayout;
 import com.whenrepay.rnd.whenrepay.Group.PersonData;
 import com.whenrepay.rnd.whenrepay.R;
 
@@ -20,15 +22,28 @@ import java.util.Random;
  */
 public class EventView extends FrameLayout {
     EditText editMoney;
-    LinearLayout group;
+    FlowLayout group;
+    TextView titleView, editTitleView, countView;
     List<DutchPersonData> personList = new ArrayList<>();
 
-
+    int eventCount =1;
     public EventView(Context context, List<PersonData> data) {
         super(context);
         inflate(getContext(), R.layout.view_edit_event, this);
         editMoney = (EditText) findViewById(R.id.edit_money);
-        group = (LinearLayout) findViewById(R.id.check_group);
+        titleView = (TextView) findViewById(R.id.text_title);
+        editTitleView = (TextView) findViewById(R.id.text_change_title);
+        countView = (TextView) findViewById(R.id.text_count);
+        group = (FlowLayout) findViewById(R.id.check_group);
+
+        titleView.setText(eventCount+"차모임");
+        countView.setText(""+data.size());
+        editTitleView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         if (data != null) {
             for (int i = 0; i < data.size(); i++) {
                 final CheckBox checkBox = new CheckBox(getContext());
@@ -52,9 +67,17 @@ public class EventView extends FrameLayout {
                             data.attended = false;
                             personList.set(buttonView.getId(), data);
                         }
+                        int count = 0;
+                        for (DutchPersonData dutchPersonData : personList) {
+                            if (dutchPersonData.attended) {
+                                count++;
+                            }
+                        }
+                        countView.setText("" + count);
                     }
                 });
-                group.addView(checkBox);
+
+                group.addView(checkBox, FlowLayout.LayoutParams.WRAP_CONTENT, FlowLayout.LayoutParams.WRAP_CONTENT);
             }
         }
     }

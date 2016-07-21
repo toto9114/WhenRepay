@@ -26,6 +26,7 @@ import com.whenrepay.rnd.whenrepay.Manager.DBContants;
 import com.whenrepay.rnd.whenrepay.Manager.DataManager;
 import com.whenrepay.rnd.whenrepay.MyProfile;
 import com.whenrepay.rnd.whenrepay.R;
+import com.whenrepay.rnd.whenrepay.Transactions.MoneyTransaction.MoneyDunData;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -156,7 +157,7 @@ public class IOUActivity extends AppCompatActivity {
         intent.setType("image/jpg");
         intent.putExtra(Intent.EXTRA_STREAM, uri);
         mRealm.beginTransaction();
-        DunData data = mRealm.createObject(DunData.class);
+        MoneyDunData data = mRealm.createObject(MoneyDunData.class);
         data.set_id(accountData._id);
         Calendar c = Calendar.getInstance();
         data.setDate(c.getTimeInMillis());

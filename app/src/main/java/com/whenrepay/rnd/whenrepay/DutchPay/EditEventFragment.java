@@ -40,11 +40,18 @@ public class EditEventFragment extends Fragment {
     EventView eventView;
     List<EventData> eventList = new ArrayList<>();
 
+    View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_edit_event, container, false);
+        if (view != null) {
+            if ((ViewGroup) view.getParent() != null)
+                ((ViewGroup) view.getParent()).removeView(view);
+            return view;
+        }
+        view = inflater.inflate(R.layout.fragment_edit_event, container, false);
+
         mFlowLayout = (FlowLayout) view.findViewById(R.id.flowlayout);
 
         Button btn = (Button) view.findViewById(R.id.btn_done);
@@ -54,8 +61,8 @@ public class EditEventFragment extends Fragment {
                 eventList.add(eventView.getData());
                 for (EventData data : eventList) {
                     dutchPayData.totalPrice += data.money;
-                    for(DutchPersonData personData : data.people){
-                        Log.i("pay",""+personData.dutchMoney);
+                    for (DutchPersonData personData : data.people) {
+                        Log.i("pay", "" + personData.dutchMoney);
                     }
                 }
                 dutchPayData.eventList = eventList;
