@@ -21,6 +21,11 @@ public class ThingsData implements Serializable, TransactionData {
     public boolean isCompleted;
 
     @Override
+    public long getId() {
+        return _id;
+    }
+
+    @Override
     public String getName() {
         return borrowerName;
     }

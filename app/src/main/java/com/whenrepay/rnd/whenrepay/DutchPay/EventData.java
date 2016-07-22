@@ -7,6 +7,8 @@ import java.util.List;
  * Created by RND on 2016-06-29.
  */
 public class EventData implements Serializable{
-    int money;
-    List<DutchPersonData> people;
+    public static final long INVALID_ID = -1;
+    public long _id = INVALID_ID;
+    public int money;
+    public List<DutchPersonData> people;
 }

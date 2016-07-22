@@ -105,6 +105,16 @@ public class SendDutchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 DataManager.getInstance().insertDutchPay(dutchPayData);
+                final long id = DataManager.getInstance().getDutchPayList().get(DataManager.getInstance().getDutchPayList().size() - 1).getId();
+                for(int i = 0 ; i<dutchPayData.personList.size() ; i++){
+                    DataManager.getInstance().insertDutchPayPerson(id,dutchPayData.personList.get(i));
+                }
+                for(int i = 0 ; i < dutchPayData.eventList.size() ; i++){
+                    DataManager.getInstance().insertEvent(id,dutchPayData.eventList.get(i));
+                    for(int j = 0 ; j<dutchPayData.eventList.get(i).people.size(); j++){
+                        //
+                    }
+                }
                 if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED) {
                     if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
@@ -172,6 +182,7 @@ public class SendDutchFragment extends Fragment {
                     data.money += dutchPayData.eventList.get(j).people.get(i).dutchMoney;
                 }
             }
+            dutchPayData.personList.get(i).setMoney(data.money);
             mAdapter.add(data);
         }
     }
