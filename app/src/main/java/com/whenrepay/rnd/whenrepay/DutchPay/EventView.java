@@ -26,8 +26,7 @@ public class EventView extends FrameLayout {
     TextView titleView, editTitleView, countView;
     List<DutchPersonData> personList = new ArrayList<>();
 
-    int eventCount =1;
-    public EventView(Context context, List<PersonData> data) {
+    public EventView(Context context, List<PersonData> data,int count) {
         super(context);
         inflate(getContext(), R.layout.view_edit_event, this);
         editMoney = (EditText) findViewById(R.id.edit_money);
@@ -36,7 +35,7 @@ public class EventView extends FrameLayout {
         countView = (TextView) findViewById(R.id.text_count);
         group = (FlowLayout) findViewById(R.id.check_group);
 
-        titleView.setText(eventCount+"차모임");
+        titleView.setText(count+"차모임");
         countView.setText(""+data.size());
         editTitleView.setOnClickListener(new OnClickListener() {
             @Override
@@ -115,6 +114,7 @@ public class EventView extends FrameLayout {
         } else {
             data.money = 0;
         }
+        data.title = titleView.getText().toString();
         data.people = personList;
         return data;
     }

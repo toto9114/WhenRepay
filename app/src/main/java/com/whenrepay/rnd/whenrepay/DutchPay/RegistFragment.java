@@ -65,7 +65,7 @@ public class RegistFragment extends Fragment {
         editEvent = (EditText) view.findViewById(R.id.edit_event);
         regitPersonView = (TextView)view.findViewById(R.id.text_regit_person);
         countView = (TextView) view.findViewById(R.id.text_count);
-        recyclerView = (FamiliarRecyclerView) view.findViewById(R.id.recycler);
+        recyclerView = (FamiliarRecyclerView) view.findViewById(R.id.container);
         layoutManager = new LinearLayoutManager(getContext(), OrientationHelper.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 //        mAdapter = new PersonListAdapter();

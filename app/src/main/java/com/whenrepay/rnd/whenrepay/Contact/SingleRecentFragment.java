@@ -21,8 +21,8 @@ import com.whenrepay.rnd.whenrepay.R;
 import com.whenrepay.rnd.whenrepay.TransactionData;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -60,19 +60,19 @@ public class SingleRecentFragment extends Fragment {
         return view;
     }
 
-    List<String> list = new ArrayList<>();
+    List<TransactionData> list = new ArrayList<>();
 
     private void initData() {
         if (DataManager.getInstance().getContractList(DBContants.SORT_TYPE_DATE).size() != 0) {
             for (TransactionData data : DataManager.getInstance().getContractList(DBContants.SORT_TYPE_DATE)) {
                 AccountData accountData = (AccountData) data;
-                list.add(accountData.name);
+                list.add(accountData);
             }
         }
         if (DataManager.getInstance().getContractThingsList().size() != 0) {
             for (TransactionData data : DataManager.getInstance().getContractThingsList()) {
                 ThingsData thingsData = (ThingsData) data;
-                list.add(thingsData.borrowerName);
+                list.add(thingsData);
             }
         }
         if (DataManager.getInstance().getDutchPayList().size() != 0) {
@@ -80,13 +80,46 @@ public class SingleRecentFragment extends Fragment {
 
             }
         }
-        HashSet hs = new HashSet(list);
+        sort();
+        List<PersonData> nameList = new ArrayList<>();
 
-        Iterator it = hs.iterator();
-        while (it.hasNext()) {
-            PersonData data = new PersonData();
-            data.setName(it.next().toString());
-            mAdapter.add(data);
+        for (int i = 0; i < list.size(); i++) {
+            addRecentList(list.get(i), i);
         }
+
+        for(TransactionData s: list){
+            PersonData personData = new PersonData();
+            if(s instanceof AccountData) {
+                s = (AccountData)s;
+                personData.setName(((AccountData) s).name);
+                personData.setPhone(((AccountData) s).phone);
+            }else if(s instanceof ThingsData){
+                s = (ThingsData)s;
+                personData.setName(((ThingsData) s).borrowerName);
+                personData.setPhone(((ThingsData) s).phone);
+            }else{
+
+            }
+            nameList.add(personData);
+        }
+        mAdapter.addAll(nameList);
+    }
+
+    private void addRecentList(TransactionData data, int position) {
+        for (int i = position + 1; i < list.size(); i++) {
+            if (list.get(i).getName().equals(data.getName())) {
+//                mAdapter.add(data.getName());
+                list.remove(i);
+            }
+        }
+    }
+
+    public void sort() {
+        Collections.sort(list, new Comparator<TransactionData>() {
+            @Override
+            public int compare(TransactionData item1, TransactionData item2) {
+                return item1.getDate() - item2.getDate() > 0 ? -1 : 1;
+            }
+        });
     }
 }

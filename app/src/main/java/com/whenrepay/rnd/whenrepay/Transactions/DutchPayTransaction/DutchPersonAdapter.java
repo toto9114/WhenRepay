@@ -15,38 +15,43 @@ import java.util.List;
 /**
  * Created by RND on 2016-07-21.
  */
-public class DutchPersonAdapter extends RecyclerView.Adapter implements OnItemCheckedListener{
+public class DutchPersonAdapter extends RecyclerView.Adapter implements OnItemCheckedListener {
     List<PersonData> items = new ArrayList<>();
 
-    public void add(PersonData data){
+    public void add(PersonData data) {
         items.add(data);
         notifyDataSetChanged();
     }
 
-    public void addAll(List<PersonData> list){
+    boolean isCompleted = false;
+
+    public void addAll(List<PersonData> list, boolean isCompleted) {
+        this.isCompleted = isCompleted;
         items.addAll(list);
         notifyDataSetChanged();
     }
-    public void clear(){
+
+    public void clear() {
         items.clear();
         notifyDataSetChanged();
     }
 
-    public PersonData getItemAtPosition(int position){
+    public PersonData getItemAtPosition(int position) {
         return items.get(position);
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.view_dutch_check,parent,false);
+        View view = inflater.inflate(R.layout.view_dutch_check, parent, false);
 
         return new DutchCheckView(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((DutchCheckView)holder).setData(items.get(position));
-        ((DutchCheckView)holder).setOnItemCheckedListener(this);
+        ((DutchCheckView) holder).setData(items.get(position),isCompleted);
+        ((DutchCheckView) holder).setOnItemCheckedListener(this);
     }
 
     @Override
@@ -56,13 +61,15 @@ public class DutchPersonAdapter extends RecyclerView.Adapter implements OnItemCh
 
 
     public OnItemCheckedListener itemCheckedListener;
-    public void setOnItemCheckedListener(OnItemCheckedListener listener){
+
+    public void setOnItemCheckedListener(OnItemCheckedListener listener) {
         itemCheckedListener = listener;
     }
+
     @Override
     public void OnItemChecked(boolean isChecked, int position) {
-        if(itemCheckedListener!=null){
-            itemCheckedListener.OnItemChecked(isChecked,position);
+        if (itemCheckedListener != null) {
+            itemCheckedListener.OnItemChecked(isChecked, position);
         }
     }
 }

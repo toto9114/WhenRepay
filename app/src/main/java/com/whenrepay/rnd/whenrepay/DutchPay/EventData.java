@@ -9,6 +9,7 @@ import java.util.List;
 public class EventData implements Serializable{
     public static final long INVALID_ID = -1;
     public long _id = INVALID_ID;
+    public String title;
     public int money;
     public List<DutchPersonData> people;
 }

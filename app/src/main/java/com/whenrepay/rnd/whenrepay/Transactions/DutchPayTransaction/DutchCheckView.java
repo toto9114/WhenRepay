@@ -32,6 +32,9 @@ public class DutchCheckView extends RecyclerView.ViewHolder {
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isCompleted) {
+                    checkBox.setChecked(true);
+                }
                 if(itemCheckedListener!=null){
                     itemCheckedListener.OnItemChecked(isChecked,getAdapterPosition());
                 }
@@ -39,7 +42,11 @@ public class DutchCheckView extends RecyclerView.ViewHolder {
         });
     }
 
-    public void setData(PersonData data){
+    PersonData data;
+    boolean isCompleted = false;
+    public void setData(PersonData data, boolean isCompleted){
+        this.data = data;
+        this.isCompleted = isCompleted;
         NumberFormat nf = NumberFormat.getInstance();
         nameView.setText(data.getName());
         moneyView.setText(nf.format(data.getMoney()));

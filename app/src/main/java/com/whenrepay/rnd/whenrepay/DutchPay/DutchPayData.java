@@ -15,6 +15,7 @@ public class DutchPayData implements Serializable,TransactionData{
     public String title;
     public int totalPrice;
     public long date;
+    public boolean isCompleted;
     public List<PersonData> personList;
     public List<EventData> eventList;
 

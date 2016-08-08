@@ -40,7 +40,7 @@ public class CompleteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_complete);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out_background);
-        recycler = (FamiliarRecyclerView) findViewById(R.id.recycler);
+        recycler = (FamiliarRecyclerView) findViewById(R.id.container);
         mAdapter = new CompleteAdapter();
         layoutManager = new LinearLayoutManager(this, OrientationHelper.VERTICAL, false);
         recycler.setAdapter(mAdapter);

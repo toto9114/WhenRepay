@@ -9,6 +9,8 @@ import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import com.whenrepay.rnd.whenrepay.DutchPay.DutchPayData;
+import com.whenrepay.rnd.whenrepay.Group.PersonData;
+import com.whenrepay.rnd.whenrepay.Manager.DataManager;
 import com.whenrepay.rnd.whenrepay.R;
 
 import java.text.SimpleDateFormat;
@@ -62,10 +64,30 @@ public class DetailDutchActivity extends AppCompatActivity {
             }
         });
 
+        btn = (Button) findViewById(R.id.btn_complete);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                completeSwitcher.showNext();
+                dutchPayData.isCompleted = true;
+                DataManager.getInstance().updateDutchPay(dutchPayData);
+                //체크리스트 모두 체크
+                for(PersonData data : DataManager.getInstance().getDutchPersonList(dutchPayData._id)){
+                    data.setIsPay(true);
+                    DataManager.getInstance().updateDutchPayPerson(dutchPayData._id,data);
+                }
+                changePersonList();
+            }
+        });
+
         init();
     }
 
+
     private void init() {
+        if(dutchPayData.isCompleted){
+            completeSwitcher.showNext();
+        }
         titleView.setText(dutchPayData.title);
         categoryView.setText("더치페이");
         SimpleDateFormat sdf = new SimpleDateFormat("MM월 dd일");
@@ -73,6 +95,12 @@ public class DetailDutchActivity extends AppCompatActivity {
         moneyView.setText(""+dutchPayData.totalPrice);
     }
 
+    public void allCheckedPersonList(){
+        dutchPayData.isCompleted = true;
+        DataManager.getInstance().updateDutchPay(dutchPayData);
+        init();
+        changePersonList();
+    }
     public void changePersonList() {
         DutchPersonListFragment f = new DutchPersonListFragment();
         Bundle args = new Bundle();

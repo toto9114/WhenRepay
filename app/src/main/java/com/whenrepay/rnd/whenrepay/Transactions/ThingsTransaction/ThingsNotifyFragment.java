@@ -52,7 +52,7 @@ public class ThingsNotifyFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_things_notify, container, false);
         mRealm = Realm.getInstance(getContext());
-        recyclerView = (FamiliarRecyclerView) view.findViewById(R.id.recycler);
+        recyclerView = (FamiliarRecyclerView) view.findViewById(R.id.container);
         mAdapter = new NotifyAdapter();
         layoutManager = new LinearLayoutManager(getContext(), OrientationHelper.VERTICAL,false);
         recyclerView.setAdapter(mAdapter);

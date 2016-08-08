@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
 import com.whenrepay.rnd.whenrepay.DutchPay.DutchPayData;
+import com.whenrepay.rnd.whenrepay.DutchPay.EventData;
 import com.whenrepay.rnd.whenrepay.Manager.DataManager;
 import com.whenrepay.rnd.whenrepay.R;
 
@@ -33,6 +34,8 @@ public class DutchInfoFragment extends Fragment {
         if(getArguments()!=null){
             dutchPayData = (DutchPayData)getArguments().getSerializable(EXTRA_DUTCH_DATA);
         }
+
+
     }
 
     @Override
@@ -50,7 +53,11 @@ public class DutchInfoFragment extends Fragment {
     private void init(){
         mAdapter.clear();
         for(int i = 0 ; i< DataManager.getInstance().getDutchEventList(dutchPayData._id).size(); i++) {
-            mAdapter.add(DataManager.getInstance().getDutchEventList(dutchPayData._id).get(i));
+            EventData eventData = DataManager.getInstance().getDutchEventList(dutchPayData._id).get(i);
+            eventData.people = DataManager.getInstance().getAttendedList(dutchPayData._id,eventData._id);
+            mAdapter.add(eventData);
         }
     }
+
+
 }

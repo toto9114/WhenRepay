@@ -13,6 +13,7 @@ import android.provider.ContactsContract;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -44,7 +45,7 @@ import io.realm.Realm;
 public class MultiContactFragment extends Fragment {
 
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
-
+    private static final int PERMISSIONS_REQUEST_READ_SMS = 200;
     public static final String EXTRA_TYPE = "type";
 
     int type = -1;
@@ -65,7 +66,6 @@ public class MultiContactFragment extends Fragment {
             type = getArguments().getInt(EXTRA_TYPE);
         }
     }
-
     MyContactFooterView addMeView;
     Realm mRealm;
     boolean isMyProfileChecked = true;
@@ -76,17 +76,17 @@ public class MultiContactFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_contact, container, false);
         keywordView = (EditText) view.findViewById(R.id.edit_keyword);
-        listView = (ListView) view.findViewById(R.id.listView);
-        addMeView = (MyContactFooterView) view.findViewById(R.id.view_add_me);
 
+        listView = (ListView) view.findViewById(R.id.listView);
+        addMeView = new MyContactFooterView(getContext());
+        listView.addHeaderView(addMeView);
         addMeView.setOnCheckedListener(new MyContactFooterView.OnCheckedListener() {
             @Override
             public void OnChecked(boolean isChecked) {
                 isMyProfileChecked = isChecked;
             }
         });
-//        TelephonyManager telManager = (TelephonyManager)getContext().getSystemService(getContext().TELEPHONY_SERVICE);
-//        phoneView.setText(telManager.getLine1Number());
+
 
         mAdapter = new MultiContactAdapter();
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
@@ -163,6 +163,16 @@ public class MultiContactFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        if(ContextCompat.checkSelfPermission(getContext(),Manifest.permission.READ_SMS)!= PackageManager.PERMISSION_GRANTED){
+            if(ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),Manifest.permission.READ_SMS)){
+
+            }else{
+                ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.READ_SMS},PERMISSIONS_REQUEST_READ_SMS);
+            }
+        }else{
+            TelephonyManager telManager = (TelephonyManager)getContext().getSystemService(getContext().TELEPHONY_SERVICE);
+            addMeView.setPhoneNumber(telManager.getLine1Number());
+        }
         if (ContextCompat.checkSelfPermission(getContext(),
                 Manifest.permission.READ_CONTACTS)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -207,6 +217,14 @@ public class MultiContactFragment extends Fragment {
                 Toast.makeText(getContext(), "Until you grant the permission, we canot display the names", Toast.LENGTH_SHORT).show();
             }
             return;
+        }
+        if(requestCode == PERMISSIONS_REQUEST_READ_SMS){
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                TelephonyManager telManager = (TelephonyManager)getContext().getSystemService(getContext().TELEPHONY_SERVICE);
+                addMeView.setPhoneNumber(telManager.getLine1Number());
+            }else{
+                Toast.makeText(getContext(), "Until you grant the permission, we canot display phone number", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

@@ -112,7 +112,8 @@ public class MultiRecentFragment extends Fragment {
                     for (int i = 0; i < mAdapter.getCount(); i++) {
                         if (listView.isItemChecked(i)) {
                             PersonData personData = new PersonData();
-                            personData.setName(mAdapter.getItem(i));
+                            personData.setName(mAdapter.getItem(i).getName());
+                            personData.setPhone(mAdapter.getItem(i).getPhone());
                             list.add(personData);
                         }
                     }
@@ -157,13 +158,25 @@ public class MultiRecentFragment extends Fragment {
             }
         }
         sort();
-        List<String> nameList = new ArrayList<>();
+        List<PersonData> nameList = new ArrayList<>();
 
         for (int i = 0 ; i < list.size() ; i++) {
                 addRecentList(list.get(i),i);
         }
         for(TransactionData s: list){
-            nameList.add(s.getName());
+            PersonData personData = new PersonData();
+            if(s instanceof AccountData) {
+                s = (AccountData)s;
+                personData.setName(((AccountData) s).name);
+                personData.setPhone(((AccountData) s).phone);
+            }else if(s instanceof ThingsData){
+                s = (ThingsData)s;
+                personData.setName(((ThingsData) s).borrowerName);
+                personData.setPhone(((ThingsData) s).phone);
+            }else{
+
+            }
+            nameList.add(personData);
         }
         mAdapter.addAll(nameList);
     }

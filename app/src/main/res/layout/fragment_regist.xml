@@ -74,7 +74,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp" />
     <cn.iwgang.familiarrecyclerview.FamiliarRecyclerView
-        android:id="@+id/recycler"
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/btn_done"

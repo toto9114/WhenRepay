@@ -42,8 +42,8 @@ public class OverDueActivity extends AppCompatActivity {
         setContentView(R.layout.activity_over_due);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out_background);
-        recyclerView = (FamiliarRecyclerView) findViewById(R.id.recycler);
+//        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out_background);
+        recyclerView = (FamiliarRecyclerView) findViewById(R.id.container);
         mAdapter = new DetailOverDueAdapter();
         layoutManager = new LinearLayoutManager(this, OrientationHelper.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);

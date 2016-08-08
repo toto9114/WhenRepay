@@ -74,8 +74,9 @@ public class EditEventFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                count++;
                 eventList.add(eventView.getData());
-                eventView = new EventView(getContext(), dutchPayData.personList);
+                eventView = new EventView(getContext(), dutchPayData.personList,count);
                 mFlowLayout.addView(eventView);
             }
         });
@@ -83,9 +84,10 @@ public class EditEventFragment extends Fragment {
         return view;
     }
 
+    int count= 1;
     private void init() {
         eventList.clear();
-        eventView = new EventView(getContext(), dutchPayData.personList);
+        eventView = new EventView(getContext(), dutchPayData.personList,count);
         mFlowLayout.addView(eventView);
     }
 }

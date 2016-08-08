@@ -65,7 +65,6 @@ public class SingleContactFragment extends Fragment {
                 Intent i = new Intent();
                 i.putExtra(ContractFragment.EXTRA_RESULT, (PersonData) mAdapter.getItem(position));
                 getActivity().setResult(Activity.RESULT_OK, i);
-
                 getActivity().finish();
             }
         });

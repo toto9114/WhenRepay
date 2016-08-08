@@ -11,6 +11,7 @@ public class ThingsData implements Serializable, TransactionData {
     public static final long INVALID_ID = -1;
     public long _id = INVALID_ID;
     public String borrowerName;
+    public String phone;
     public String thingsName;
     public String memo;
     public long date;

@@ -20,7 +20,7 @@ public class GroupView extends FrameLayout {
         moneyView = (TextView)findViewById(R.id.text_money);
     }
     public void setData(EventData data){
-        titleView.setText("");
+        titleView.setText(data.title);
         moneyView.setText(""+data.money);
     }
 }

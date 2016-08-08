@@ -47,7 +47,7 @@ public class RegistGroupInfoFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_regist_group_info, container, false);
 
         titleView = (EditText) view.findViewById(R.id.edit_group_name);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
+        recyclerView = (RecyclerView) view.findViewById(R.id.container);
         mAdapter = new MemberListAdapter();
         layoutManager = new LinearLayoutManager(getContext(), OrientationHelper.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);

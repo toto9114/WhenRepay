@@ -17,7 +17,7 @@ public class SettingActivity extends AppCompatActivity {
     TextView nameView;
     TextView bankView;
 
-    TextView changeNameView, changeBankView;
+    TextView changeNameView, changeBankView, signView;
     Realm mRealm;
 
     public static final String RESULT_INFO = "info";
@@ -36,9 +36,9 @@ public class SettingActivity extends AppCompatActivity {
 
         nameView = (TextView) findViewById(R.id.text_name);
         bankView = (TextView) findViewById(R.id.text_bank_account);
-        changeNameView = (TextView)findViewById(R.id.text_change_name);
-        changeBankView = (TextView)findViewById(R.id.text_change_bank);
-
+        changeNameView = (TextView) findViewById(R.id.text_change_name);
+        changeBankView = (TextView) findViewById(R.id.text_change_bank);
+        signView = (TextView) findViewById(R.id.text_sign);
 
         changeNameView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +59,12 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
+        signView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SettingActivity.this,EditSignActivity.class));
+            }
+        });
     }
 
     @Override
@@ -73,7 +79,7 @@ public class SettingActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if(id == android.R.id.home){
+        if (id == android.R.id.home) {
             finish();
             return true;
         }
@@ -97,6 +103,6 @@ public class SettingActivity extends AppCompatActivity {
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.slide_left_in_background,R.anim.slide_right_out);
+        overridePendingTransition(R.anim.slide_left_in_background, R.anim.slide_right_out);
     }
 }

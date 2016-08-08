@@ -26,4 +26,7 @@
     <string name="category_money">돈 빌려주기</string>
     <string name="category_things">물건 빌려주기</string>
     <string name="category_dutch">더치페이</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

@@ -49,7 +49,7 @@ public class OverDueViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+    SimpleDateFormat sdf = new SimpleDateFormat("M월 d일");
 
     public void setData(TransactionData data,boolean isCheckBoxVisible) {
         checkBox.setChecked(false);
@@ -78,9 +78,8 @@ public class OverDueViewHolder extends RecyclerView.ViewHolder {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
             Date date = new Date(accountData.date);
-            descView.setText(sdf.format(date) + "/" + "상환일 " + diff + "일 지남");
+            descView.setText("상환예정일 "+sdf.format(date) + "/" + "상환일 " + diff + "일 지남");
         } else if (data instanceof ThingsData) {
             ThingsData thingsData = (ThingsData) data;
             categoryView.setText(R.string.category_things);
@@ -95,9 +94,8 @@ public class OverDueViewHolder extends RecyclerView.ViewHolder {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
             Date date = new Date(thingsData.date);
-            descView.setText(sdf.format(date) + "/" + "상환일 " + diff + "일 지남");
+            descView.setText("상환예정일 "+sdf.format(date) + "/" + "상환일 " + diff + "일 지남");
         } else {
             DutchPayData dutchPayData = (DutchPayData) data;
             categoryView.setText(R.string.category_dutch);
@@ -112,7 +110,6 @@ public class OverDueViewHolder extends RecyclerView.ViewHolder {
 //            } catch (ParseException e) {
 //                e.printStackTrace();
 //            }
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
             Date date = new Date(dutchPayData.date);
             descView.setText(sdf.format(date));
         }

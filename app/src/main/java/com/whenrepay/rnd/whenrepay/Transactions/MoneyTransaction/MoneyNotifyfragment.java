@@ -52,7 +52,7 @@ public class MoneyNotifyfragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_notifyfragment, container, false);
         mRealm = Realm.getInstance(getContext());
-        recyclerView = (FamiliarRecyclerView) view.findViewById(R.id.recycler);
+        recyclerView = (FamiliarRecyclerView) view.findViewById(R.id.container);
         mAdapter = new NotifyAdapter();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), OrientationHelper.VERTICAL,false);
         recyclerView.setLayoutManager(layoutManager);

@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.whenrepay.rnd.whenrepay.Group.PersonData;
 import com.whenrepay.rnd.whenrepay.R;
@@ -59,11 +60,13 @@ public class MultiContactAdapter extends BaseAdapter {
             view = (MultiContactView) convertView;
         }
         CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox_name);
+        TextView phoneView = (TextView) view.findViewById(R.id.text_phone);
         checkBox.setChecked(((ListView) parent).isItemChecked(position));
         checkBox.setFocusable(false);
         checkBox.setClickable(false);
 
         checkBox.setText(items.get(position).getName());
+        phoneView.setText(items.get(position).getPhone());
         return view;
     }
 

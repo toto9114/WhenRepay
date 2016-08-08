@@ -111,8 +111,11 @@ public class SendDutchFragment extends Fragment {
                 }
                 for(int i = 0 ; i < dutchPayData.eventList.size() ; i++){
                     DataManager.getInstance().insertEvent(id,dutchPayData.eventList.get(i));
+                    long eventId = DataManager.getInstance().getDutchEventList(id).get(DataManager.getInstance().getDutchEventList(id).size()-1)._id;
                     for(int j = 0 ; j<dutchPayData.eventList.get(i).people.size(); j++){
-                        //
+                        if(dutchPayData.eventList.get(i).people.get(j).attended){
+                            DataManager.getInstance().insertAttentedPerson(id,eventId,dutchPayData.eventList.get(i).people.get(j));
+                        }
                     }
                 }
                 if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)

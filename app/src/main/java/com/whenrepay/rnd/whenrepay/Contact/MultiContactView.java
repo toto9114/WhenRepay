@@ -3,6 +3,7 @@ package com.whenrepay.rnd.whenrepay.Contact;
 import android.content.Context;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.whenrepay.rnd.whenrepay.R;
 
@@ -12,6 +13,7 @@ import com.whenrepay.rnd.whenrepay.R;
 public class MultiContactView extends FrameLayout {
 
     CheckBox nameView;
+    TextView phoneView;
     public MultiContactView(Context context) {
         super(context);
         inflate(getContext(), R.layout.view_multi_contact, this);
@@ -28,5 +30,6 @@ public class MultiContactView extends FrameLayout {
 
     public void setData(String name){
         nameView.setText(name);
+
     }
 }

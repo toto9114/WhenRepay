@@ -5,7 +5,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.whenrepay.rnd.whenrepay.Group.PersonData;
 import com.whenrepay.rnd.whenrepay.R;
 
 import java.util.ArrayList;
@@ -15,14 +17,14 @@ import java.util.List;
  * Created by RND on 2016-07-13.
  */
 public class MultiRecentAdapter extends BaseAdapter {
-    List<String> items = new ArrayList<>();
+    List<PersonData> items = new ArrayList<>();
 
-    public void add(String data) {
+    public void add(PersonData data) {
         items.add(data);
         notifyDataSetChanged();
     }
 
-    public void addAll(List<String> list) {
+    public void addAll(List<PersonData> list) {
         items.addAll(list);
         notifyDataSetChanged();
     }
@@ -33,7 +35,7 @@ public class MultiRecentAdapter extends BaseAdapter {
     }
 
     @Override
-    public String getItem(int position) {
+    public PersonData getItem(int position) {
         return items.get(position);
     }
 
@@ -51,11 +53,13 @@ public class MultiRecentAdapter extends BaseAdapter {
             view = (MultiContactView) convertView;
         }
         CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox_name);
+        TextView phoneView = (TextView) view.findViewById(R.id.text_phone);
         checkBox.setChecked(((ListView) parent).isItemChecked(position));
         checkBox.setFocusable(false);
         checkBox.setClickable(false);
 
-        checkBox.setText(items.get(position));
+        checkBox.setText(items.get(position).getName());
+        phoneView.setText(items.get(position).getPhone());
         return view;
     }
 }
